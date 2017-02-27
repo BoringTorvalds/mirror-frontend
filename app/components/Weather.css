@@ -1,0 +1,141 @@
+:root {
+	--main-bg-color: #000;
+}
+
+@keyframes rotate {
+	0% {transform: rotate(0deg);}
+	100% {transform: rotate(360deg);}
+}
+
+@keyframes rock {
+	0% {transform: rotate(0deg);}
+	50% {transform: rotate(-20deg);}
+	100% {transform: rotate(0deg);}
+}
+
+@keyframes downfall-rain-sleet {
+	0% {transform: translateY(0px);}
+	100% {transform: translateY(32px);}
+}
+
+@keyframes downfall-snow {
+	0% {transform: translateY(0px);}
+	100% {transform: translateY(18px);}
+}
+
+@keyframes shake {
+	0% {transform: translateX(0px);}
+	25% {transform: translateX(2px);}
+	50% {transform: translateX(0px);}
+	75% {transform: translateX(-2px);}
+	100% {transform: translateX(0px);}
+}
+
+@keyframes pass {
+	0% {transform: translateX(0px);}
+	100% {transform: translateX(-100px);}
+}
+
+.format {
+	background-color: var(--main-bg-color);
+	height: 50vh;
+	width: 20%;
+}
+
+.iconPosition {
+	background-color: none;
+	width: 12vw;
+	height: 12vw;
+	margin: auto;
+	position: relative;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+svg {
+	fill: #FFFFFF;
+}
+
+#r-cloud,
+#s-cloud,
+#c-cloud1,
+#c-cloud2,
+#pcd-cloud,
+#pcn-cloud {
+	fill: var(--main-bg-color);
+}
+
+#clear-day,
+#pcd-rays {
+	animation: rotate 10s infinite linear;
+	transform-origin: 50% 50%;
+}
+
+#cn-moon,
+#pcn-moon {
+	animation: rock 5s infinite ease-in-out;
+	transform-origin: 50% 50%;
+}
+
+#r-rain,
+#sl-sleet {
+	animation: downfall-rain-sleet 2s infinite linear;
+}
+
+#s-snow {
+	animation: downfall-snow 2s infinite linear;
+}
+
+#w-wind1,
+#w-wind2,
+#w-wind3,
+#w-wind4 {
+	animation: shake 2s infinite linear;
+}
+
+#w-wind2,
+#w-wind4 {
+	animation-delay: .5s;
+}
+
+#f-fog1,
+#f-fog2,
+#f-fog3 {
+	animation: shake 2s infinite linear;
+}
+
+#f-fog2 {
+	animation-delay: 0.5s;
+}
+
+#f-fog3 {
+	animation-delay: 1s;
+}
+
+#c-moving-clouds {
+	animation: pass 7.5s infinite linear;
+}
+
+
+
+.weather-icon {
+	float: right;
+}
+
+.weather-status-container {
+	float: left;
+	line-height: 3;
+}
+.weather-top-container {
+	padding-bottom: 20px;
+}
+
+#temperature {
+	font-size: 35px;
+
+}
+
+.weather-icon {
+}
