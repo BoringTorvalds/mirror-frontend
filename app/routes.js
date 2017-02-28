@@ -8,6 +8,6 @@ import Login from './containers/Login';
 
 export default (
   <Route path="/" component={App}>
-        <IndexRoute component={Login} />
+        <IndexRoute component={Home} />
   </Route>
 );

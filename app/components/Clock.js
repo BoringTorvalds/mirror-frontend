@@ -1,0 +1,58 @@
+import React, { Component } from 'react';
+import styles from './Clock.css';
+
+class Clock extends Component {
+
+    constructor(props){
+        super(props);
+
+        const currentTime = new Date();
+        this.state = {
+            hours: currentTime.getHours(),
+            minutes: currentTime.getMinutes(),
+            seconds: currentTime.getSeconds(),
+            ampm: currentTime.getHours() >= 12 ? 'pm' : 'am'
+        };
+        this.setTimer(); //Run clock
+    }
+
+    updateClock() {
+        const currentTime = new Date();
+        this.setState({
+            hours: currentTime.getHours(),
+            minutes: currentTime.getMinutes(),
+            seconds: currentTime.getSeconds(),
+            ampm: currentTime.getHours() >= 12 ? 'pm' : 'am'
+        });
+        this.setTimer();
+    }
+
+    setTimer() {
+        setTimeout(this.updateClock.bind(this), 1000);
+    }
+
+    render(){
+        const {
+            hours,
+            minutes,
+            seconds,
+            ampm
+        } = this.state;
+
+        return(
+            <div className={styles.container}>
+            {
+                hours == 0 ? 12 :
+                (hours >12) ? hours - 12 : hours
+            }: {
+                minutes > 9 ? minutes: `0${minutes}`
+            }: {
+                seconds > 9 ? seconds: `0${seconds}`
+            } {ampm}
+
+            </div>
+        );
+    }
+}
+
+export default Clock;

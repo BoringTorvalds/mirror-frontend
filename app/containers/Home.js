@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Weather from './../components/Weather';
-import Time from './../components/Time';
+import Clock from './../components/Clock';
 import HNStories from './../components/HNStories';
 import styles from './Home.css';
 
@@ -13,7 +13,6 @@ export default class Home extends Component {
         // Utilize Redux for more structured flow
         this.state = { weather: null } 
         this.fetchWeather();
-        this.getCurrentTime = this.getCurrentTime.bind(this);
     }
 
     fetchWeather() {
@@ -42,17 +41,6 @@ export default class Home extends Component {
             .catch((r)=> console.log(r));
     }
 
-    getCurrentTime(){
-        const tmp = new Date();
-        const h = tmp.getHours();
-        const m = tmp.getMinutes();
-        const r = {
-            hour: h,
-            minutes: m
-        };
-        return r;
-    }
-
     render() {
         const self = this;
         return (
@@ -68,7 +56,7 @@ export default class Home extends Component {
                 />
             }
 
-            <Time currentTime={ this.getCurrentTime() }/>
+            <Clock />
             <HNStories />
             </div>
         );
