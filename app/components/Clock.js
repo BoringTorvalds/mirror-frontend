@@ -7,28 +7,38 @@ class Clock extends Component {
         super(props);
 
         const currentTime = new Date();
-        this.state = {
+        this.state = this.getTime();
+    }
+
+    componentDidMount() {
+        this.setTimer();
+    }
+
+    componentWillMount(){
+        // Avoiding timeout still runs when component is unmounted
+        if (this.timeOut) {
+            clearTimeout(this.timeOut);
+        }
+    }
+
+    updateClock() {
+        const currentTime = this.getTime();
+        this.setState(currentTime);
+        this.setTimer();
+    }
+
+    getTime() {
+        const currentTime = new Date();
+        return {
             hours: currentTime.getHours(),
             minutes: currentTime.getMinutes(),
             seconds: currentTime.getSeconds(),
             ampm: currentTime.getHours() >= 12 ? 'pm' : 'am'
         };
-        this.setTimer(); //Run clock
-    }
-
-    updateClock() {
-        const currentTime = new Date();
-        this.setState({
-            hours: currentTime.getHours(),
-            minutes: currentTime.getMinutes(),
-            seconds: currentTime.getSeconds(),
-            ampm: currentTime.getHours() >= 12 ? 'pm' : 'am'
-        });
-        this.setTimer();
     }
 
     setTimer() {
-        setTimeout(this.updateClock.bind(this), 1000);
+        this.timeOut = setTimeout(this.updateClock.bind(this), 1000);
     }
 
     render(){
