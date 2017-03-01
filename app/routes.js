@@ -9,5 +9,6 @@ import Login from './containers/Login';
 export default (
   <Route path="/" component={App}>
         <IndexRoute component={Home} />
+        <Route path="signin" component={Login} />
   </Route>
 );

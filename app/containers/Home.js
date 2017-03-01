@@ -3,15 +3,14 @@ import Weather from './../components/Weather';
 import Clock from './../components/Clock';
 import HNStories from './../components/HNStories';
 import styles from './Home.css';
+import { Link } from 'react-router';
 
 import axios from 'axios';
 
 export default class Home extends Component {
     constructor(){
         super();
-        //@TODO: Pass to child component's props later instead of state
-        // Utilize Redux for more structured flow
-        this.state = { weather: null } 
+        this.state = { weather: null }
         this.fetchWeather();
     }
 
@@ -19,7 +18,7 @@ export default class Home extends Component {
         const self = this;
         //@TODO: Save token in process variables
         const lat = "32.7357";
-        const lng = "97.1081";
+        const lng = "-97.1081";
 
         const sampleUrl = "https://api.darksky.net/forecast/9e1bfc49cdc03b377f4d00753ff13ada/" + lat +"," + lng;
         axios({
@@ -29,12 +28,14 @@ export default class Home extends Component {
         })
             .then((r) => {
                 const d = r.data;
+                console.log(d);
                 const days = d.daily.data;
                 self.setState({
                     weather: {
-                        'current': d.currently.temperature,
-                        'summary': d.hourly.summary,
-                        'daily': [days[1], days[2], days[3], days[4], days[5]]
+                        current: d.currently.temperature,
+                        summary: d.hourly.summary,
+                        daily: [...days],
+                        iconType: d.currently.icon
                     }
                 });
             })
@@ -50,7 +51,7 @@ export default class Home extends Component {
                 this.state.weather.current &&
                 this.state.weather.summary &&
                 <Weather
-                iconType="sun"
+                iconType={this.state.weather.iconType}
                 summary={this.state.weather.summary}
                 temparature={this.state.weather.current}
                 />
@@ -58,6 +59,7 @@ export default class Home extends Component {
 
             <Clock />
             <HNStories />
+            <Link to="signin"> Sign In </Link>
             </div>
         );
     }

@@ -31,7 +31,7 @@ class Webcam extends Component {
         return(
                 <div>
                 Webcam
-            { this.getCameraStream() && <video src={ this.getCameraStream() } autoPlay> </video> }
+            { this.getCameraStream() && <video width="320" height="240"  src={ this.getCameraStream() } autoPlay> </video> }
             </div>
         );
     }

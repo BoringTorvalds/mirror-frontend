@@ -29,11 +29,15 @@ class Clock extends Component {
 
     getTime() {
         const currentTime = new Date();
+        const date = currentTime.toDateString().split(" ");
         return {
             hours: currentTime.getHours(),
             minutes: currentTime.getMinutes(),
             seconds: currentTime.getSeconds(),
-            ampm: currentTime.getHours() >= 12 ? 'pm' : 'am'
+            ampm: currentTime.getHours() >= 12 ? 'pm' : 'am',
+            dayOfWeek: date[0],
+            month: date[1],
+            date: date[2]
         };
     }
 
@@ -46,7 +50,10 @@ class Clock extends Component {
             hours,
             minutes,
             seconds,
-            ampm
+            ampm,
+            dayOfWeek,
+            month,
+            date
         } = this.state;
 
         return(
@@ -58,7 +65,8 @@ class Clock extends Component {
                 minutes > 9 ? minutes: `0${minutes}`
             }: {
                 seconds > 9 ? seconds: `0${seconds}`
-            } {ampm}
+            } {ampm} <br/>
+            { dayOfWeek }, { month } { date }
 
             </div>
         );

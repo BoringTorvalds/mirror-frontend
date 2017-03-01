@@ -1,6 +1,7 @@
 .container {
 	color: #fff;
-	float: right;
-	font-size: 26px;
-	padding: 20px 20px;
+	font-size: 34px;
+  top:3em;
+  right:10em;
+  position: absolute;
 }

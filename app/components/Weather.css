@@ -1,141 +1,294 @@
-:root {
-	--main-bg-color: #000;
+.container {
+    min-height: 20em;
+    width: 30%;
+    position: relative;
+    background-color: var(--light-dark-color);
+}
+.topSection {
+    height: 60%;
+}
+.bottomSection {
+    position: absolute;
+    height: 40%;
+    bottom: 0px;
+}
+.icon {
+    display: inline-block;
+    position: absolute;
+    right: 2em;
+    top: 1em;
+    color: var(--light-dark-color)!important;
+    background-color: var(--light-dark-color);
+    font-size: 1em; /* control icon size here */
 }
 
-@keyframes rotate {
-	0% {transform: rotate(0deg);}
-	100% {transform: rotate(360deg);}
+.cloud {
+    composes: icon;
+    position: absolute;
+    z-index: 1;
+    width: 3.6875em;
+    height: 3.6875em;
+    margin: -1.84375em;
+    border-radius: 50%;
+    box-shadow:
+    -2.1875em 0.6875em 0 -0.6875em,
+    2.0625em 0.9375em 0 -0.9375em,
+    0 0 0 0.375em #fff,
+    -2.1875em 0.6875em 0 -0.3125em #fff,
+    2.0625em 0.9375em 0 -0.5625em #fff;
+}
+.cloud:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -0.5em;
+    display: block;
+    width: 4.5625em;
+    height: 1em;
+    background: var(--light-dark-color);
+    box-shadow: 0 0.4375em 0 -0.0625em #fff;
+}
+.cloud:nth-child(2) {
+    z-index: 0;
+    background: #fff;
+    box-shadow:
+    -2.1875em 0.6875em 0 -0.6875em #fff,
+    2.0625em 0.9375em 0 -0.9375em #fff,
+    0 0 0 0.375em #fff,
+    -2.1875em 0.6875em 0 -0.3125em #fff,
+    2.0625em 0.9375em 0 -0.5625em #fff;
+    opacity: 0.3;
+    transform: scale(0.5) translate(6em, -3em);
+    animation: cloud 4s linear infinite;
+}
+.cloud:nth-child(2):after { background: #fff; }
+
+.sun {
+    composes: icon;
+    width: 2.5em;
+    height: 2.5em;
+    margin: -1.25em;
+    background: var(--light-dark-color);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0.375em #fff;
+    animation: spin 12s infinite linear;
+}
+.rays {
+    position: absolute;
+    top: -2em;
+    left: 50%;
+    display: block;
+    width: 0.375em;
+    height: 1.125em;
+    margin-left: -0.1875em;
+    background: #fff;
+    border-radius: 0.25em;
+    box-shadow: 0 5.375em #fff;
+}
+.rays:before,
+.rays:after {
+    content: '';
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    display: block;
+    width: 0.375em;
+    height: 1.125em;
+    transform: rotate(60deg);
+    transform-origin: 50% 3.25em;
+    background: #fff;
+    border-radius: 0.25em;
+    box-shadow: 0 5.375em #fff;
+}
+.rays:before {
+    transform: rotate(120deg);
+}
+.cloud + .sun {
+    margin: -2em 1em;
 }
 
-@keyframes rock {
-	0% {transform: rotate(0deg);}
-	50% {transform: rotate(-20deg);}
-	100% {transform: rotate(0deg);}
+.rain,
+.lightning,
+.snow {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 3.75em;
+    height: 3.75em;
+    margin: 0.375em 0 0 -2em;
+    background: var(--light-dark-color);
 }
 
-@keyframes downfall-rain-sleet {
-	0% {transform: translateY(0px);}
-	100% {transform: translateY(32px);}
+.rain:after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 1.125em;
+    height: 1.125em;
+    margin: -1em 0 0 -0.25em;
+    background: #0cf;
+    border-radius: 100% 0 60% 50% / 60% 0 100% 50%;
+    box-shadow:
+    0.625em 0.875em 0 -0.125em rgba(255,255,255,0.2),
+    -0.875em 1.125em 0 -0.125em rgba(255,255,255,0.2),
+    -1.375em -0.125em 0 rgba(255,255,255,0.2);
+    transform: rotate(-28deg);
+    animation: rain 3s linear infinite;
 }
 
-@keyframes downfall-snow {
-	0% {transform: translateY(0px);}
-	100% {transform: translateY(18px);}
+.bolt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -0.25em 0 0 -0.125em;
+    color: #fff;
+    opacity: 0.3;
+    animation: lightning 2s linear infinite;
+}
+.bolt:nth-child(2) {
+    width: 0.5em;
+    height: 0.25em;
+    margin: -1.75em 0 0 -1.875em;
+    transform: translate(2.5em, 2.25em);
+    opacity: 0.2;
+    animation: lightning 1.5s linear infinite;
+}
+.bolt:before,
+.bolt:after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    margin: -1.625em 0 0 -1.0125em;
+    border-top: 1.25em solid transparent;
+    border-right: 0.75em solid;
+    border-bottom: 0.75em solid;
+    border-left: 0.5em solid transparent;
+    transform: skewX(-10deg);
+}
+.bolt:after {
+    margin: -0.25em 0 0 -0.25em;
+    border-top: 0.75em solid;
+    border-right: 0.5em solid transparent;
+    border-bottom: 1.25em solid transparent;
+    border-left: 0.75em solid;
+    transform: skewX(-10deg);
+}
+.bolt:nth-child(2):before {
+    margin: -0.75em 0 0 -0.5em;
+    border-top: 0.625em solid transparent;
+    border-right: 0.375em solid;
+    border-bottom: 0.375em solid;
+    border-left: 0.25em solid transparent;
+}
+.bolt:nth-child(2):after {
+    margin: -0.125em 0 0 -0.125em;
+    border-top: 0.375em solid;
+    border-right: 0.25em solid transparent;
+    border-bottom: 0.625em solid transparent;
+    border-left: 0.375em solid;
 }
 
-@keyframes shake {
-	0% {transform: translateX(0px);}
-	25% {transform: translateX(2px);}
-	50% {transform: translateX(0px);}
-	75% {transform: translateX(-2px);}
-	100% {transform: translateX(0px);}
+.flake:before,
+.flake:after {
+    content: '\2744';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -1.025em 0 0 -1.0125em;
+    color: #fff;
+    list-height: 1em;
+    opacity: 0.2;
+    animation: spin 8s linear infinite reverse;
 }
-
-@keyframes pass {
-	0% {transform: translateX(0px);}
-	100% {transform: translateX(-100px);}
+.flake:after {
+    margin: 0.125em 0 0 -1em;
+    font-size: 1.5em;
+    opacity: 0.4;
+    animation: spin 14s linear infinite;
 }
-
-.format {
-	background-color: var(--main-bg-color);
-	height: 50vh;
-	width: 20%;
+.flake:nth-child(2):before {
+    margin: -0.5em 0 0 0.25em;
+    font-size: 1.25em;
+    opacity: 0.2;
+    animation: spin 10s linear infinite;
 }
-
-.iconPosition {
-	background-color: none;
-	width: 12vw;
-	height: 12vw;
-	margin: auto;
-	position: relative;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-}
-
-svg {
-	fill: #FFFFFF;
-}
-
-#r-cloud,
-#s-cloud,
-#c-cloud1,
-#c-cloud2,
-#pcd-cloud,
-#pcn-cloud {
-	fill: var(--main-bg-color);
-}
-
-#clear-day,
-#pcd-rays {
-	animation: rotate 10s infinite linear;
-	transform-origin: 50% 50%;
-}
-
-#cn-moon,
-#pcn-moon {
-	animation: rock 5s infinite ease-in-out;
-	transform-origin: 50% 50%;
-}
-
-#r-rain,
-#sl-sleet {
-	animation: downfall-rain-sleet 2s infinite linear;
-}
-
-#s-snow {
-	animation: downfall-snow 2s infinite linear;
-}
-
-#w-wind1,
-#w-wind2,
-#w-wind3,
-#w-wind4 {
-	animation: shake 2s infinite linear;
-}
-
-#w-wind2,
-#w-wind4 {
-	animation-delay: .5s;
-}
-
-#f-fog1,
-#f-fog2,
-#f-fog3 {
-	animation: shake 2s infinite linear;
-}
-
-#f-fog2 {
-	animation-delay: 0.5s;
-}
-
-#f-fog3 {
-	animation-delay: 1s;
-}
-
-#c-moving-clouds {
-	animation: pass 7.5s infinite linear;
+.flake:nth-child(2):after {
+    margin: 0.375em 0 0 0.125em;
+    font-size: 2em;
+    opacity: 0.4;
+    animation: spin 16s linear infinite reverse;
 }
 
 
+/* Animations */ 
 
-.weather-icon {
-	float: right;
+@keyframes spin {
+    100% { transform: rotate(360deg); }
 }
 
-.weather-status-container {
-	float: left;
-	line-height: 3;
-}
-.weather-top-container {
-	padding-bottom: 20px;
-}
-
-#temperature {
-	font-size: 35px;
-
+@keyframes cloud {
+    0% { opacity: 0; }
+    50% { opacity: 0.3; }
+    100% {
+        opacity: 0;
+        transform: scale(0.5) translate(-200%, -3em);
+    }
 }
 
-.weather-icon {
+@keyframes rain {
+    0% {
+        background: #0cf;
+        box-shadow:
+        0.625em 0.875em 0 -0.125em rgba(255,255,255,0.2),
+        -0.875em 1.125em 0 -0.125em rgba(255,255,255,0.2),
+        -1.375em -0.125em 0 #0cf;
+    }
+    25% {
+        box-shadow:
+        0.625em 0.875em 0 -0.125em rgba(255,255,255,0.2),
+        -0.875em 1.125em 0 -0.125em #0cf,
+        -1.375em -0.125em 0 rgba(255,255,255,0.2);
+    }
+    50% {
+        background: rgba(255,255,255,0.3);
+        box-shadow:
+        0.625em 0.875em 0 -0.125em #0cf,
+        -0.875em 1.125em 0 -0.125em rgba(255,255,255,0.2),
+        -1.375em -0.125em 0 rgba(255,255,255,0.2);
+    }
+    100% {
+        box-shadow:
+        0.625em 0.875em 0 -0.125em rgba(255,255,255,0.2),
+        -0.875em 1.125em 0 -0.125em rgba(255,255,255,0.2),
+        -1.375em -0.125em 0 #0cf;
+    }
+}
+
+@keyframes lightning {
+    45% {
+        color: #fff;
+        background: #fff;
+        opacity: 0.2;
+    }
+    50% {
+        color: #0cf;
+        background: #0cf;
+        opacity: 1;
+    }
+    55% {
+        color: #fff;
+        background: #fff;
+        opacity: 0.2;
+    }
+}
+.temperature {
+    font-size: 50px;
+    left: 1em;
+    z-index: 2;
+    top: 3em;
 }
