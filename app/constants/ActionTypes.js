@@ -1,0 +1,7 @@
+export const CONNECT = 'CONNECT';
+export const CONNECTED = 'CONNECTED';
+export const CONNECTING = 'CONNECTING';
+export const DISCONNECT = 'DISCONNECT';
+export const DISCONNECTED = 'DISCONNECTED';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';

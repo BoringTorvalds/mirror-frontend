@@ -3,15 +3,19 @@ import Weather from './../components/Weather';
 import Clock from './../components/Clock';
 import HNStories from './../components/HNStories';
 import styles from './Home.css';
-import { Link } from 'react-router';
+import { hashHistory, Link } from 'react-router';
 
 import axios from 'axios';
 
 export default class Home extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = { weather: null }
         this.fetchWeather();
+    }
+
+    goToLogin() {
+        hashHistory.push('/login') ;
     }
 
     fetchWeather() {
@@ -38,6 +42,7 @@ export default class Home extends Component {
                         iconType: d.currently.icon
                     }
                 });
+
             })
             .catch((r)=> console.log(r));
     }
@@ -46,20 +51,20 @@ export default class Home extends Component {
         const self = this;
         return (
             <div className={styles.container}>
-            {
-                this.state.weather &&
-                this.state.weather.current &&
-                this.state.weather.summary &&
-                <Weather
-                iconType={this.state.weather.iconType}
-                summary={this.state.weather.summary}
-                temparature={this.state.weather.current}
-                />
-            }
+                {
+                    this.state.weather &&
+                    this.state.weather.current &&
+                    this.state.weather.summary &&
+                    <Weather
+                        iconType={this.state.weather.iconType}
+                        summary={this.state.weather.summary}
+                        temparature={this.state.weather.current}
+                    />
+                }
 
-            <Clock />
-            <HNStories />
-            <Link to="signin"> Sign In </Link>
+                <Clock />
+                <HNStories />
+                <button onClick={ this.goToLogin }> Login </button>
             </div>
         );
     }

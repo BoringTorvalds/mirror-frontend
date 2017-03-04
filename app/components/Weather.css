@@ -1,6 +1,6 @@
 .container {
     min-height: 20em;
-    width: 30%;
+    width: 25%;
     position: relative;
     background-color: var(--light-dark-color);
 }
