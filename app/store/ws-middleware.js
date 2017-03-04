@@ -5,7 +5,7 @@ const wsMiddleware = (function(){
     let socket = null;
 
     const onSocketOpen = (ws, store, token) => evt => {
-       store.dispatch(actions.connected());
+        store.dispatch(actions.connected());
     }
 
     const onSocketClose = (ws, store) => evt => {

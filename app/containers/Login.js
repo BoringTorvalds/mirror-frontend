@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Webcam from './../components/Webcam';
-import { browserHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 export default class Login extends Component {
     constructor(props){
         super(props);
@@ -10,8 +10,9 @@ export default class Login extends Component {
     }
 
     goTo() {
-        browserHistory.push('/home');
+        hashHistory.push('/');
     }
+
 
 
 

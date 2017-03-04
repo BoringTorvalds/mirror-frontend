@@ -9,17 +9,17 @@ class Clock extends Component {
         const currentTime = new Date();
         this.state = this.getTime();
     }
-
-    componentDidMount() {
-        this.setTimer();
-    }
-
-    componentWillMount(){
+    componentWillUnmount(){
         // Avoiding timeout still runs when component is unmounted
         if (this.timeOut) {
             clearTimeout(this.timeOut);
         }
     }
+
+    componentDidMount() {
+        this.setTimer();
+    }
+
 
     updateClock() {
         const currentTime = this.getTime();

@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
 
 class Webcam extends Component {
-    constructor() {
-        super();
-        this.state = Object.assign({}, this.state, { streamUrl: false });
-        this.loadCameraStream();
+    constructor(props) {
+        super(props);
+        this.state = {
+            streamUrl: null
+        };
         this.getCameraStream = this.getCameraStream.bind(this);
+        this.mediaStream = null;
+    }
+
+    componentDidMount() {
+        this.loadCameraStream();
+    }
+
+    componentWillUnmount() {
+        this.mediaStream.stop();
     }
 
 
     setCameraStream(source) {
         const url = URL.createObjectURL(source);
+        this.mediaStream = source.getTracks()[0];
         this.setState({ streamUrl : url });
     }
 
@@ -29,9 +40,9 @@ class Webcam extends Component {
     render() {
 
         return(
-                <div>
+            <div>
                 Webcam
-            { this.getCameraStream() && <video width="320" height="240"  src={ this.getCameraStream() } autoPlay> </video> }
+                { this.getCameraStream() && <video width="320" height="240"  src={ this.getCameraStream() } autoPlay> </video> }
             </div>
         );
     }
