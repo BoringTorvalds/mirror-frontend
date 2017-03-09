@@ -80,6 +80,7 @@ export default class Login extends Component {
 	  this.socket.send(JSON.stringify(msg));
 	}
   }
+  
   addPerson(){
 	if (this.socket != null){
 	  let msg = {
@@ -94,6 +95,7 @@ export default class Login extends Component {
 	  this.socket.send(JSON.stringify(msg));
 	}
   }
+
   _sendFrameLoop() {
 	if (this.socket == null || 
 		this.socket.readyState != this.socket.OPEN ||
@@ -101,9 +103,10 @@ export default class Login extends Component {
 	   ){
 	  return;
 	}
-	if (this.tok > 0){
-	  const dataURL = this._screenShot();
 
+	if (this.tok > 0){
+
+	  const dataURL = this._screenShot();
 	  const msg = {
 		'type': 'FRAME',
 		'dataURL': dataURL,
@@ -115,15 +118,11 @@ export default class Login extends Component {
 	}
 
 	let sendFrameLoop = this._sendFrameLoop.bind(this);
-
-	window.setTimeout(function(){
-	  window.requestAnimFrame(sendFrameLoop)
-	}, 150);
+	window.setTimeout(function(){ window.requestAnimFrame(sendFrameLoop) }, 150);
   }
 
   _screenShot(){
-	const img = this.refs.webcam.getScreenShot();
-	return img;
+	return this.refs.webcam.getScreenShot();
   }
 
   _closeSocket(){
@@ -134,9 +133,9 @@ export default class Login extends Component {
   }
 
   _onSocketOpen(){
-	  this.numNulls = 0;
-	  this.tok = DEFAULT_TOK;
-      this.socket.send(JSON.stringify({'type': 'NULL'}));
+	this.numNulls = 0;
+	this.tok = DEFAULT_TOK;
+	this.socket.send(JSON.stringify({'type': 'NULL'}));
   }
 
   _getDataURLFromRGB(rgb) {
@@ -160,10 +159,12 @@ export default class Login extends Component {
 	  t += 3;
 	}
 	ctx.putImageData(imageData, 0, 0);
-
 	return canvas.toDataURL("image/png");
   }
 
+  /**
+   * Process onmessage events corresponding to OpenFace WS protocol
+   */
   _onSocketMessage (e){
 	const msg = JSON.parse(e.data);
 	console.log(msg.type);
