@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
+import styles from './Webcam.css';
 
 class Webcam extends Component {
     constructor(props) {
@@ -29,6 +31,21 @@ class Webcam extends Component {
         return this.state.streamUrl;
     }
 
+	getScreenShot() {
+	  const video = findDOMNode(this);
+	  let canvas = document.createElement('canvas');
+
+	  canvas.width = video.clientWidth;
+	  canvas.height = video.clientHeight;
+
+	  let ctx = canvas.getContext('2d');
+	  ctx.drawImage(video, 0,0, canvas.width , canvas.height);
+	  // console.log(video);
+
+	  const dataUrl = canvas.toDataURL('image/jpeg',0.6);
+	  return dataUrl;
+	}
+
 
     //@TODO : Load steps with React view callbacks and show alert on Alert View
     loadCameraStream() {
@@ -39,13 +56,10 @@ class Webcam extends Component {
 
     render() {
 
-        return(
-            <div>
-                Webcam
-                { this.getCameraStream() && <video width="320" height="240"  src={ this.getCameraStream() } autoPlay> </video> }
-            </div>
-        );
-    }
+	  return(
+		  <video width="400" height="300"  src={ this.getCameraStream() } autoPlay> </video>
+		  );
+}
 }
 
 export default Webcam;

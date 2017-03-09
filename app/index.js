@@ -14,8 +14,6 @@ const history = syncHistoryWithStore(hashHistory, store);
 
 ready(()=>{
 
-    store.dispatch(actions.connect());
-
     render(
         <Provider store={store}>
             <Router history={history} routes={routes} />
