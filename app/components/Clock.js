@@ -42,7 +42,9 @@ class Clock extends Component {
   }
 
   setTimer() {
-	this.timeOut = setTimeout(this.updateClock.bind(this), 1000);
+	this.timeOut = setTimeout(()=> {
+	  this.updateClock() 
+	}, 1000);
   }
 
   render(){

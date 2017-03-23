@@ -1,38 +1,56 @@
 import React, { Component, PropTypes } from 'react';
 import AnimatedIcon from './AnimatedIcon';
+import {
+  Grid,
+  Row,
+  Col
+} from 'react-bootstrap';
 import styles from './Weather.css';
 
-const propTypes = {
-  iconType: PropTypes.string,
-  temparature: PropTypes.number.isRequired,
-  summary: PropTypes.string.isRequired
-};
 
 class Weather extends Component {
   constructor(props){
 	super(props);
   }
 
-  render(){
+  static propTypes = {
+	iconType: PropTypes.string,
+	summary: PropTypes.object,
+	current: PropTypes.object.isRequired,
+	summary: PropTypes.string.isRequired
+  }
+
+  render = () => {
 	const { iconType,
 	  summary,
-	  temparature
+	  current
 	} = this.props;
 
 	return(
-	  <div className={styles.container}>
-		<div className={styles.topSection}>
-		  <div className={styles.temperature}>{ temparature }° </div>
+	  <Grid fluid>
+		<Row>
 		  <AnimatedIcon iconType={iconType} />
-		</div>
-		<div className={styles.bottomSection}>
-		  { summary }
-		</div>
-	  </div>
+		</Row>
+		<Row>
+		</Row>
+		<Row>
+		  <div className={styles.temperature}>
+			{current.temperature }° 
+		  </div>
+		</Row>
+		<Row>
+		</Row>
+		<Row>
+		  <p>{ summary } </p>
+		</Row>
+	  </Grid>
 	);
   }
 }
 
-Weather.propTypes = propTypes;
-
+/**
+ * Export
+ *
+ * @type {Component}
+ */
 export default Weather;

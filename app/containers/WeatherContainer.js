@@ -29,7 +29,7 @@ class WeatherContainer extends Component{
 	return (
 	  <div>
 		{ this.props.weather.isFetched && <Weather {...this.props.weather} /> }
-		</div>
+	  </div>
 	)
   }
 

@@ -9,7 +9,7 @@ const parseWeatherObject = (d) => {
 	  console.log(d);
 	  const days = d.daily.data;
 	  const weather =  {
-		  current: d.currently.temperature,
+		  current: d.currently,
 		  summary: d.hourly.summary,
 		  daily: [...days],
 		  iconType: d.currently.icon
