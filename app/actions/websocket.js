@@ -1,11 +1,8 @@
-export function connected() {
-    return {
-        type: 'CONNECTED'
-    }
-}
+export const connected = () => ({
+  type: 'CONNECTED'
+})
 
 export function connecting() {
-    console.log("connecting");
     return {
         type: 'CONNECTING'
     }
@@ -22,6 +19,11 @@ export function connect() {
         type: 'CONNECT'
     }
 }
+
+export const connectionFailure = (error)=> ({
+  type: 'CONNECTION_FAILURE',
+  error: error
+})
 
 export function disconnect() {
     return {

@@ -1,23 +1,31 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 class App extends Component {
-    constructor(context){
-        super(context);
-    }
-    props: {
-        children: HTMLElement
-    };
+  constructor(props){
+	super(props);
+  }
+  props: {
+	children: HTMLElement,
+	isConnected: PropTypes.boolean
+  };
 
-    render() {
-        return (
-                <div>
-                {this.props.children}
-            </div>
-        );
-    }
+  render() {
+	return (
+	  <div>
+		{this.props.children}
+	  </div>
+	);
+  }
+
 }
 
-export default connect()(App);
+const mapStateToProps = (state) => {
+  return {
+	isConnected: state.websocket.isConnected
+  }
+}
+
+export default connect(mapStateToProps)(App);
 

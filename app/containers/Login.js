@@ -13,8 +13,8 @@ window.requestAnimFrame = (function() {
 	window.oRequestAnimationFrame ||
 	window.msRequestAnimationFrame ||
 	function(callback, element) {
-	  return window.setTimeout(callback, 600/60);
-	};
+	return window.setTimeout(callback, 600/60);
+  };
 })();
 
 const SOCKET_ADDRESS = "ws://192.168.99.100:9000";
@@ -23,8 +23,8 @@ const DEFAULT_NUMNULLS= 20;
 
 export default class Login extends Component {
 
-  constructor(props){ super(props);
-	console.log("CONSTRUCTOR CALLED");
+  constructor(props){ 
+	super(props);
 	this.state = {
 	  detectedFaces: null
 	};
@@ -58,6 +58,16 @@ export default class Login extends Component {
   componentDidMount() {
   }
 
+  updateState = () => {
+	const msg = {
+	  type: 'ALL_STATE',
+	  images: this.images,
+	  people: this.people,
+	  training: this.training
+	};
+
+  }
+
   _sendState(){
 	const msg = {
 	  type: 'ALL_STATE',
@@ -80,7 +90,7 @@ export default class Login extends Component {
 	  this.socket.send(JSON.stringify(msg));
 	}
   }
-  
+
   addPerson(){
 	if (this.socket != null){
 	  let msg = {
@@ -98,9 +108,9 @@ export default class Login extends Component {
 
   _sendFrameLoop() {
 	if (this.socket == null || 
-		this.socket.readyState != this.socket.OPEN ||
-		this.numNulls != DEFAULT_NUMNULLS
-	   ){
+	  this.socket.readyState != this.socket.OPEN ||
+	  this.numNulls != DEFAULT_NUMNULLS
+	){
 	  return;
 	}
 
@@ -195,6 +205,7 @@ export default class Login extends Component {
 		  representation: msg.representation
 		}
 		this.images.push(newImage);
+		this.updateState();
 		console.log(msg.identity);
 		console.log(this.images);
 		break;
@@ -278,17 +289,17 @@ export default class Login extends Component {
 
   render() {
 	return (<div>
-		<Webcam ref='webcam'/> 
-		{ this.state.detectedFaces && <img src={this.state.detectedFaces} width="430px" /> }
-		<button onClick={this.goTo}> Home </button>
-		<button onClick={ this.setTrainingOn }> Train on</button>
-		<button onClick={ this.setTrainingOff }> Train off</button>
-		<button onClick={this._sendFrameLoop}> Send </button>
-		<button onClick={ this.closeConnection}> Close </button>
-		<button onClick={ this.addPerson }> Add Me </button>
-		<button onClick={ this.addHim }> Add Tom </button>
+	  <Webcam ref='webcam'/> 
+	  { this.state.detectedFaces && <img src={this.state.detectedFaces} width="800px" /> }
+	  <button onClick={this.goTo}> Home </button>
+	  <button onClick={ this.setTrainingOn }> Train on</button>
+	  <button onClick={ this.setTrainingOff }> Train off</button>
+	  <button onClick={this._sendFrameLoop}> Send </button>
+	  <button onClick={ this.closeConnection}> Close </button>
+	  <button onClick={ this.addPerson }> Add Me </button>
+	  <button onClick={ this.addHim }> Add Tom </button>
 
-		</div>);
+	</div>);
   }
 
 }

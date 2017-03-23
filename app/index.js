@@ -14,10 +14,10 @@ const history = syncHistoryWithStore(hashHistory, store);
 
 ready(()=>{
 
-    render(
-        <Provider store={store}>
-            <Router history={history} routes={routes} />
-        </Provider>,
-        document.getElementById('root')
-    );
+  render(
+	<Provider store={store}>
+	  <Router history={history} routes={routes} />
+	</Provider>,
+	document.getElementById('root')
+  );
 });
