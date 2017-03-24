@@ -258,7 +258,7 @@ export default class Login extends Component {
   }
 
   goTo() {
-	hashHistory.push('/');
+	hashHistory.push('/home');
   }
 
   setTrainingOn(){

@@ -17,6 +17,7 @@ class SignUp extends Base {
 	  <div>
 		Sign Up Page
 		<button onClick={this.handleNavigate}> Click </button>
+		<button onClick={this.navigateTo}> Home Page</button>
 		{ this.props.isConnected == true ? 'a' : 'b'}
 	  </div>
 	)

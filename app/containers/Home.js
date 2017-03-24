@@ -15,8 +15,8 @@ export default class Home extends Component {
 	super(props);
   }
 
-  goToLogin() {
-	hashHistory.push('/login') ;
+  goTo() {
+	hashHistory.push("/login");
   }
 
 
@@ -24,7 +24,7 @@ export default class Home extends Component {
 	return (
 	  <Grid>
 		<Row> 
-		  <Col sm={6} md={6} lg={6} pull>
+		  <Col sm={6} md={6} lg={6}>
 			<WeatherContainer />
 		  </Col>
 		  <Col sm={2} md={2} lg={2} >
@@ -39,7 +39,7 @@ export default class Home extends Component {
 		  </Col>
 		</Row>
 		<Row>
-		  <button onClick={ this.goToLogin }> Login </button>
+		  <button onClick={ this.goTo }> Login </button>
 		</Row>
 	  </Grid>
 	);

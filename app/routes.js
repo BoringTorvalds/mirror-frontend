@@ -9,6 +9,7 @@ import SignUp from './containers/SignUp';
 export default (
   <Route path="/" component={App}>
 	<IndexRoute component={Home} />
+	<Route path="home" component={Home} />
 	<Route path="login" component={Login} />
 	<Route path="signup" component={SignUp} />
   </Route>

@@ -7,7 +7,7 @@ export default class Base extends Component {
   }
 
   navigateTo() {
-	hashHistory.push('/');
+	hashHistory.push('/home');
   }
 
 }
