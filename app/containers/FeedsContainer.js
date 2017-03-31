@@ -1,36 +1,51 @@
-import React, { Component, PropTypes } from 'react'; // import { connect } from 'react-redux';
-export default class FeedsContainer extends Component {
+import React, { Component, PropTypes } from 'react'; 
+import { connect } from 'react-redux';
+import HNStoryListItem from './../components/HNStoryListItem';
+import {
+  fetchAllItems
+} from './../actions/hn';
+
+class FeedsContainer extends Component {
   static propTypes = {
-	news: PropTypes.object
+	hn: PropTypes.object
   }
   constructor(props) {
 	super(props);
   }
 
+  componentDidMount() {
+	this.props.dispatch(fetchAllItems());
+  }
+
   renderEmptyView() {
 	return (
-	  <div> No News </div>
+	  <div> No hn </div>
 	)
   }
 
-  renderNews() {
-	return(
-	  <div>
-		List of news
-	  </div>
-	)
+  renderhn = () => {
+	const stories = this.props.hn.items.map(each => <HNStoryListItem id={each.id} {...each} /> );
+	return stories;
   }
 
   render() {
 	return(
 	  <div>
-		{ this.props.news ? 
-		  this.renderNews() : 
+		{ this.props.hn.isFetched ? 
+		  this.renderhn() : 
 		  this.renderEmptyView()
 		}
 	  </div>
 	)
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+	hn: state.hn
+  }
+}
+
+export default connect(mapStateToProps)(FeedsContainer);
 
 

@@ -1,20 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class HNStoryListItem extends Component {
-	constructor(){
-		super();
-	}
-
-	render(){
-		const { story } = this.props;
-		return (
-			<div> 
-			<i className="fa fa-newspaper-o" aria-hidden="true"></i> &nbsp;
-			{ story.title }  
-			</div>
-		);
-	}
+export default (props) => {
+  const {
+	by,
+	score,
+	time,
+	title,
+	url
+  } = props;
+  return (
+	<div> {title} <br/> {by}</div> 
+  )
 }
-
-
-export default HNStoryListItem; 

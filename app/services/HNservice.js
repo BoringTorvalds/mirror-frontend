@@ -1,42 +1,62 @@
 // Rewrite from insin/react-hn
-
-import Firebase from 'firebase';
-
+import fetch from 'isomorphic-fetch';
 import {
   MAX_THREAD_NUMBER,
   HN_API_URL
-} from './../constants';
+} from './../constants/config';
 
-let api = new Firebase(HN_API_URL);
-
-/**
- * Construct path for querying item 
- *
- * @param {String} id of item
- * @return {Object} firebase item 
- */
-export function itemRef(id) {
-  return api.child('item/' + id);
+const options = {
+  method: 'GET',
+  headers: {
+	'Accept': 'application/json'
+  }
 }
 
-/**
- * Query for the item
- *
- * @param {string} item id
- * @return {Promise} item
- */
-export function getItem (itemId) {
-  return new Promise((reject,resolve) => {
-	itemRef(itemId).once('value', (snapshot) => {
-	  if (!snapshot) {
-		reject(new Error("Item not found"));
-	  }
-	  resolve(snapshot.val());
-	})
+export function itemRefJSON(id) {
+  return new Promise((resolve,reject) => {
+	itemRef(id)
+	  .then((response) => {
+		if (response.status >= 400) {
+		  reject(new Error("Bad response from server"));
+		}
+		resolve(response.json());
+	  });
   });
 }
-export function getItems (itemIds) {
-  let items = new Map();
-  const promises = itemsId.map(itemId => getItem(itemId));
-  return Promise.all(promises);
+export function itemRef(id) {
+  return fetch(HN_API_URL + '/item/' + id + '.json', options);
 }
+export function fetchItem(id, cb) {
+
+}
+
+export function fetchAllItems() {
+  return fetch(HN_API_URL + 'topstories.json', options);
+}
+
+export function fetchContents() {
+  return new Promise((resolve, reject) => {
+	fetchAllItems()
+	  .then((response) =>{
+		if (response.status > 400) {
+		  reject(new Error("Bad request"));
+		}
+		resolve(response.json());
+	  })
+  })
+}
+
+export function fetchAllItemsJSON(itemIds){
+  return new Promise((resolve, reject) => {
+	fetchContents()
+	  .then((itemIds) => {
+		itemIds = itemIds.slice(0,20)
+		const promises = itemIds.map(id => itemRefJSON(id));
+		return Promise.all(promises);
+	  })
+	  .then(items => resolve(items))
+	  .catch(err => resolve(err));
+  });
+}
+
+
