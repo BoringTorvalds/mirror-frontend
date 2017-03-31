@@ -12,6 +12,9 @@ import * as actions from './actions/websocket';
 const store = configureStore();
 const history = syncHistoryWithStore(hashHistory, store);
 
+
+store.dispatch(actions.connect());
+
 ready(()=>{
 
   render(

@@ -9,15 +9,15 @@ import styles from './Weather.css';
 
 
 class Weather extends Component {
-  constructor(props){
-	super(props);
-  }
-
   static propTypes = {
 	iconType: PropTypes.string,
 	summary: PropTypes.object,
 	current: PropTypes.object.isRequired,
 	summary: PropTypes.string.isRequired
+  }
+
+  constructor(props){
+	super(props);
   }
 
   render = () => {
@@ -29,14 +29,16 @@ class Weather extends Component {
 	return(
 	  <Grid fluid>
 		<Row>
-		  <AnimatedIcon iconType={iconType} />
-		</Row>
-		<Row>
-		</Row>
-		<Row>
 		  <div className={styles.temperature}>
 			{current.temperature }° 
 		  </div>
+		</Row>
+		<Row>
+		  <div className={styles.placeHolder}>
+		  </div>
+		</Row>
+		<Row>
+		  <AnimatedIcon iconType={iconType} />
 		</Row>
 		<Row>
 		</Row>

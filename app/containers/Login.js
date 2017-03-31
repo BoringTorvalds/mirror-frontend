@@ -17,7 +17,8 @@ window.requestAnimFrame = (function() {
   };
 })();
 
-const SOCKET_ADDRESS = "ws://192.168.99.100:9000";
+// const SOCKET_ADDRESS = "ws://34.208.16.120:9000";
+const SOCKET_ADDRESS ="ws://192.168.99.100:9000";
 const DEFAULT_TOK= 1;
 const DEFAULT_NUMNULLS= 20;
 

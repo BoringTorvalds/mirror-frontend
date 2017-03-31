@@ -1,3 +1,5 @@
+import { routerMiddleware, push } from 'react-router-redux';
+
 const websocketMiddleware = (function() {
   let socket = null;
 
@@ -11,14 +13,7 @@ const websocketMiddleware = (function() {
 
   const onMessage = (ws, store) => ev => {
 	let msg = JSON.parse(ev.data);
-	switch(msg.type) {
-	  case "Hello":
-		store.dispatch(actions.loginRequest());
-		break;
-	  default:
-		console.log("Received unknown message" + msg.type);
-		break;
-	}
+	store.dispatch(actions.receiveMessage("HEYYYY"));
   }
 
   return store => next => action => {
@@ -33,6 +28,7 @@ const websocketMiddleware = (function() {
 		  socket.close();
 		}
 		store.dispatch(actions.connecting());
+		console.log("CONNECTING TO WS");
 		socket = new WebSocket(action.url);
 		if (socket != null) {
 		  store.dispatch(actions.connected());

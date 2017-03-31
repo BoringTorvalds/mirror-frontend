@@ -11,5 +11,6 @@
   },
   "license": "MIT",
   "dependencies": {
+    "firebase": "^3.7.4"
   }
 }

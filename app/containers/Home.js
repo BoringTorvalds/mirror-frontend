@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import WeatherContainer from './WeatherContainer';
 import Clock from './../components/Clock';
 import HNStories from './../components/HNStories';
+import FeedsContainer from './FeedsContainer';
 import styles from './Home.css';
 import {
   Grid,
@@ -35,7 +36,7 @@ export default class Home extends Component {
 		</Row>
 		<Row>
 		  <Col sm={6} md={6} lg={6}>
-			<HNStories />
+			<FeedsContainer />
 		  </Col>
 		</Row>
 		<Row>

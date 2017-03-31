@@ -32,7 +32,7 @@ export function disconnect() {
 
 
 export function receiveMessage(msg) {
-    console.log(msg);
+  console.log(msg);
     return {
         type: types.RECEIVE_MESSAGE,
         msg
