@@ -1,6 +1,7 @@
 :root {
   --dark-color: #000;
   --light-dark-color: #000;
+	--primary-green: #50E3C2;
 }
 
 html, body{

@@ -5,10 +5,14 @@ class Clock extends Component {
 
 	constructor(props){
 		super(props);
-
 		const currentTime = new Date();
 		this.state = this.getTime();
 	}
+
+	componentDidMount() {
+		this.setTimer();
+	}
+
 	componentWillUnmount(){
 		// Avoiding timeout still runs when component is unmounted
 		if (this.timeOut) {
@@ -16,17 +20,21 @@ class Clock extends Component {
 		}
 	}
 
-	componentDidMount() {
-		this.setTimer();
-	}
-
-
+	/**
+	 *
+	 * Update clock state with new time
+	 */
 	updateClock() {
 		const currentTime = this.getTime();
 		this.setState(currentTime);
 		this.setTimer();
 	}
 
+	/**
+	 *
+	 * Parse current Date object
+	 * @return {Object} properties of current time
+	 */
 	getTime() {
 		const currentTime = new Date();
 		const date = currentTime.toDateString().split(" ");
@@ -41,6 +49,10 @@ class Clock extends Component {
 		};
 	}
 
+	/**
+	 *
+	 * Update current clock for every 1 second
+	 */
 	setTimer() {
 		this.timeOut = setTimeout(()=> {
 			this.updateClock() 

@@ -4,6 +4,8 @@ import HNStoryListItem from './../components/HNStoryListItem';
 import {
 	fetchAllItems
 } from './../actions/hn';
+import NewsIcon from './news-icon.png';
+import styles from './FeedsContainer.css';
 
 class FeedsContainer extends Component {
 	static propTypes = {
@@ -24,8 +26,14 @@ class FeedsContainer extends Component {
 	}
 
 	renderhn = () => {
-		const stories = this.props.hn.items.map(each => <HNStoryListItem id={each.id} {...each} /> );
-		return stories;
+		const stories = this.props.hn.items.map((each,ind) => <HNStoryListItem key={each.id} i={ind} {...each} /> );
+		return (
+			<div>
+				<img src={NewsIcon} />
+				<div className={styles.titleIcon}> HN News </div>
+				{stories}
+			</div>
+		)
 	}
 
 	render() {

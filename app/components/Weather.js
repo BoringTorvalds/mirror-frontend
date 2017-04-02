@@ -8,6 +8,10 @@ import {
 import styles from './Weather.css';
 
 
+const formatTemperature = (degrees, format) => {
+	const formattedDegree = Math.round(degrees);
+	return `${formattedDegree}°${format}`;
+}
 class Weather extends Component {
 	static propTypes = {
 		iconType: PropTypes.string,
@@ -29,21 +33,19 @@ class Weather extends Component {
 		return(
 			<Grid fluid>
 				<Row>
+				</Row>
+				<Row>
 					<div className={styles.temperature}>
-						{current.temperature }° 
+						{ formatTemperature(current.temperature,'F') }
 					</div>
-				</Row>
-				<Row>
-					<div className={styles.placeHolder}>
-					</div>
-				</Row>
-				<Row>
 					<AnimatedIcon iconType={iconType} />
 				</Row>
 				<Row>
+					<div className={styles.placeHolder}> </div>
 				</Row>
 				<Row>
-					<p>{ summary } </p>
+					<p className={styles.text}> Arlington, Tx </p>
+					<p className={styles.text}>{ summary } </p>
 				</Row>
 			</Grid>
 		);

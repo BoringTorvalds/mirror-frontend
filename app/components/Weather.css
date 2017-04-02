@@ -1,8 +1,14 @@
 .temperature {
-    font-size: 50px;
+    font-size: -webkit-xxx-large;
     z-index: 2;
+		position: relative;
+		top: 1.5em;
 }
 
 .placeHolder {
-  padding: 50px 50px;
+  padding: 1.5em 2em;
+}
+
+.text {
+	text-align: center;
 }

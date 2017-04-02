@@ -3,13 +3,13 @@ import WeatherContainer from './WeatherContainer';
 import Clock from './../components/Clock';
 import HNStories from './../components/HNStories';
 import FeedsContainer from './FeedsContainer';
+import { hashHistory, Link } from 'react-router';
 import styles from './Home.css';
 import {
 	Grid,
 	Col,
 	Row
 } from 'react-bootstrap';
-import { hashHistory, Link } from 'react-router';
 
 export default class Home extends Component {
 	constructor(props){
@@ -25,18 +25,18 @@ export default class Home extends Component {
 		return (
 			<Grid>
 				<Row> 
-					<Col sm={6} md={6} lg={6}>
+					<Col sm={4} md={4} lg={4}>
 						<WeatherContainer />
 					</Col>
-					<Col sm={2} md={2} lg={2} >
-					</Col>
-					<Col sm={4} md={4} lg={4} >
+					<Col smPush={4} mdPush={4} lgPush={4} >
 						<Clock />
 					</Col>
 				</Row>
 				<Row>
 					<Col sm={6} md={6} lg={6}>
-						<FeedsContainer />
+					</Col>
+					<Col sm={6} md={6} lg={6}>
+						{/* <FeedsContainer /> */}
 					</Col>
 				</Row>
 				<Row>

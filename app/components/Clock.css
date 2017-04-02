@@ -1,7 +1,8 @@
 .container {
   color: #fff;
-  font-size: 45px;
-  /* top: 1em; */
+  font-size: -webkit-xxx-large;
+	float: right;
+  top: 1.5em; 
   /* right: 2em; */
-  /* position: absolute; */
+  position: relative;
 }
