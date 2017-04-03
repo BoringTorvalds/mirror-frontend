@@ -1,5 +1,6 @@
 import * as actions from './../actions/SocketActions';
 import * as types from './../constants/ActionTypes';
+import { parseNavigationRequest } from './../utils/AlexaParser';
 import { push } from 'react-router-redux';
 
 const wsMiddleware = (function(){
@@ -20,7 +21,10 @@ const wsMiddleware = (function(){
 	 * Channel "command": commands on a page (show more stories, show a specific thing, ...)
 	 */
 	const onSocketMessage = (ws, store) => evt => {
-		store.dispatch(push('/login'));
+		// store.dispatch(push('/login'));
+		let msg = JSON.parse(evt.data);
+		const route = parseNavigationRequest(msg.content);
+		store.dispatch(push(route));
 		store.dispatch(actions.receiveMessage(evt.data));
 	}
 
