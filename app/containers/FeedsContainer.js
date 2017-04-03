@@ -7,6 +7,9 @@ import {
 import NewsIcon from './news-icon.png';
 import HNIcon from './hn-icon.png';
 import styles from './FeedsContainer.css';
+import {
+	PAGE_SIZE
+} from './../constants/config';
 
 class FeedsContainer extends Component {
 	static propTypes = {
@@ -16,7 +19,7 @@ class FeedsContainer extends Component {
 		super(props);
 		this.filter = {
 			offSet: 0,
-			pageSize: 10
+			pageSize: PAGE_SIZE
 		};
 	}
 
