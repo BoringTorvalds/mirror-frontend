@@ -5,6 +5,7 @@ import {
 	fetchAllItems
 } from './../actions/hn';
 import NewsIcon from './news-icon.png';
+import HNIcon from './hn-icon.png';
 import styles from './FeedsContainer.css';
 
 class FeedsContainer extends Component {
@@ -29,8 +30,10 @@ class FeedsContainer extends Component {
 		const stories = this.props.hn.items.map((each,ind) => <HNStoryListItem key={each.id} i={ind} {...each} /> );
 		return (
 			<div>
-				<img src={NewsIcon} />
-				<div className={styles.titleIcon}> HN News </div>
+				<div className={styles.header}>
+					<img src={HNIcon} />
+					<div className={styles.align}> Hacker News </div>
+				</div>
 				{stories}
 			</div>
 		)

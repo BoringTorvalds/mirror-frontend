@@ -4,12 +4,13 @@ body {
     color: #fff;
 }
 
-.container {
-    padding: 5% 10%;
-	display: grid;
+.setting {
+	color: var(--primary-green);
+	position: absolute;
+	bottom: 10px;
 }
 
-.weatherBar {
-	font-size: 21px;
-	color: #fff;
+.inline {
+	display: inline;
 }
+

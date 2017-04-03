@@ -9,7 +9,9 @@ export default (props) => {
 		url,
 		i
 	} = props;
+
+	const primaryGreen = { color: "#50E3C2"};
 	return (
-		<div> {i}. {title} <br/> {by}</div> 
+		<div> {i+1}. {title}  ({url})<br/> <div style={primaryGreen}> By {by}</div></div> 
 	)
 }
