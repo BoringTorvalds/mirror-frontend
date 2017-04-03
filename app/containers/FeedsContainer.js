@@ -14,6 +14,10 @@ class FeedsContainer extends Component {
 	}
 	constructor(props) {
 		super(props);
+		this.filter = {
+			offSet: 0,
+			pageSize: 10
+		};
 	}
 
 	componentDidMount() {
@@ -26,8 +30,22 @@ class FeedsContainer extends Component {
 		)
 	}
 
+	/**
+	 * Fetch next stories of next page
+	 */
+	_fetchFeeds = () => {
+		this.filter.offSet++;
+		this.props.dispatch(fetchAllItems(this.filter));
+	}
+
 	renderhn = () => {
-		const stories = this.props.hn.items.map((each,ind) => <HNStoryListItem key={each.id} i={ind} {...each} /> );
+		const stories = this.props.hn.items.map((each,ind) => 
+			<HNStoryListItem 
+				key={each.id} 
+				i={parseInt(ind + this.filter.offSet*this.filter.pageSize)} 
+				{...each} 
+			/> 
+		);
 		return (
 			<div>
 				<div className={styles.header}>
@@ -35,6 +53,12 @@ class FeedsContainer extends Component {
 					<div className={styles.align}> Hacker News </div>
 				</div>
 				{stories}
+				<div 
+					onClick={this._fetchFeeds}
+					className={styles.header}
+				> 
+					Show More 
+				</div>
 			</div>
 		)
 	}

@@ -2,7 +2,8 @@
 import fetch from 'isomorphic-fetch';
 import {
 	MAX_THREAD_NUMBER,
-	HN_API_URL
+	HN_API_URL,
+	PAGE_SIZE
 } from './../constants/config';
 
 const options = {
@@ -46,11 +47,26 @@ export function fetchContents() {
 	})
 }
 
-export function fetchAllItemsJSON(itemIds){
+/**
+ * Fetch all stories with contents
+ *
+ * @param {Array} List of ids 
+ * @param {Object} { pageSize, offSet}
+ * @return {Promise} 
+ */
+export function fetchAllItemsJSON(options){
+	if (!options) {
+		options = {
+			offSet: 0,
+			pageSize: PAGE_SIZE
+		};
+	}
 	return new Promise((resolve, reject) => {
 		fetchContents()
 			.then((itemIds) => {
-				itemIds = itemIds.slice(0,10)
+				let startIndex = options.offSet*options.pageSize;
+				let endIndex = startIndex + options.pageSize;
+				itemIds = itemIds.slice(startIndex, endIndex);
 				const promises = itemIds.map(id => itemRefJSON(id));
 				return Promise.all(promises);
 			})

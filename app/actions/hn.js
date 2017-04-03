@@ -25,10 +25,10 @@ export const fetchHNRequest = () => {
   }
 }
 
-export const fetchAllItems = () => {
+export const fetchAllItems = (options) => {
   return dispatch => {
 	HNservice
-	  .fetchAllItemsJSON()
+	  .fetchAllItemsJSON(options)
 	  .then(json => dispatch(fetchHNSuccess(json)))
 	  .catch(error => dispatch(fetchHNFailure(error)))
   }
