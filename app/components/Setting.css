@@ -1,0 +1,9 @@
+.setting {
+	color: var(--primary-green);
+	position: absolute;
+	bottom: 10px;
+}
+
+.inline {
+	display: inline;
+}

@@ -4,13 +4,13 @@ import FeedsContainer from './FeedsContainer';
 import WeatherContainer from './WeatherContainer';
 import Clock from './../components/Clock';
 import HNStories from './../components/HNStories';
+import Setting from './../components/Setting';
 import styles from './Home.css';
 import {
 	Grid,
 	Col,
 	Row
 } from 'react-bootstrap';
-import settingIcon from './setting-icon.png';
 
 export default class Home extends Component {
 	constructor(props){
@@ -42,12 +42,7 @@ export default class Home extends Component {
 				</Row>
 				<Row>
 					{/* <button onClick={ this.goTo }> Login </button> */}
-					<Link to="/login">
-						<div className={styles.setting}>
-							<img src={settingIcon} />
-							<p className={styles.inline}> echo "Mirror, show my settings" </p>
-						</div>
-					</Link>
+					<Setting />
 
 				</Row>
 			</Grid>
