@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Base from './Base';
 import { connect } from 'react-redux';
 import { connected } from './../actions/websocket';
+import FaceContainer from './Login';
 
 class SignUp extends Base {
 	constructor(props) {
@@ -16,8 +17,7 @@ class SignUp extends Base {
 		return(
 			<div>
 				Sign Up Page
-				<button onClick={this.handleNavigate}> Click </button>
-				<button onClick={this.navigateTo}> Home Page</button>
+				<FaceContainer ref="face" />
 				{ this.props.isConnected == true ? 'a' : 'b'}
 			</div>
 		)

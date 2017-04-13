@@ -22,7 +22,7 @@ const SOCKET_ADDRESS ="ws://192.168.99.100:9000";
 const DEFAULT_TOK= 1;
 const DEFAULT_NUMNULLS= 20;
 
-export default class Login extends Component {
+export default class FaceContainer extends Component {
 
 	constructor(props){ 
 		super(props);
@@ -57,6 +57,12 @@ export default class Login extends Component {
 	}
 
 	componentDidMount() {
+		let msg = localStorage.getItem('faces');
+		if (msg) {
+			msg = JSON.parse(msg);
+			this.images = msg.images;
+			this.people = msg.people;
+		}
 	}
 
 	updateState = () => {
@@ -66,6 +72,7 @@ export default class Login extends Component {
 			people: this.people,
 			training: this.training
 		};
+		localStorage.setItem('faces', JSON.stringify(msg));
 
 	}
 
