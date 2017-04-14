@@ -25,17 +25,23 @@ class StockContainer extends Component {
 	_renderRange = (data) => {
 		return (
 			<div>  
-				Low : ${data.Elements[0].DataSeries.low.max}
-				High : ${data.Elements[0].DataSeries.high.max}
+				Low : ${data.Elements[0].DataSeries.low.max} <br/>
+				High : ${data.Elements[0].DataSeries.high.max} <br/>
 				Close : ${data.Elements[0].DataSeries.close.max}
 			</div>
 		)
 	}
 
+	_getStockName = (data) => {
+		return data.Elements[0].Symbol;
+	}
+
 	render() {
 		return(
 			<div>
-				AAPL
+				{ this.props.stock.isFetched && 
+					this._getStockName(this.props.stock.data)
+				}	
 				{ this.props.stock.isFetched && <Trend 
 					data={this._getStock(this.props.stock.data)} 
 					autoDraw
@@ -45,7 +51,7 @@ class StockContainer extends Component {
 				/>}
 
 				{ this.props.stock.isFetched && this._renderRange(this.props.stock.data) }
-				{ this.props.stock.isFetching && <Spinner /> }
+				{ this.props.stock.isFetching && <Spinner width="50" height="50"/> }
 			</div>
 		)
 	}

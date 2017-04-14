@@ -25,13 +25,15 @@ export default class Home extends Component {
 	render() {
 		return (
 			<Grid>
-				<Row> 
+				<Row style={{marginBottom: "100"}}> 
 					<Col sm={4} md={4} lg={4}>
 						<WeatherContainer />
 					</Col>
 					<Col smPush={4} mdPush={4} lgPush={4} >
 						<Clock />
 					</Col>
+				</Row>
+				<Row>
 				</Row>
 				<Row>
 					<Col sm={5} md={5} lg={5}>

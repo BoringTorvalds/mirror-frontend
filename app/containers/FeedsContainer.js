@@ -25,12 +25,12 @@ class FeedsContainer extends Component {
 	}
 
 	componentDidMount() {
-		this.props.dispatch(fetchAllItems());
+		this.props.dispatch(fetchAllItems())
 	}
 
 	renderEmptyView() {
 		return (
-			<div> Loading news ... <br/>
+			<div style={{textAlign: "center"}}> Loading news ... <br/>
 				<Spinner 
 					height='100'
 					width='100'
@@ -75,8 +75,10 @@ class FeedsContainer extends Component {
 	render() {
 		return(
 			<div>
-				{ this.props.hn.isFetched ? 
-					this.renderhn() : 
+				{ this.props.hn.isFetched && 
+					this.renderhn()
+				}
+				{ this.props.hn.isFetching &&
 					this.renderEmptyView()
 				}
 			</div>
