@@ -25,6 +25,9 @@ export const fetchStockSuccess = (stock) => {
  */
 export const fetchStock = (stockName) => {
 	let url = 'http://dev.markitondemand.com/Api/v2/InteractiveChart/json';
+	if (!stockName) {
+		stockName = 'AAPL';
+	}
 	const params = {  
 		parameters: {
 			Normalized: false,
@@ -32,23 +35,26 @@ export const fetchStock = (stockName) => {
 			DataPeriod: "Day",
 			Elements: [
 			{
-				Symbol: 'AAPL',
+				Symbol: stockName,
 				Type: "price",
 				Params: ["ohlc"] //ohlc, c = close only
 			},
 			{
-				Symbol: 'AAPL',
+				Symbol: stockName,
 				Type: "volume"
 			}
 			]
 		}
 	};
 	return dispatch => {
-		dispatch(fetchStockRequest);
+		dispatch(fetchStockRequest());
+    setTimeout(() => {		
 		return axios.get(url, {
 			params: params
 		})
 		.then(json => dispatch(fetchStockSuccess(json)))
 		.catch(err => dispatch(fetchStockFailure(err)));
+		},2000);
 	}
 }
+

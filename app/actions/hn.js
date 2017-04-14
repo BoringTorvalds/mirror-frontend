@@ -26,10 +26,13 @@ export const fetchHNRequest = () => {
 }
 
 export const fetchAllItems = (options) => {
-  return dispatch => {
-	HNservice
-	  .fetchAllItemsJSON(options)
-	  .then(json => dispatch(fetchHNSuccess(json)))
-	  .catch(error => dispatch(fetchHNFailure(error)))
-  }
+	return dispatch => {
+		dispatch(fetchHNRequest());
+		setTimeout(() => {
+			HNservice
+				.fetchAllItemsJSON(options)
+				.then(json => dispatch(fetchHNSuccess(json)))
+				.catch(error => dispatch(fetchHNFailure(error)))
+		},2000);
+	}
 }

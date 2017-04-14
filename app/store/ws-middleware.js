@@ -2,6 +2,7 @@ import * as actions from './../actions/SocketActions';
 import * as types from './../constants/ActionTypes';
 import { parseNavigationRequest } from './../utils/AlexaParser';
 import { push } from 'react-router-redux';
+import { fetchStock } from './../actions/stock';
 
 const wsMiddleware = (function(){
 	let socket = null;
@@ -15,11 +16,6 @@ const wsMiddleware = (function(){
 	}
 
 
-	/**
-	 * @TODO : Parse message type and process requests based on channels:
-	 * Channel "navigation": navigate to the corresponding page on command
-	 * Channel "command": commands on a page (show more stories, show a specific thing, ...)
-	 */
 	const onSocketMessage = (ws, store) => evt => {
 		// store.dispatch(push('/login'));
 		let msg = JSON.parse(evt.data);
@@ -33,6 +29,8 @@ const wsMiddleware = (function(){
 
 			case 'stock':
 				console.log('stock' + msg.content);
+				const stockName = msg.content;
+				store.dispatch(fetchStock(stockName));
 				break;
 		}
 	}
