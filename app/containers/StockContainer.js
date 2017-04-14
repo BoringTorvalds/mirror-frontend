@@ -3,6 +3,7 @@ import Trend from 'react-trend';
 import axios from 'axios'
 import { connect } from 'react-redux';
 import {fetchStock } from './../actions/stock';
+import Spinner from './../components/Spinner';
 
 class StockContainer extends Component {
 	static propTypes = {
@@ -35,7 +36,7 @@ class StockContainer extends Component {
 		return(
 			<div>
 				AAPL
-				{ this.props.stock && <Trend 
+				{ this.props.stock.isFetched && <Trend 
 					data={this._getStock(this.props.stock.data)} 
 					autoDraw
 					autoDrawDuration={3000}
@@ -43,8 +44,8 @@ class StockContainer extends Component {
 					gradient={['#0FF', '#F0F', '#FF0']}
 				/>}
 
-				{ this.props.stock && this._renderRange(this.props.stock.data) }
-				
+				{ this.props.stock.isFetched && this._renderRange(this.props.stock.data) }
+				{ this.props.stock.isFetching && <Spinner /> }
 			</div>
 		)
 	}

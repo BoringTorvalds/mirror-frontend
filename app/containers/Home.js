@@ -3,7 +3,6 @@ import { hashHistory, Link } from 'react-router';
 import FeedsContainer from './FeedsContainer';
 import WeatherContainer from './WeatherContainer';
 import Clock from './../components/Clock';
-import HNStories from './../components/HNStories';
 import Setting from './../components/Setting';
 import StockContainer from './StockContainer';
 import styles from './Home.css';

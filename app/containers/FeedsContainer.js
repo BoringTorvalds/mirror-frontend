@@ -7,6 +7,7 @@ import {
 import NewsIcon from './news-icon.png';
 import HNIcon from './hn-icon.png';
 import styles from './FeedsContainer.css';
+import Spinner from './../components/Spinner';
 import {
 	PAGE_SIZE
 } from './../constants/config';
@@ -29,7 +30,12 @@ class FeedsContainer extends Component {
 
 	renderEmptyView() {
 		return (
-			<div> No hn </div>
+			<div> Loading news ... <br/>
+				<Spinner 
+					height='100'
+					width='100'
+				/>
+			</div>
 		)
 	}
 
