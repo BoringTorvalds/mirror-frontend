@@ -12,8 +12,7 @@ const getWeather = (state) => {
 }
 
 class WeatherContainer extends Component{
-
-	constructor(props) {
+constructor(props) {
 		super(props);
 	}
 

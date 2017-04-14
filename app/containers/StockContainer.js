@@ -1,62 +1,58 @@
-import React, {Component} from 'react';
+import React, {PropTypes, Component} from 'react';
 import Trend from 'react-trend';
 import axios from 'axios'
+import { connect } from 'react-redux';
+import {fetchStock } from './../actions/stock';
 
 class StockContainer extends Component {
+	static propTypes = {
+		stock: PropTypes.object
+	}
 	constructor(props) {
 		super(props);
-		this.state = {
-			data: null
-		}
 	}
+
 
 	componentDidMount() {
-		const params = {  
-			parameters: {
-			Normalized: false,
-			NumberOfDays: 365,
-			DataPeriod: "Day",
-			Elements: [
-			{
-				Symbol: 'AAPL',
-				Type: "price",
-				Params: ["ohlc"] //ohlc, c = close only
-			},
-			{
-				Symbol: 'AAPL',
-				Type: "volume"
-			}
-			]
-			}
-		};
-
-		let url = 'http://dev.markitondemand.com/Api/v2/InteractiveChart/json';
-		axios.get(url, {
-			params: params
-		})
-		.then(json => this._setStock(json.data))
-		.catch(err => console.log(err));
+		this.props.dispatch(fetchStock());
 	}
 
-	_setStock = (data) => {
-		this.setState({data: data.Elements[1].DataSeries.volume.values});
+	_getStock = (data) => {
+		return data.Elements[1].DataSeries.volume.values;
+	}
+
+	_renderRange = (data) => {
+		return (
+			<div>  
+				Low : ${data.Elements[0].DataSeries.low.max}
+				High : ${data.Elements[0].DataSeries.high.max}
+				Close : ${data.Elements[0].DataSeries.close.max}
+			</div>
+		)
 	}
 
 	render() {
 		return(
 			<div>
 				AAPL
-				{ this.state.data && <Trend 
-					data={this.state.data} 
+				{ this.props.stock && <Trend 
+					data={this._getStock(this.props.stock.data)} 
 					autoDraw
 					autoDrawDuration={3000}
 					autoDrawEasing="ease-in"
 					gradient={['#0FF', '#F0F', '#FF0']}
-				/>
-				}
+				/>}
+
+				{ this.props.stock && this._renderRange(this.props.stock.data) }
+				
 			</div>
 		)
 	}
 }
 
-export default StockContainer;
+const mapStateToProps = (state) => {
+	return {
+		stock: state.stock
+	}
+}
+export default connect(mapStateToProps)(StockContainer);

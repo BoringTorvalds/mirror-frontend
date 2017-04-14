@@ -23,9 +23,18 @@ const wsMiddleware = (function(){
 	const onSocketMessage = (ws, store) => evt => {
 		// store.dispatch(push('/login'));
 		let msg = JSON.parse(evt.data);
-		const route = parseNavigationRequest(msg.content);
-		store.dispatch(push(route));
-		store.dispatch(actions.receiveMessage(evt.data));
+
+		switch(msg.type) {
+			case 'navigation':
+				const route = parseNavigationRequest(msg.content);
+				store.dispatch(push(route));
+				store.dispatch(actions.receiveMessage(evt.data));
+				break;
+
+			case 'stock':
+				console.log('stock' + msg.content);
+				break;
+		}
 	}
 
 	return store => next => action => {
