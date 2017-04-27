@@ -17,12 +17,13 @@ const wsMiddleware = (function(){
 
 
 	const onSocketMessage = (ws, store) => evt => {
-		// store.dispatch(push('/login'));
 		let msg = JSON.parse(evt.data);
+		console.log(msg);
 
 		switch(msg.type) {
 			case 'navigation':
 				const route = parseNavigationRequest(msg.content);
+				console.log("Navigating to" + route);
 				store.dispatch(push(route));
 				store.dispatch(actions.receiveMessage(evt.data));
 				break;
@@ -42,7 +43,7 @@ const wsMiddleware = (function(){
 					socket.close();
 				}
 				store.dispatch(actions.connecting());
-				socket = new WebSocket("ws://127.0.0.1:9000");
+				socket = new WebSocket("ws://127.0.0.1:9000/ws");
 				socket.onmessage = onSocketMessage(socket, store);
 				socket.onopen = onSocketOpen(socket, store, action.token);
 				socket.onclose = onSocketClose(socket, store);

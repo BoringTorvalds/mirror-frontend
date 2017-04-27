@@ -9,11 +9,11 @@ import SignUp from './containers/SignUp';
 import SignIn from './containers/Signin';
 
 export default (
-  <Route path="/" component={App}>
-	<IndexRoute component={Home} />
-	<Route path="home" component={Home} />
-	<Route path="login" component={FaceContainer} />
-	<Route path="signup" component={SignUp} />
-	<Route path="setting" component={Setting} />
-  </Route>
+	<Route path="/" component={App}>
+		<IndexRoute component={Home} />
+		<Route path="home" component={Home} />
+		<Route path="login" component={FaceContainer} />
+		<Route path="signup" component={SignUp} />
+		<Route path="setting" component={Setting} />
+	</Route>
 );

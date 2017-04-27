@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { connected } from './../actions/websocket';
+import { push } from 'react-router-redux';
 import FaceContainer from './Login';
 
 class SignUp extends Component {
@@ -9,14 +10,15 @@ class SignUp extends Component {
 	}
 
 	handleNavigate = ()=> {
-		this.props.dispatch({type: 'CONNECT'});
+		this.props.dispatch(push("/login"));
 	}
 
 	render() {
 		return(
 			<div>
+				<button onClick={this.handleNavigate}> Click </button>
 				Sign Up Page
-				<FaceContainer ref="face" />
+				{/* <FaceContainer ref="face" /> */}
 				{ this.props.isConnected == true ? 'a' : 'b'}
 			</div>
 		)

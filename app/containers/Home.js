@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { hashHistory, Link } from 'react-router';
+import { push } from 'react-router-redux';
+import { connect } from 'react-redux';
 import FeedsContainer from './FeedsContainer';
 import WeatherContainer from './WeatherContainer';
 import Clock from './../components/Clock';
@@ -12,13 +13,13 @@ import {
 	Row
 } from 'react-bootstrap';
 
-export default class Home extends Component {
+class Home extends Component {
 	constructor(props){
 		super(props);
 	}
 
-	goTo() {
-		hashHistory.push("/login");
+	goTo =() =>{
+		this.props.dispatch(push("/login"));
 	}
 
 
@@ -44,7 +45,7 @@ export default class Home extends Component {
 					</Col>
 				</Row>
 				<Row>
-					{/* <button onClick={ this.goTo }> Login </button> */}
+					<button onClick={ this.goTo }> Login </button>
 					<Setting />
 
 				</Row>
@@ -52,3 +53,5 @@ export default class Home extends Component {
 		);
 	}
 }
+
+export default connect()(Home);
