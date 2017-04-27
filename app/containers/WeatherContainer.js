@@ -1,18 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import Weather from './../components/Weather';
 import { connect } from 'react-redux';
+import Weather from './../components/Weather';
 import { fetchWeather } from './../actions/weather';
 
-const propTypes = {
-	weather: PropTypes.object
-}
-
-const getWeather = (state) => {
-	return state.weather;
-}
-
 class WeatherContainer extends Component{
-constructor(props) {
+	static propTypes = {
+		weather: PropTypes.object
+	}
+	constructor(props) {
 		super(props);
 	}
 
@@ -39,7 +34,7 @@ constructor(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		weather: getWeather(state)
+		weather: state.weather
 	}
 }
 

@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import Base from './Base';
 import { connect } from 'react-redux';
 import { connected } from './../actions/websocket';
 import FaceContainer from './Login';
 
-class SignUp extends Base {
+class SignUp extends Component {
 	constructor(props) {
 		super(props);
 	}

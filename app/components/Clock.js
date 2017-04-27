@@ -6,7 +6,7 @@ class Clock extends Component {
 	constructor(props){
 		super(props);
 		const currentTime = new Date();
-		this.state = this.getTime();
+		this.state = this._getTime();
 	}
 
 	componentDidMount() {
@@ -25,33 +25,41 @@ class Clock extends Component {
 	 * Update clock state with new time
 	 */
 	updateClock() {
-		const currentTime = this.getTime();
+		const currentTime = this._getTime();
 		this.setState(currentTime);
 		this.setTimer();
 	}
 
 	/**
-	 *
 	 * Parse current Date object
-	 * @return {Object} properties of current time
+	 *
+	 * @return {Object} currentTime
+	 *	@return {int} currentTime.hour
+	 *	@return {int} currentTime.minutes
+	 *	@return {string} currentTime.ampm "am" or "pm"
+	 *	@return {string} currentTime.dayOfWeek 
+	 *	@return {string} currentTime.month
+	 *	@return {int} currentTime.date
 	 */
-	getTime() {
-		const currentTime = new Date();
-		const date = currentTime.toDateString().split(" ");
-		return {
-			hours: currentTime.getHours(),
-			minutes: currentTime.getMinutes(),
-			seconds: currentTime.getSeconds(),
-			ampm: currentTime.getHours() >= 12 ? 'pm' : 'am',
-			dayOfWeek: date[0],
-			month: date[1],
-			date: date[2]
+	_getTime = ()=>{
+		const dateObject = new Date();
+		const dateString = dateObject.toDateString().split(" ");
+		const currentTime = {
+			hours: dateObject.getHours(),
+			minutes: dateObject.getMinutes(),
+			seconds: dateObject.getSeconds(),
+			ampm: dateObject.getHours() >= 12 ? 'pm' : 'am',
+			dayOfWeek: dateString[0],
+			month: dateString[1],
+			date: dateString[2]
 		};
+
+		return currentTime;
 	}
 
 	/**
-	 *
 	 * Update current clock for every 1 second
+	 *
 	 */
 	setTimer() {
 		this.timeOut = setTimeout(()=> {
