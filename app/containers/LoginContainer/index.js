@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { hashHistory } from 'react-router';
 import * as messageTypes from './../../constants/SocketMessageTypes';
 import Webcam from './../../components/Webcam';
+import { 
+	Grid, 
+	Row, 
+	Col, 
+	Image 
+} from 'react-bootstrap';
 
 /**
  * Request new frames to rerender annotated frames
@@ -13,7 +19,7 @@ window.requestAnimFrame = (function() {
 		window.oRequestAnimationFrame ||
 		window.msRequestAnimationFrame ||
 		function(callback, element) {
-		return window.setTimeout(callback, 600/60);
+		return window.setTimeout(callback, 300/60);
 	};
 })();
 
@@ -45,7 +51,6 @@ export default class FaceContainer extends Component {
 		this.people = [];
 		this.images = [];
 		this.numNulls = 0;
-		this.training = false;
 
 		this.createSocket(SOCKET_ADDRESS);
 		this.setTrainingOn = this.setTrainingOn.bind(this);
@@ -70,7 +75,7 @@ export default class FaceContainer extends Component {
 			type: 'ALL_STATE',
 			images: this.images,
 			people: this.people,
-			training: this.training
+			training: this.props.training
 		};
 		localStorage.setItem('faces', JSON.stringify(msg));
 
@@ -81,7 +86,7 @@ export default class FaceContainer extends Component {
 			type: 'ALL_STATE',
 			images: this.images,
 			people: this.people,
-			training: this.training
+			training: this.props.training
 		};
 
 		this.socket.send(JSON.stringify(msg));
@@ -136,7 +141,7 @@ export default class FaceContainer extends Component {
 		}
 
 		let sendFrameLoop = this._sendFrameLoop.bind(this);
-		window.setTimeout(function(){ window.requestAnimFrame(sendFrameLoop) }, 150);
+		window.setTimeout(function(){ window.requestAnimFrame(sendFrameLoop) }, 100);
 	}
 
 	_screenShot(){
@@ -274,7 +279,7 @@ export default class FaceContainer extends Component {
 			type: 'TRAINING',
 			val: true 
 		};
-		this.training = true;
+		this.props.training = true;
 		this.socket.send(JSON.stringify(msg))
 	}
 
@@ -283,7 +288,7 @@ export default class FaceContainer extends Component {
 			'type': 'TRAINING',
 			'val': false
 		};
-		this.training = false;
+		this.props.training = false;
 		this.socket.send(JSON.stringify(msg))
 	}
 
@@ -298,7 +303,7 @@ export default class FaceContainer extends Component {
 	render() {
 		return (<div>
 			<Webcam ref='webcam'/> 
-			{ this.state.detectedFaces && <img src={this.state.detectedFaces} width="800px" /> }
+			{ this.state.detectedFaces && <Image src={this.state.detectedFaces} width="800" height="600"/> }
 			<button onClick={this.goTo}> Home </button>
 			<button onClick={ this.setTrainingOn }> Train on</button>
 			<button onClick={ this.setTrainingOff }> Train off</button>

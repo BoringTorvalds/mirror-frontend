@@ -1,11 +1,15 @@
-.FeedsContainer__align___3-zaH {
+.FeedsContainer__align___1_ppc {
 	display: inline;
 }
-.FeedsContainer__header___35sMD {
+.FeedsContainer__header___3co4d {
 	color: var(--primary-green);
 	display: inline;
 	position: relative;
 	font-size: large;
+}
+
+.FeedsContainer__container___3VSCG {
+	padding: 2em 2em;
 }
 .style__container___QMOA5 {
 	/* min-height: 20em; */
@@ -281,14 +285,14 @@
 	}
 }
 .Weather__temperature___2JjsU {
-    font-size: -webkit-xxx-large;
-    z-index: 2;
-		position: relative;
-		top: 1.0em;
+	font-size: -webkit-xxx-large;
+	z-index: 2;
+	position: relative;
+	top: 1.0em;
 }
 
 .Weather__placeHolder___1-mF8 {
-  padding: 1.5em 2em;
+	padding: 1.5em 2em;
 }
 
 .Weather__text___1zmAU {
@@ -335,7 +339,7 @@ body {
 .Setting__textWhite___3qoLU {
 	color: white;
 }
-.SignIn__container___38EXj {
+.SignIn__container___21TTy {
 	margin: auto;
 	width: 60%;
 	padding: 10px;
@@ -350,8 +354,9 @@ html, body{
   height: 100%;
   width: 100%;
   margin: 0;
-  font-family: 'Exo 2', sans-serif;
-  font-size: medium;
+	font-weight: 600;
+  font-family: 'HelveticaNeue-UltraLight', sans-serif;
+  font-size: large;
 }
 
 video {

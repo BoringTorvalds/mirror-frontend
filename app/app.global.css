@@ -8,8 +8,9 @@ html, body{
   height: 100%;
   width: 100%;
   margin: 0;
-  font-family: 'Exo 2', sans-serif;
-  font-size: medium;
+	font-weight: 600;
+  font-family: 'HelveticaNeue-UltraLight', sans-serif;
+  font-size: large;
 }
 
 video {

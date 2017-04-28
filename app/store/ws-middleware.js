@@ -3,7 +3,7 @@ import * as types from './../constants/ActionTypes';
 import { parseNavigationRequest } from './../utils/AlexaParser';
 import { push } from 'react-router-redux';
 import { fetchStock } from './../actions/stock';
-import { fetchPersonName } from './../actions/signup';
+import { fetchPersonName, updateTraining } from './../actions/signup';
 
 const wsMiddleware = (function(){
 	let socket = null;
@@ -22,6 +22,10 @@ const wsMiddleware = (function(){
 		console.log(msg);
 
 		switch(msg.type) {
+			case 'training':
+				const option = msg.content == 'on';
+				store.dispatch(updateTraining(option))
+				break;
 			case 'navigation':
 				const route = parseNavigationRequest(msg.content);
 				console.log("Navigating to" + route);

@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import { connected } from './../actions/websocket';
 import { push } from 'react-router-redux';
 import FaceContainer from './LoginContainer';
+import {
+	Grid,
+	Col,
+	Row
+} from 'react-bootstrap';
 
 class SignUp extends Component {
 	static props = {
@@ -16,17 +21,25 @@ class SignUp extends Component {
 	_renderStatus = () => {
 		const {person, isFetched} = this.props.signup;
 		if (isFetched) {
-			return <div> Hi {person.name}, <br/> Please position your face in the circle. <br/> Say "Ready" to Alexa when you're ready </div>
+			return <h2> Hi {person.name}, <br/> Please position your face in the circle. <br/> Say "I'm Ready" to Alexa when you're ready </h2>
 		}
-		return <div> Please ask Alexa to prompt for your name ... </div>
+		return <h2> Please tell Alexa your name. </h2>
+	}
+	_renderSignUpForm = () =>{
+			return <Grid>
+				{ this._renderStatus()}
+				{ this.props.signup.isFetched && <FaceContainer training={this.props.signup.training} ref="face" /> }
+			</Grid>
 	}
 	render() {
+		const connectionError = <h2> There's an issue connecting to OpenFace. <br /> Please refresh the app </h2>;
+		const containerStyle = {
+			padding: "15% 10%"
+		}
 		return(
-			<div>
-				{ this._renderStatus()}
-				Sign Up Page
-				{/* <FaceContainer ref="face" /> */}
-				{ this.props.isConnected == true ? 'a' : 'b'}
+			<div style={containerStyle}>
+				{/* { !this.props.isConnected ? this._renderSignUpForm() : connectionError } */}
+				{this._renderSignUpForm()}
 			</div>
 		);
 	}

@@ -1,7 +1,8 @@
 import {
 	FETCH_PERSON_NAME_FAILURE,
 	FETCH_PERSON_NAME_SUCCESS,
-	FETCH_PERSON_NAME_REQUEST
+	FETCH_PERSON_NAME_REQUEST,
+	UPDATE_TRAINING
 } from './../constants/ActionTypes';
 
 const initialState = {
@@ -9,7 +10,8 @@ const initialState = {
 		name: null
 	},
 	isFetching: false,
-	isFetched: false
+	isFetched: false,
+	training: false
 }
 
 export const signup = (state=initialState, action) => {
@@ -24,6 +26,10 @@ export const signup = (state=initialState, action) => {
 			return Object.assign({}, state, {
 				isFetching: true,
 				isFetched: false
+			});
+		case UPDATE_TRAINING:
+			return Object.assign({}, state, {
+				training: action.training
 			});
 		default:
 			return state
