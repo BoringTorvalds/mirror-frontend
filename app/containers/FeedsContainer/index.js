@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react'; 
 import { connect } from 'react-redux';
-import HNStoryListItem from './../components/HNStoryListItem';
+import HNStoryListItem from './../../components/HNStoryListItem';
 import {
 	fetchAllItems
-} from './../actions/hn';
+} from './../../actions/hn';
 import NewsIcon from './news-icon.png';
 import HNIcon from './hn-icon.png';
 import styles from './FeedsContainer.css';
-import Spinner from './../components/Spinner';
+import Spinner from './../../components/Spinner';
 import {
 	PAGE_SIZE
-} from './../constants/config';
+} from './../../constants/config';
 
 class FeedsContainer extends Component {
 	static propTypes = {
@@ -74,7 +74,7 @@ class FeedsContainer extends Component {
 
 	render() {
 		return(
-			<div>
+			<div className={styles.container}>
 				{ this.props.hn.isFetched && 
 					this.renderhn()
 				}

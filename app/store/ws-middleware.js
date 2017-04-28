@@ -3,6 +3,7 @@ import * as types from './../constants/ActionTypes';
 import { parseNavigationRequest } from './../utils/AlexaParser';
 import { push } from 'react-router-redux';
 import { fetchStock } from './../actions/stock';
+import { fetchPersonName } from './../actions/signup';
 
 const wsMiddleware = (function(){
 	let socket = null;
@@ -32,6 +33,12 @@ const wsMiddleware = (function(){
 				console.log('stock' + msg.content);
 				const stockName = msg.content;
 				store.dispatch(fetchStock(stockName));
+				break;
+
+			case 'signup':
+				console.log("Signing up a user with name: " + msg.content);
+				const name = msg.content;
+				store.dispatch(fetchPersonName(name));
 				break;
 		}
 	}

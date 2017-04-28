@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
-import FeedsContainer from './FeedsContainer';
-import WeatherContainer from './WeatherContainer';
-import Clock from './../components/Clock';
-import Setting from './../components/Setting';
-import StockContainer from './StockContainer';
+
+import FeedsContainer from './../FeedsContainer';
+import WeatherContainer from './../WeatherContainer';
+import Clock from './../../components/Clock';
+import Setting from './../../components/Setting';
+import StockContainer from './../StockContainer';
 import styles from './Home.css';
 import {
 	Grid,

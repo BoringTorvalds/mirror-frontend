@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import styles from './SignIn.css';
-import Setting from './../components/Setting';
+import Setting from './../../components/Setting';
 import {PageHeader} from 'react-bootstrap';
 
-export default class SignIn extends Component {
+export default class SignInContainer extends Component {
 	constructor(props){
 		super(props);
 	}

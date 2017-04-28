@@ -1,0 +1,13 @@
+.align {
+	display: inline;
+}
+.header {
+	color: var(--primary-green);
+	display: inline;
+	position: relative;
+	font-size: large;
+}
+
+.container {
+	padding: 2em 2em;
+}

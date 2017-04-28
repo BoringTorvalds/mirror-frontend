@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Webcam from './../components/Webcam';
 import { hashHistory } from 'react-router';
-import * as messageTypes from './../constants/SocketMessageTypes';
+import * as messageTypes from './../../constants/SocketMessageTypes';
+import Webcam from './../../components/Webcam';
 
 /**
  * Request new frames to rerender annotated frames
