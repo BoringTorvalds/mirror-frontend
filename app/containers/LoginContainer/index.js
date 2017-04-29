@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { hashHistory } from 'react-router';
 import * as messageTypes from './../../constants/SocketMessageTypes';
 import Webcam from './../../components/Webcam';
+import { connect } from 'react-redux';
+import { updateTraining } from './../../actions/signup';
 import { 
 	Grid, 
 	Row, 
@@ -23,12 +25,15 @@ window.requestAnimFrame = (function() {
 	};
 })();
 
-// const SOCKET_ADDRESS = "ws://34.208.16.120:9000";
+//const SOCKET_ADDRESS = "ws://34.208.16.120:9000";
 const SOCKET_ADDRESS ="ws://192.168.99.100:9000";
 const DEFAULT_TOK= 1;
 const DEFAULT_NUMNULLS= 20;
 
-export default class FaceContainer extends Component {
+class FaceContainer extends Component {
+	static props = {
+		training: PropTypes.boolean
+	}
 
 	constructor(props){ 
 		super(props);
@@ -53,7 +58,6 @@ export default class FaceContainer extends Component {
 		this.numNulls = 0;
 
 		this.createSocket(SOCKET_ADDRESS);
-		this.setTrainingOn = this.setTrainingOn.bind(this);
 		this.setTrainingOff = this.setTrainingOff.bind(this);
 		this._sendFrameLoop = this._sendFrameLoop.bind(this);
 		this.closeConnection = this.closeConnection.bind(this);
@@ -88,6 +92,7 @@ export default class FaceContainer extends Component {
 			people: this.people,
 			training: this.props.training
 		};
+
 
 		this.socket.send(JSON.stringify(msg));
 	}
@@ -130,6 +135,8 @@ export default class FaceContainer extends Component {
 		if (this.tok > 0){
 
 			const dataURL = this._screenShot();
+			this.setTrainingOn();
+			// console.log("SENDING : " + dataURL);
 			const msg = {
 				'type': 'FRAME',
 				'dataURL': dataURL,
@@ -274,12 +281,13 @@ export default class FaceContainer extends Component {
 		hashHistory.push('/home');
 	}
 
-	setTrainingOn(){
+	setTrainingOn = () => {
 		const msg = {
 			type: 'TRAINING',
-			val: true 
+			val: this.props.training
 		};
-		this.props.training = true;
+
+		// this.training = true;
 		this.socket.send(JSON.stringify(msg))
 	}
 
@@ -288,7 +296,7 @@ export default class FaceContainer extends Component {
 			'type': 'TRAINING',
 			'val': false
 		};
-		this.props.training = false;
+		this.training = false;
 		this.socket.send(JSON.stringify(msg))
 	}
 
@@ -316,4 +324,9 @@ export default class FaceContainer extends Component {
 	}
 
 }
-
+const mapStateToProps = (state) => {
+	return {
+		training: state.signup.training
+	}
+}
+export default connect(mapStateToProps)(FaceContainer);

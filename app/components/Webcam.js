@@ -32,6 +32,7 @@ class Webcam extends Component {
 
 	getCameraStream() {
 		return this.state.streamUrl;
+		// return "http://172.24.1.1:8080/stream/video.mjpeg"
 	}
 
 	getScreenShot() {
@@ -42,9 +43,8 @@ class Webcam extends Component {
 		canvas.height = video.clientHeight;
 
 		let ctx = canvas.getContext('2d');
-		const ratio = 0.6;
 		ctx.drawImage(video, 0,0, canvas.width , canvas.height);
-
+		const ratio = 0.6;
 		const dataUrl = canvas.toDataURL('image/jpeg',ratio);
 		return dataUrl;
 	}
@@ -60,8 +60,7 @@ class Webcam extends Component {
 	render() {
 
 		return(
-			<video 
-				className={styles.videoel} 
+			<video
 				src={ this.getCameraStream() } 
 				width="400" 
 				height="300"  

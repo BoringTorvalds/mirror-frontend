@@ -1,6 +1,7 @@
 import {
 	FETCH_PERSON_NAME_SUCCESS,
-	UPDATE_TRAINING
+	UPDATE_TRAINING,
+	UPDATE_COUNTS
 } from './../constants/ActionTypes';
 
 /** 
@@ -28,5 +29,12 @@ export const updateTraining = (status) => {
 	return {
 		type: UPDATE_TRAINING,
 		training: status 
+	}
+}
+
+export const updateProcessedCounts = (newVal) => {
+	return {
+		type: UPDATE_COUNTS,
+		counts: newVal
 	}
 }
