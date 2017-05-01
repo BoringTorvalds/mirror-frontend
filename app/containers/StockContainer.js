@@ -14,8 +14,8 @@ class StockContainer extends Component {
 		this.props.dispatch(fetchStock());
 	}
 
-	_getStock = (data) => {
-		return data.Elements[1].DataSeries.volume.values;
+	_getStock = ({Elements}) => {
+		return Elements[1].DataSeries.volume.values;
 	}
 
 	_renderRange = ({Elements}) => {
