@@ -36,9 +36,9 @@ class SignUp extends Component {
 		return <div> {this.props.counts } </div>
 	}
 	_renderStatus = () => {
-		const {person, isFetched} = this.props;
-		if (isFetched) {
-			return <h2> Hi {person.name}, <br/> Please position your face in the circle. <br/> Say "I'm Ready" to Alexa when you're ready </h2>
+		const {person} = this.props;
+		if (person !== null) {
+			return <h2> Hi {person}, <br/> Please position your face in the circle. <br/> Say "I'm Ready" to Alexa when you're ready </h2>
 		}
 		return <h2> Please tell Alexa your name. </h2>
 	}
@@ -66,15 +66,14 @@ class SignUp extends Component {
 SignUp.propTypes = {
 	training: PropTypes.boolean,
 	counts: PropTypes.number,
-	isFetched: PropTypes.boolean,
-	isFetching: PropTypes.boolean,
-	person: PropTypes.object
+	person: PropTypes.string
 };
 
 const mapStateToProps = ({signup, facialAuth}) => {
 	return {
 		...signup, 
-	training: facialAuth.training
+	training: facialAuth.training,
+	person: facialAuth.person
 	}
 };
 

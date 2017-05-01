@@ -3,7 +3,8 @@ import {
 	UPDATE_IDENTITY,
 	UPDATE_TRAINING,
 	ADD_PERSON_REQUEST,
-	ADD_PERSON_FINISHED
+	ADD_PERSON_FINISHED,
+	FETCH_PERSON_NAME_SUCCESS
 } from './../constants/ActionTypes';
 
 export function detectNewFace() {
@@ -35,5 +36,12 @@ export function addPersonRequest() {
 export function addPersonFinished() {
 	return {
 		type: ADD_PERSON_FINISHED
+	}
+}
+
+export function fetchPersonName(name) {
+	return {
+		type: FETCH_PERSON_NAME_SUCCESS,
+		person: name
 	}
 }

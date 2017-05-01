@@ -114,7 +114,7 @@ class FaceContainer extends Component {
 		if (this.tok > 0){
 
 			if (this.props.add) {
-				this._addPerson("example");
+				this._addPerson(this.props.person);
 				this.props.dispatch(addPersonFinished());
 			}
 
@@ -311,7 +311,6 @@ class FaceContainer extends Component {
 
 		return (<div>
 			<h1> { currentIdentity } </h1>
-			<button onClick={this._addPerson} > Add person </button>
 			<Webcam 
 				ref='webcam'
 				hidden
@@ -336,7 +335,8 @@ FaceContainer.propTypes = {
 	training: PropTypes.boolean,
 	hidden: PropTypes.boolean,
 	currentIdentity: PropTypes.string,
-	add: PropTypes.boolean
+	add: PropTypes.boolean,
+	person: PropTypes.string
 };
 
 const mapStateToProps = ({facialAuth}) => {

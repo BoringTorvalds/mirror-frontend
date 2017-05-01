@@ -3,9 +3,14 @@ import * as actions from './../actions/SocketActions';
 import * as types from './../constants/ActionTypes';
 import { parseNavigationRequest } from './../utils/AlexaParser';
 import { fetchStock } from './../actions/stock';
-import { fetchPersonName } from './../actions/signup';
-import { updateTraining } from './../actions/facialAuth';
+import { updateTraining, fetchPersonName } from './../actions/facialAuth';
 
+
+/**
+ * This socket communicate with Event Emitter server 
+ * Purpose is the communication gateway between the client and Alexa
+ *
+ */
 const wsMiddleware = (function(){
 	let socket = null;
 
