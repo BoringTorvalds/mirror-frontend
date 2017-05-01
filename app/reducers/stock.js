@@ -10,16 +10,9 @@ const initialState = {
 export function stock(state= initialState, action) {
 	switch (action.type) {
 		case FETCH_STOCK_REQUEST:
-			return Object.assign({}, state, {
-				isFetching: true,
-				isFetched: false
-			});
-
+			return { ...state, isFetching: true, isFetched: false };
 		case FETCH_STOCK_SUCCESS:
-			return Object.assign({}, state, action.stock, {
-				isFetching: false,
-				isFetched: true
-			});
+			return { ...state, isFetching: false, isFetched: true, ...action.stock };
 		default:
 			return state
 	}

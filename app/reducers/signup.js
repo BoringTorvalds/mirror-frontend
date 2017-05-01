@@ -19,24 +19,13 @@ const initialState = {
 export const signup = (state=initialState, action) => {
 	switch (action.type) {
 		case FETCH_PERSON_NAME_SUCCESS:
-			return Object.assign({}, state, {
-				isFetching: false,
-				isFetched: true,
-				person: action.person
-			});
+			return { ...state, person: action.person, isFetching: false, isFetched: true };
 		case FETCH_PERSON_NAME_REQUEST:
-			return Object.assign({}, state, {
-				isFetching: true,
-				isFetched: false
-			});
+			return { ...state, isFetching: true, isFetched: false };
 		case UPDATE_TRAINING:
-			return Object.assign({}, state, {
-				training: action.training
-			});
+			return { ...state, training: action.training };
 		case UPDATE_COUNTS:
-			return Object.assign({}, state, {
-				counts: action.counts
-			});
+			return { ...state, counts: action.counts };
 		default:
 			return state
 	}
