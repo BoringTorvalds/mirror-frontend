@@ -1,12 +1,16 @@
 import {
 	NEW_FACE_DETECTED,
-	UPDATE_IDENTITY
+	UPDATE_IDENTITY,
+	UPDATE_TRAINING,
+	ADD_PERSON_REQUEST,
+	ADD_PERSON_FINISHED
 } from './../constants/ActionTypes';
 
 const initialState = {
 	training: false,
 	counts: 0,
-	currentIdentity: "Unknown person"
+	currentIdentity: "Unknown person",
+	add: false
 };
 
 export function facialAuth(state = initialState, action) {
@@ -16,6 +20,12 @@ export function facialAuth(state = initialState, action) {
 		}
 		case UPDATE_IDENTITY:
 			return { ...state, currentIdentity: action.identity };
+		case UPDATE_TRAINING:
+			return { ...state, training: action.training };
+		case ADD_PERSON_REQUEST:
+			return { ...state, add: true };
+		case ADD_PERSON_FINISHED:
+			return { ...state, add: false };
 		default:
 			return state;
 	}

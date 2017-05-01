@@ -1,9 +1,10 @@
+import { push } from 'react-router-redux';
 import * as actions from './../actions/SocketActions';
 import * as types from './../constants/ActionTypes';
 import { parseNavigationRequest } from './../utils/AlexaParser';
-import { push } from 'react-router-redux';
 import { fetchStock } from './../actions/stock';
-import { fetchPersonName, updateTraining } from './../actions/signup';
+import { fetchPersonName } from './../actions/signup';
+import { updateTraining } from './../actions/facialAuth';
 
 const wsMiddleware = (function(){
 	let socket = null;
@@ -24,6 +25,7 @@ const wsMiddleware = (function(){
 		switch(msg.type) {
 			case 'training':
 				const option = msg.content == 'on';
+				console.log("DISPATCHING option :" + option);
 				store.dispatch(updateTraining(option))
 				break;
 			case 'navigation':

@@ -1,4 +1,3 @@
-// @flow
 import React, { Component, PropTypes } from 'react';
 import FaceContainer from './FaceContainer';
 import { connect } from 'react-redux';
@@ -11,7 +10,7 @@ class App extends Component {
 	render() {
 		return ( 
 			<div> 
-				<FaceContainer hidden />
+				<FaceContainer />
 				{this.props.children}
 			</div>
 		);

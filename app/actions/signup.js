@@ -1,6 +1,5 @@
 import {
 	FETCH_PERSON_NAME_SUCCESS,
-	UPDATE_TRAINING,
 	UPDATE_COUNTS
 } from './../constants/ActionTypes';
 
@@ -22,13 +21,6 @@ export const fetchPersonName= (name) => {
 		person: {
 			name: name
 		}	
-	}
-}
-
-export const updateTraining = (status) => {
-	return {
-		type: UPDATE_TRAINING,
-		training: status 
 	}
 }
 

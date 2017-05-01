@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as messageTypes from './../../constants/SocketMessageTypes';
 import Webcam from './../../components/Webcam';
 import { updateTraining } from './../../actions/signup';
-import { detectNewFace, updateIdentity } from './../../actions/facialAuth';
+import { detectNewFace, updateIdentity, addPersonFinished } from './../../actions/facialAuth';
 import { OPENFACE_SOCKET_ADDRESS } from './../../constants/config';
 import { Image } from 'react-bootstrap';
 import styles from './Login.css'
@@ -52,14 +52,13 @@ class FaceContainer extends Component {
 	}
 
 	componentDidMount() {
-		let msg = localStorage.getItem('faces');
-		if (msg) {
-			msg = JSON.parse(msg);
-			this.images = msg.images;
-			this.people = msg.people;
-		}
+		// let msg = localStorage.getItem('faces');
+		// if (msg) {
+		// 	msg = JSON.parse(msg);
+		// 	this.images = msg.images;
+		// 	this.people = msg.people;
+		// }
 	}
-
 
 	updateState = () => {
 		const msg = {
@@ -68,8 +67,8 @@ class FaceContainer extends Component {
 			people: this.people,
 			training: this.props.training
 		};
-		localStorage.setItem('faces', JSON.stringify(msg));
-
+		// localStorage.setItem('faces', JSON.stringify(msg));
+    //
 	}
 
 	_sendState(){
@@ -80,20 +79,19 @@ class FaceContainer extends Component {
 			training: this.props.training
 		};
 
-
 		this.socket.send(JSON.stringify(msg));
 	}
 
-	addPerson(){
+	_addPerson = (name) => {
 		if (this.socket != null){
 			let msg = {
 				'type': 'ADD_PERSON',
-				'val': 'Nhat'
+				'val': name
 			};
 
 			this.defaultPerson  = this.people.length;
 
-			this.people.push('Nhat');
+			this.people.push(name);
 
 			this.socket.send(JSON.stringify(msg));
 		}
@@ -114,6 +112,11 @@ class FaceContainer extends Component {
 		}
 
 		if (this.tok > 0){
+
+			if (this.props.add) {
+				this._addPerson("example");
+				this.props.dispatch(addPersonFinished());
+			}
 
 			const dataURL = this._screenShot();
 			this.setTrainingOn();
@@ -264,12 +267,11 @@ class FaceContainer extends Component {
 	}
 
 	setTrainingOn = () => {
+		const { training, counts } = this.props;
 		const msg = {
 			type: 'TRAINING',
-			val: this.props.training
+			val: training
 		};
-
-		// this.training = true;
 		this.socket.send(JSON.stringify(msg))
 	}
 
@@ -293,11 +295,13 @@ class FaceContainer extends Component {
 	render() {
 		const {
 			training,
-			hidden 
+			currentIdentity, 
+			hidden ,
+			counts
 		} = this.props;
 		if (hidden){
 			return <div> 
-			<h1> { this.props.currentIdentity } </h1>
+			<h1> { currentIdentity } </h1>
 				<Webcam 
 				ref='webcam'
 				hidden
@@ -306,18 +310,19 @@ class FaceContainer extends Component {
 		}
 
 		return (<div>
-			<h1> { this.props.currentIdentity } </h1>
+			<h1> { currentIdentity } </h1>
+			<button onClick={this._addPerson} > Add person </button>
 			<Webcam 
 				ref='webcam'
 				hidden
 			/> 
-			{ this.props.training ? "Training" : "Not Training"}
-			{ !this.props.training &&
+			{ training ? "Training" : "Not Training"}
+			{ !training &&
 				<Image 
 					src={this.detectedFace} 
 					width="800" 
 					height="600"
-					id={this.props.counts}
+					id={counts}
 				/> 
 			}
 
@@ -330,7 +335,8 @@ FaceContainer.propTypes = {
 	counts: PropTypes.number,
 	training: PropTypes.boolean,
 	hidden: PropTypes.boolean,
-	currentIdentity: PropTypes.string
+	currentIdentity: PropTypes.string,
+	add: PropTypes.boolean
 };
 
 const mapStateToProps = ({facialAuth}) => {

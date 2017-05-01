@@ -1,10 +1,8 @@
 import React, {Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { connected } from './../actions/websocket';
-import { 
-	updateProcessedCounts, 
-	updateTraining 
-} from './../actions/signup';
+import { updateProcessedCounts } from './../actions/signup';
+import { updateTraining, addPersonRequest } from './../actions/facialAuth';
 
 import {
 	Grid,
@@ -19,25 +17,26 @@ class SignUp extends Component {
 	}
 
 	componentWillUpdate = (nextProps) => {
-		console.log(nextProps.signup);
-		if (nextProps.signup.training) {
-			if (nextProps.signup.counts == 10) {
+		if (nextProps.training) {
+			if (nextProps.counts === 10) {
 				setTimeout(()=> {
 					this.props.dispatch(updateProcessedCounts(0)) ;
+					this.props.dispatch(addPersonRequest());
 					this.props.dispatch(updateTraining(false));
+
 				}, 2000);
 			} else {
 				setTimeout(()=> {
-					this.props.dispatch(updateProcessedCounts(this.props.signup.counts + 1));
+					this.props.dispatch(updateProcessedCounts(this.props.counts + 1));
 				},1000);
 			}
 		}
 	}
 	_renderCounts = () => {
-		return <div> {this.props.signup.counts } </div>
+		return <div> {this.props.counts } </div>
 	}
 	_renderStatus = () => {
-		const {person, isFetched} = this.props.signup;
+		const {person, isFetched} = this.props;
 		if (isFetched) {
 			return <h2> Hi {person.name}, <br/> Please position your face in the circle. <br/> Say "I'm Ready" to Alexa when you're ready </h2>
 		}
@@ -58,21 +57,24 @@ class SignUp extends Component {
 			<div style={containerStyle}>
 				{/* { !this.props.isConnected ? this._renderSignUpForm() : connectionError } */}
 				{this._renderSignUpForm()}
-				{ this.props.signup.training && this._renderCounts() }
+				{ this.props.training && this._renderCounts() }
 			</div>
 		);
 	}
 }
 
 SignUp.propTypes = {
-	isConnected: PropTypes.boolean,
-	signup: PropTypes.Object
+	training: PropTypes.boolean,
+	counts: PropTypes.number,
+	isFetched: PropTypes.boolean,
+	isFetching: PropTypes.boolean,
+	person: PropTypes.object
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({signup, facialAuth}) => {
 	return {
-		isConnected: state.websocket.isConnected,
-		signup: state.signup
+		...signup, 
+	training: facialAuth.training
 	}
 };
 
