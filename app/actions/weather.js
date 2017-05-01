@@ -16,20 +16,20 @@ const parseWeatherObject = (d) => {
 	  };
 	  return weather;
 }
-export const fetchWeatherRequest = () => {
+const fetchWeatherRequest = () => {
   return {
 	type: FETCH_WEATHER_REQUEST
   }
 }
 
-export const fetchWeatherSuccess = (weather) => {
+const fetchWeatherSuccess = (weather) => {
   return {
 	type: FETCH_WEATHER_SUCCESS,
 	weather
   }
 }
 
-export const fetchWeatherFailure = (error) => {
+const fetchWeatherFailure = (error) => {
   return {
 	type: FETCH_WEATHER_FAILURE,
 	error

@@ -8,7 +8,6 @@ class Webcam extends Component {
 		this.state = {
 			streamUrl: null
 		};
-		this.getCameraStream = this.getCameraStream.bind(this);
 		this.mediaStream = null;
 	}
 
@@ -30,7 +29,7 @@ class Webcam extends Component {
 		this.setState({ streamUrl : url });
 	}
 
-	getCameraStream() {
+	getCameraStream = () => {
 		return this.state.streamUrl;
 		// return "http://172.24.1.1:8080/stream/video.mjpeg"
 	}

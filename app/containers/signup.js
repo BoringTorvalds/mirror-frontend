@@ -1,8 +1,11 @@
 import React, {Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { connected } from './../actions/websocket';
-import { push } from 'react-router-redux';
-import { updateProcessedCounts, updateTraining } from './../actions/signup';
+import { 
+	updateProcessedCounts, 
+	updateTraining 
+} from './../actions/signup';
+
 import {
 	Grid,
 	Col,
@@ -10,10 +13,6 @@ import {
 } from 'react-bootstrap';
 
 class SignUp extends Component {
-	static props = {
-		isConnected: PropTypes.boolean,
-		signup: PropTypes.Object
-	}
 
 	constructor(props) {
 		super(props);
@@ -65,11 +64,16 @@ class SignUp extends Component {
 	}
 }
 
+SignUp.propTypes = {
+	isConnected: PropTypes.boolean,
+	signup: PropTypes.Object
+};
+
 const mapStateToProps = (state) => {
 	return {
 		isConnected: state.websocket.isConnected,
 		signup: state.signup
 	}
-}
+};
 
 export default connect(mapStateToProps)(SignUp);

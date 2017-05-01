@@ -12,20 +12,15 @@ const formatTemperature = (degrees, format) => {
 	const formattedDegree = Math.round(degrees);
 	return `${formattedDegree}°${format}`;
 }
-class Weather extends Component {
-	static propTypes = {
-		iconType: PropTypes.string,
-		summary: PropTypes.object,
-		current: PropTypes.object.isRequired,
-		summary: PropTypes.string.isRequired
-	}
 
+class Weather extends Component {
 	constructor(props){
 		super(props);
 	}
 
 	render = () => {
-		const { iconType,
+		const { 
+			iconType,
 			summary,
 			current
 		} = this.props;
@@ -52,9 +47,11 @@ class Weather extends Component {
 	}
 }
 
-/**
- * Export
- *
- * @type {Component}
- */
+Weather.propTypes = {
+		iconType: PropTypes.string,
+		summary: PropTypes.object,
+		current: PropTypes.object.isRequired,
+		summary: PropTypes.string.isRequired
+}
+
 export default Weather;

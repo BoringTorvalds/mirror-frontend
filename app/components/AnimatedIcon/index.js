@@ -1,8 +1,7 @@
 import React from 'react';
 import styles from './style.css';
 
-export default (props) => {
-	const { iconType } = props;
+export default ({iconType}) => {
 
 	const sunny = (
 		<div className={styles.sunny}>

@@ -1,18 +1,14 @@
 import React, {PropTypes, Component} from 'react';
-import Trend from 'react-trend';
-import axios from 'axios'
 import { connect } from 'react-redux';
-import {fetchStock } from './../actions/stock';
+import axios from 'axios'
+import Trend from 'react-trend';
 import Spinner from './../components/Spinner';
+import { fetchStock } from './../actions/stock';
 
 class StockContainer extends Component {
-	static propTypes = {
-		stock: PropTypes.object
-	}
 	constructor(props) {
 		super(props);
 	}
-
 
 	componentDidMount() {
 		this.props.dispatch(fetchStock());
@@ -22,41 +18,54 @@ class StockContainer extends Component {
 		return data.Elements[1].DataSeries.volume.values;
 	}
 
-	_renderRange = (data) => {
+	_renderRange = ({Elements}) => {
+		const { 
+			low, 
+			high, 
+			close 
+		} = Elements[0].DataSeries;
 		return (
 			<div>  
-				Low : ${data.Elements[0].DataSeries.low.max} <br/>
-				High : ${data.Elements[0].DataSeries.high.max} <br/>
-				Close : ${data.Elements[0].DataSeries.close.max}
+				Low : ${low.max} <br/>
+				High : ${high.max} <br/>
+				Close : ${close.max}
 			</div>
 		)
 	}
 
-	_getStockName = (data) => {
-		return data.Elements[0].Symbol;
+	_getStockName = ({Elements}) => {
+		return Elements[0].Symbol;
 	}
 
 	render() {
+		const {
+			isFetched,
+			isFetching,
+			data
+		} = this.props.stock;
 		return(
 			<div>
-				{ this.props.stock.isFetched && 
-					this._getStockName(this.props.stock.data)
-				}	
-				{ this.props.stock.isFetched && <Trend 
-					data={this._getStock(this.props.stock.data)} 
-					autoDraw
-					autoDrawDuration={3000}
-					autoDrawEasing="ease-in"
-					gradient={['#0FF', '#F0F', '#FF0']}
-				/>}
+				{ isFetched && this._getStockName(data) }	
+				{ 
+					isFetched && 
+						<Trend 
+							data={this._getStock(data)} 
+							autoDraw
+							autoDrawDuration={3000}
+							autoDrawEasing="ease-in"
+							gradient={['#0FF', '#F0F', '#FF0']}
+						/>
+						}
 
-				{ this.props.stock.isFetched && this._renderRange(this.props.stock.data) }
-				{ this.props.stock.isFetching && <Spinner width="50" height="50"/> }
-			</div>
+						{ isFetched && this._renderRange(data) }
+						{ isFetching && <Spinner width="50" height="50"/> }
+					</div>
 		)
 	}
 }
-
+StockContainer.propTypes = {
+	stock: PropTypes.object
+}
 const mapStateToProps = (state) => {
 	return {
 		stock: state.stock

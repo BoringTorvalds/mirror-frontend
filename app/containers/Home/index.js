@@ -7,6 +7,7 @@ import WeatherContainer from './../WeatherContainer';
 import Clock from './../../components/Clock';
 import Setting from './../../components/Setting';
 import StockContainer from './../StockContainer';
+
 import styles from './Home.css';
 import {
 	Grid,
@@ -14,16 +15,6 @@ import {
 	Row
 } from 'react-bootstrap';
 
-/**
- * React.Component class represents Home Page
- * Features:
- *	- Weather 
- *	- Stock 
- *	- HN news
- *	- Time
- *
- * @class
- */
 class Home extends Component {
 	constructor(props){
 		super(props);

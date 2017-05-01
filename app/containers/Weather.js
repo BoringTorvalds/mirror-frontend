@@ -1,21 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { 
+	WEATHER_API_ENDPOINT,
+	DEFAULT_LAT,
+	DEFAULT_LNG
+} from './../constants/config';
+
 import { fetchWeather } from './../actions/weather';
 import Weather from './../components/Weather';
 
 class WeatherContainer extends Component{
-	static propTypes = {
-		weather: PropTypes.object
-	}
 	constructor(props) {
 		super(props);
 	}
 
 	componentDidMount() {
-		const lat = "32.7357";
-		const lng = "-97.1081";
-
-		const sampleUrl = "https://api.darksky.net/forecast/9e1bfc49cdc03b377f4d00753ff13ada/" + lat +"," + lng;
+		const sampleUrl = WEATHER_API_ENDPOINT + DEFAULT_LAT +"," + DEFAULT_LNG;
 		console.log(`FETCH WEATHER FROM ${sampleUrl}`);
 		this.props.dispatch(fetchWeather(sampleUrl));
 	}
@@ -31,6 +31,9 @@ class WeatherContainer extends Component{
 	}
 
 }
+Weather.propTypes = {
+	weather: PropTypes.object
+};
 
 const mapStateToProps = (state) => {
 	return {
