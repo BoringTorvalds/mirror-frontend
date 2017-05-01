@@ -58,11 +58,17 @@ class Webcam extends Component {
 
 
 	render() {
-
+		console.log(this.props);
+		const hiddenStyle =  this.props.hidden ? {
+			"position" : "absolute",
+			"top": "-99999px",
+			"bottom": "-99999px"
+		} : null;
 		return(
 			<video
 				src={ this.getCameraStream() } 
 				width="400" 
+				style = {hiddenStyle} 
 				height="300"  
 				autoPlay
 			> 

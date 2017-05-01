@@ -1,15 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import { hashHistory } from 'react-router';
+import { connect } from 'react-redux';
 import * as messageTypes from './../../constants/SocketMessageTypes';
 import Webcam from './../../components/Webcam';
-import { connect } from 'react-redux';
 import { updateTraining } from './../../actions/signup';
-import { 
-	Grid, 
-	Row, 
-	Col, 
-	Image 
-} from 'react-bootstrap';
+import { detectNewFace, updateIdentity } from './../../actions/facialAuth';
+import { OPENFACE_SOCKET_ADDRESS } from './../../constants/config';
+import { Image } from 'react-bootstrap';
+import styles from './Login.css'
 
 /**
  * Request new frames to rerender annotated frames
@@ -26,43 +23,32 @@ window.requestAnimFrame = (function() {
 })();
 
 //const SOCKET_ADDRESS = "ws://34.208.16.120:9000";
-const SOCKET_ADDRESS ="ws://192.168.99.100:9000";
 const DEFAULT_TOK= 1;
 const DEFAULT_NUMNULLS= 20;
 
 class FaceContainer extends Component {
-	static props = {
-		training: PropTypes.boolean
-	}
 
+	/**
+	 * Init variables for OpenFace
+	 * @param { number } tok : A variable 0 or 1 to make sure an image was processed 
+	 * then client will send more frames 
+	 * @param { string } people : Names of People in trained models
+	 * @param { string } images : Array of screenshots used for training in form ds:// jpg
+	 * @param { number } numNulls : A variable default = 20 to slow down the sending frames sent to server 
+	 * @param { boolean } training : Indicate if the OpenFace should train a profile or not
+	 */
 	constructor(props){ 
 		super(props);
-		this.state = {
-			detectedFaces: null
-		};
 
-		/**
-		 * Init variables for OpenFace
-		 * @param { number } tok : A variable 0 or 1 to make sure an image was processed 
-		 * then client will send more frames 
-		 * @param { string } people : Names of People in trained models
-		 * @param { string } images : Array of screenshots used for training in form ds:// jpg
-		 * @param { number } numNulls : A variable default = 20 to slow down the sending frames sent to server 
-		 * @param { boolean } training : Indicate if the OpenFace should train a profile or not
-		 */
 		this.socket = null;
+		this.detectedFace = null;
 		this.tok = DEFAULT_TOK;
 		this.defaultPerson = -1;
 		this.people = [];
 		this.images = [];
 		this.numNulls = 0;
 
-		this.createSocket(SOCKET_ADDRESS);
-		this.setTrainingOff = this.setTrainingOff.bind(this);
-		this._sendFrameLoop = this._sendFrameLoop.bind(this);
-		this.closeConnection = this.closeConnection.bind(this);
-		this.addPerson = this.addPerson.bind(this);
-		this.addHim= this.addHim.bind(this);
+		this.createSocket(OPENFACE_SOCKET_ADDRESS);
 	}
 
 	componentDidMount() {
@@ -73,6 +59,7 @@ class FaceContainer extends Component {
 			this.people = msg.people;
 		}
 	}
+
 
 	updateState = () => {
 		const msg = {
@@ -97,18 +84,6 @@ class FaceContainer extends Component {
 		this.socket.send(JSON.stringify(msg));
 	}
 
-	addHim(){
-		if (this.socket != null){
-			let msg = {
-				'type': 'ADD_PERSON',
-				'val': 'TOM'
-			};
-			this.defaultPerson = this.people.length;
-			this.people.push('TOM');
-			this.socket.send(JSON.stringify(msg));
-		}
-	}
-
 	addPerson(){
 		if (this.socket != null){
 			let msg = {
@@ -124,6 +99,12 @@ class FaceContainer extends Component {
 		}
 	}
 
+
+	getIdentity = () => {
+		const len = this.people.length;
+		return this.people[len-1];
+	}
+
 	_sendFrameLoop() {
 		if (this.socket == null || 
 			this.socket.readyState != this.socket.OPEN ||
@@ -136,7 +117,6 @@ class FaceContainer extends Component {
 
 			const dataURL = this._screenShot();
 			this.setTrainingOn();
-			// console.log("SENDING : " + dataURL);
 			const msg = {
 				'type': 'FRAME',
 				'dataURL': dataURL,
@@ -195,8 +175,9 @@ class FaceContainer extends Component {
 	/**
 	 * Process onmessage events corresponding to OpenFace WS protocol
 	 */
-	_onSocketMessage (e){
+	_onSocketMessage = (e) => {
 		const msg = JSON.parse(e.data);
+		console.log("----------------------------------");
 		console.log(msg.type);
 
 		switch(msg.type) {
@@ -212,9 +193,9 @@ class FaceContainer extends Component {
 				break;
 
 			case messageTypes.ANNOTATED:
-				this.setState({
-					detectedFaces: msg['content']
-				});
+				const {counts} = this.props;
+				this.props.dispatch(detectNewFace());
+				this.detectedFace = msg['content'];
 				break;
 
 			case messageTypes.NEW_IMAGE:
@@ -227,7 +208,6 @@ class FaceContainer extends Component {
 				this.images.push(newImage);
 				this.updateState();
 				console.log(msg.identity);
-				console.log(this.images);
 				break;
 
 			case messageTypes.PROCESSED:
@@ -244,10 +224,12 @@ class FaceContainer extends Component {
 							identity = this.people[idIndex];
 						}
 						console.log("Identity is " + identity);
+						this.props.dispatch(updateIdentity(identity));
 					}
 
 				} else {
 					console.log("Nobody detected");
+					this.props.dispatch(updateIdentity("Nobody"));
 				}
 				break;
 			case messageTypes.TSNE_DATA:
@@ -309,24 +291,49 @@ class FaceContainer extends Component {
 
 
 	render() {
+		const {
+			training,
+			hidden 
+		} = this.props;
+		if (hidden){
+			return <div> 
+			<h1> { this.props.currentIdentity } </h1>
+				<Webcam 
+				ref='webcam'
+				hidden
+			/> 
+		</div>
+		}
+
 		return (<div>
-			<Webcam ref='webcam'/> 
-			{ this.state.detectedFaces && <Image src={this.state.detectedFaces} width="800" height="600"/> }
-			<button onClick={this.goTo}> Home </button>
-			<button onClick={ this.setTrainingOn }> Train on</button>
-			<button onClick={ this.setTrainingOff }> Train off</button>
-			<button onClick={this._sendFrameLoop}> Send </button>
-			<button onClick={ this.closeConnection}> Close </button>
-			<button onClick={ this.addPerson }> Add Me </button>
-			<button onClick={ this.addHim }> Add Tom </button>
+			<h1> { this.props.currentIdentity } </h1>
+			<Webcam 
+				ref='webcam'
+				hidden
+			/> 
+			{ this.props.training ? "Training" : "Not Training"}
+			{ !this.props.training &&
+				<Image 
+					src={this.detectedFace} 
+					width="800" 
+					height="600"
+					id={this.props.counts}
+				/> 
+			}
 
 		</div>);
 	}
 
 }
-const mapStateToProps = (state) => {
-	return {
-		training: state.signup.training
-	}
+
+FaceContainer.propTypes = {
+	counts: PropTypes.number,
+	training: PropTypes.boolean,
+	hidden: PropTypes.boolean,
+	currentIdentity: PropTypes.string
+};
+
+const mapStateToProps = ({facialAuth}) => {
+	return facialAuth;
 }
 export default connect(mapStateToProps)(FaceContainer);

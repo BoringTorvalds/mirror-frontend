@@ -1,30 +1,26 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
+import FaceContainer from './FaceContainer';
 import { connect } from 'react-redux';
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 	}
-	static props =  {
-		children: HTMLElement,
-		isConnected: PropTypes.boolean
-	}
 
 	render() {
 		return ( 
-			< div > 
+			<div> 
+				<FaceContainer hidden />
 				{this.props.children}
-		 </div>
+			</div>
 		);
 	}
 
 }
 
-const mapStateToProps = (state) => {
-	return {
-		isConnected: state.websocket.isConnected
-	};
+App.propTypes = {
+	children: HTMLElement
 }
 
-export default connect(mapStateToProps)(App);
+export default connect()(App);

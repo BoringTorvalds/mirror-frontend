@@ -2,7 +2,6 @@ import React, {Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { connected } from './../actions/websocket';
 import { push } from 'react-router-redux';
-import FaceContainer from './LoginContainer';
 import { updateProcessedCounts, updateTraining } from './../actions/signup';
 import {
 	Grid,
@@ -48,7 +47,6 @@ class SignUp extends Component {
 	_renderSignUpForm = () =>{
 		return <Grid>
 			{ this._renderStatus()}
-			{ this.props.signup.isFetched && !this.props.signup.training && <FaceContainer ref="face" /> }
 		</Grid>
 	}
 

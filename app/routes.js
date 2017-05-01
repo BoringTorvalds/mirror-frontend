@@ -3,7 +3,7 @@ import React from 'react';
 import { Route,Router, IndexRoute } from 'react-router';
 import App from './containers/App';
 import Home from './containers/Home';
-import FaceContainer from './containers/LoginContainer';
+import FaceContainer from './containers/FaceContainer';
 import Setting from './containers/Setting';
 import SignUp from './containers/SignUp';
 import SignInContainer from './containers/SignInContainer';

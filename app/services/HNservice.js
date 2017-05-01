@@ -1,4 +1,3 @@
-// Rewrite from insin/react-hn
 import fetch from 'isomorphic-fetch';
 import {
 	MAX_THREAD_NUMBER,
