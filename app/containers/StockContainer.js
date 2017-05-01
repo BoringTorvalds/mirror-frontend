@@ -43,24 +43,24 @@ class StockContainer extends Component {
 			isFetching,
 			data
 		} = this.props.stock;
-		return(
-			<div>
-				{ isFetched && this._getStockName(data) }	
-				{ 
-					isFetched && 
-						<Trend 
-							data={this._getStock(data)} 
-							autoDraw
-							autoDrawDuration={3000}
-							autoDrawEasing="ease-in"
-							gradient={['#0FF', '#F0F', '#FF0']}
-						/>
-						}
-
-						{ isFetched && this._renderRange(data) }
-						{ isFetching && <Spinner width="50" height="50"/> }
-					</div>
-		)
+		if (isFetched) {
+			return(
+				<div> 
+					{this._getStockName(data)}
+					<Trend 
+						data={this._getStock(data)} 
+						autoDraw
+						autoDrawDuration={3000}
+						autoDrawEasing="ease-in"
+						gradient={['#0FF', '#F0F', '#FF0']}
+					/>
+					{this._renderRange(data)}
+				</div>
+			)
+		} else if (isFetching){
+			return <Spinner width="50" height="50"/> 
+		} 
+		return null;
 	}
 }
 StockContainer.propTypes = {
