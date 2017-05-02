@@ -76,7 +76,7 @@ class FaceContainer extends Component {
 		console.log("SAVE::::");
 		// console.log(localStorage.getItem('faces'));
 		localStorage.setItem('faces', JSON.stringify(msg));
-    //
+		//
 	}
 
 	_sendState(){
@@ -313,12 +313,11 @@ class FaceContainer extends Component {
 		} = this.props;
 		if (hidden){
 			return <div> 
-			<h1> { currentIdentity } </h1>
 				<Webcam 
-				ref='webcam'
-				hidden
-			/> 
-		</div>
+					ref='webcam'
+					hidden
+				/> 
+			</div>
 		}
 
 		return (<div>
@@ -328,7 +327,6 @@ class FaceContainer extends Component {
 				hidden
 			/> 
 			{ "Hi, " + this.props.person }
-			{ training ? "Training" : "Not Training"}
 			{ !training &&
 				<Image 
 					src={this.detectedFace} 

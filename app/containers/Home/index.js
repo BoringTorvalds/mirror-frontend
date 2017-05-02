@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
@@ -21,6 +21,8 @@ class Home extends Component {
 	}
 
 	render() {
+		const { person } = this.props;
+		const title = ((person == "Unknown person") || (person == "Nobody")) ? person : "Hi " + person;
 		return (
 			<Grid>
 				<Row style={{marginBottom: "50"}}> 
@@ -28,7 +30,7 @@ class Home extends Component {
 						<WeatherContainer />
 					</Col>
 					<Col smPush={4} mdPush={4} lgPush={4} >
-						<Clock />
+						<Clock title={title} />
 					</Col>
 				</Row>
 				<Row>
@@ -47,4 +49,13 @@ class Home extends Component {
 	}
 }
 
-export default connect()(Home);
+Home.propTypes = {
+	person: PropTypes.string
+}
+const mapStateToProps = ({facialAuth}) => {
+	const { currentIdentity} = facialAuth;
+	return {
+		person: currentIdentity
+	}
+}
+export default connect(mapStateToProps)(Home);

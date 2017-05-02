@@ -80,6 +80,7 @@ class Clock extends Component {
 
 		return(
 			<div className={styles.container}>
+				{ this.props.title } <br />
 				{ dayOfWeek }, { month } { date } <br/> 
 				{
 					hours == 0 ? 12 :
@@ -93,6 +94,10 @@ class Clock extends Component {
 			</div>
 		);
 	}
+}
+
+Clock.propTypes = {
+	title: React.PropTypes.string
 }
 
 export default Clock;
