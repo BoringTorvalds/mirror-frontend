@@ -2,7 +2,12 @@ import React, {Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { connected } from './../actions/websocket';
 import { updateProcessedCounts } from './../actions/signup';
-import { updateTraining, addPersonRequest } from './../actions/facialAuth';
+import { 
+	showFace, 
+	updateTraining, 
+	addPersonRequest,
+	trainingFinished
+} from './../actions/facialAuth';
 
 import {
 	Grid,
@@ -21,45 +26,44 @@ class SignUp extends Component {
 		if (nextProps.training) {
 			if (nextProps.counts === 10) {
 				setTimeout(()=> {
+					this.props.dispatch(trainingFinished());
 					this.props.dispatch(updateProcessedCounts(0)) ;
 					this.props.dispatch(updateTraining(false));
 
 				}, 2000);
 			} else {
-
 				setTimeout(()=> {
 					this.props.dispatch(updateProcessedCounts(this.props.counts + 0.5));
-				},500);
+				},1000);
 			}
 		}
 	}
 	_renderCounts = () => {
 		const percentage = (this.props.counts / 10) * 100;
-		return <CircularProgress percentage={percentage} radius="80" strokeWidth="10"	/>
+		return <CircularProgress percentage={percentage} radius="80" strokeWidth="8"	/>
 	}
 	_renderStatus = () => {
-		const {person} = this.props;
+		const {
+			person
+		}
+		= this.props;
 		if (person !== null) {
-			return <h2> Hi {person}, <br/> Please position your face in the circle. <br/> Say "I'm Ready" to Alexa when you're ready </h2>
+			this.props.dispatch(showFace());
+			return <h2> Hi {person}, <br/> Say "I'm Ready" to Alexa when you're ready </h2>
 		}
 		return <h2> Please tell Alexa your name. </h2>
 	}
-	_renderSignUpForm = () =>{
-		return <Grid>
-			{ this._renderStatus()}
-		</Grid>
-	}
-
 	render() {
 		const connectionError = <h2> There's an issue connecting to OpenFace. <br /> Please refresh the app </h2>;
 		const containerStyle = {
-			padding: "10% 5%",
+			padding: "5% 5%",
 			textAlign: "center"
 		}
 		return(
 			<div style={containerStyle}>
-				{/* { !this.props.isConnected ? this._renderSignUpForm() : connectionError } */}
-				{this._renderSignUpForm()}
+				<Grid>
+					{this._renderStatus()}
+				</Grid>
 				{ this.props.training && this._renderCounts() }
 			</div>
 		);
@@ -69,14 +73,24 @@ class SignUp extends Component {
 SignUp.propTypes = {
 	training: PropTypes.boolean,
 	counts: PropTypes.number,
-	person: PropTypes.string
+	person: PropTypes.string,
+	trainingFinished: PropTypes.boolean,
+	trainingRequest: PropTypes.boolean
 };
 
+const parseFacialAuth = ({training, person, trainingRequest, trainingFinished}) => {
+	return {
+		training: training,
+		person: person,
+		trainingRequest: trainingRequest,
+		trainingFinished: trainingFinished
+	};
+}
 const mapStateToProps = ({signup, facialAuth}) => {
+	const auth = parseFacialAuth(facialAuth);
 	return {
 		...signup, 
-	training: facialAuth.training,
-	person: facialAuth.person
+		...auth
 	}
 };
 

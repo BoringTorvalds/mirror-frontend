@@ -5,7 +5,7 @@ import {
 
 const initialState = {
 	data: null
-}
+};
 
 export function stock(state= initialState, action) {
 	switch (action.type) {

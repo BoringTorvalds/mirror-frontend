@@ -1,9 +1,17 @@
 import { push } from 'react-router-redux';
+import { EVENT_SERVER_SOCKET_ADDRESS } from './../constants/config';
 import * as actions from './../actions/SocketActions';
 import * as types from './../constants/ActionTypes';
 import { parseNavigationRequest } from './../utils/AlexaParser';
 import { fetchStock } from './../actions/stock';
-import { updateTraining, addPersonRequest, fetchPersonName } from './../actions/facialAuth';
+import { 
+	hideFace, 
+	showFace, 
+	updateTraining, 
+	addPersonRequest, 
+	fetchPersonName ,
+	trainingRequest
+} from './../actions/facialAuth';
 
 
 /**
@@ -32,6 +40,9 @@ const wsMiddleware = (function(){
 				const option = msg.content == 'on';
 				console.log("DISPATCHING option :" + option);
 				store.dispatch(updateTraining(option));
+				if (option) {
+					store.dispatch(trainingRequest());
+				}
 				break;
 			case 'navigation':
 				const route = parseNavigationRequest(msg.content);
@@ -62,7 +73,7 @@ const wsMiddleware = (function(){
 					socket.close();
 				}
 				store.dispatch(actions.connecting());
-				socket = new WebSocket("ws://127.0.0.1:9000/ws");
+				socket = new WebSocket(EVENT_SERVER_SOCKET_ADDRESS);
 				socket.onmessage = onSocketMessage(socket, store);
 				socket.onopen = onSocketOpen(socket, store, action.token);
 				socket.onclose = onSocketClose(socket, store);

@@ -1,55 +1,71 @@
-import { 
-	NEW_FACE_DETECTED,
-	UPDATE_IDENTITY,
-	UPDATE_TRAINING,
-	ADD_PERSON_REQUEST,
-	ADD_PERSON_FINISHED,
-	ADD_PERSON_FAILURE,
-	FETCH_PERSON_NAME_SUCCESS
-} from './../constants/ActionTypes';
+import * as ActionTypes from './../constants/ActionTypes';
 
 export function detectNewFace() {
 	return {
-		type: NEW_FACE_DETECTED
+		type: ActionTypes.NEW_FACE_DETECTED
 	}
 }
 
 export function updateIdentity(newIdentity) {
 	return {
-		type: UPDATE_IDENTITY,
+		type: ActionTypes.UPDATE_IDENTITY,
 		identity: newIdentity
 	}
 }
 
 export function updateTraining(status) {
 	return {
-		type: UPDATE_TRAINING,
+		type: ActionTypes.UPDATE_TRAINING,
 		training: status
 	}
 }
 
 export function addPersonRequest() {
 	return {
-		type: ADD_PERSON_REQUEST
+		type: ActionTypes.ADD_PERSON_REQUEST
 	}
 }
 
 export function addPersonFinished() {
 	return {
-		type: ADD_PERSON_FINISHED
+		type: ActionTypes.ADD_PERSON_FINISHED
 	}
 }
 
 export function addPersonFailure(err) {
 	return {
-		type: ADD_PERSON_FAILURE,
+		type: ActionTypes.ADD_PERSON_FAILURE,
 		error: err
 	}
 }
 
 export function fetchPersonName(name) {
 	return {
-		type: FETCH_PERSON_NAME_SUCCESS,
+		type: ActionTypes.FETCH_PERSON_NAME_SUCCESS,
 		person: name
+	}
+}
+
+export function showFace() {
+	return {
+		type: ActionTypes.SHOW_FACE
+	}
+}
+
+export function hideFace() {
+	return {
+		type: ActionTypes.HIDE_FACE
+	}
+}
+
+export function trainingRequest() {
+	return {
+		type: ActionTypes.TRAINING_REQUEST
+	}
+}
+
+export function trainingFinished() {
+	return {
+		type: ActionTypes.TRAINING_FINISHED
 	}
 }

@@ -23,13 +23,13 @@ window.requestAnimFrame = (function() {
 		window.oRequestAnimationFrame ||
 		window.msRequestAnimationFrame ||
 		function(callback, element) {
-		return window.setTimeout(callback, 300/60);
+		return window.setTimeout(callback, 1000/100);
 	};
 })();
 
 //const SOCKET_ADDRESS = "ws://34.208.16.120:9000";
 const DEFAULT_TOK= 1;
-const DEFAULT_NUMNULLS= 20;
+const DEFAULT_NUMNULLS= 10;
 
 class FaceContainer extends Component {
 
@@ -57,13 +57,13 @@ class FaceContainer extends Component {
 	}
 
 	componentDidMount() {
-		let msg = localStorage.getItem('faces');
-		if (msg) {
-			msg = JSON.parse(msg);
-			// console.log(msg);
-			this.images = msg.images;
-			this.people = msg.people;
-		}
+		// let msg = localStorage.getItem('faces');
+		// if (msg) {
+		// 	msg = JSON.parse(msg);
+		// 	// console.log(msg);
+		// 	this.images = msg.images;
+		// 	this.people = msg.people;
+		// }
 	}
 
 	updateState = () => {
@@ -75,7 +75,7 @@ class FaceContainer extends Component {
 		};
 		console.log("SAVE::::");
 		// console.log(localStorage.getItem('faces'));
-		localStorage.setItem('faces', JSON.stringify(msg));
+		// localStorage.setItem('faces', JSON.stringify(msg));
 		//
 	}
 
@@ -143,7 +143,7 @@ class FaceContainer extends Component {
 		}
 
 		let sendFrameLoop = this._sendFrameLoop.bind(this);
-		window.setTimeout(function(){ window.requestAnimFrame(sendFrameLoop) }, 100);
+		window.setTimeout(function(){ window.requestAnimFrame(sendFrameLoop) }, 60);
 	}
 
 	_screenShot(){
@@ -308,10 +308,11 @@ class FaceContainer extends Component {
 		const {
 			training,
 			currentIdentity, 
-			hidden,
-			counts
+			hideFace,
+			counts,
+			person
 		} = this.props;
-		if (hidden){
+		if (hideFace){
 			return <div> 
 				<Webcam 
 					ref='webcam'
@@ -321,17 +322,16 @@ class FaceContainer extends Component {
 		}
 
 		return (<div>
-			<h1> { currentIdentity } </h1>
 			<Webcam 
 				ref='webcam'
 				hidden
 			/> 
-			{ "Hi, " + this.props.person }
 			{ !training &&
 				<Image 
 					src={this.detectedFace} 
-					width="400" 
-					height="300"
+					width="750" 
+					height="550"
+					style={{"position":"absolute", "zIndex":"-1", "left": "10%"}}
 					id={counts}
 				/> 
 			}
@@ -344,10 +344,10 @@ class FaceContainer extends Component {
 FaceContainer.propTypes = {
 	counts: PropTypes.number,
 	training: PropTypes.boolean,
-	hidden: PropTypes.boolean,
 	currentIdentity: PropTypes.string,
 	add: PropTypes.boolean,
-	person: PropTypes.string
+	person: PropTypes.string,
+	hideFace: PropTypes.boolean
 };
 
 const mapStateToProps = ({facialAuth}) => {
