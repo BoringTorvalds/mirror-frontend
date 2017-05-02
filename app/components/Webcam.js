@@ -73,7 +73,7 @@ class Webcam extends Component {
 			// 	autoPlay
 			// > 
 			// </video>
-			<img src={this.getCameraStream()} width="400" height="300" />
+			<img src={this.getCameraStream()} width="400" height="300" alt="image" />
 		);
 	}
 }
