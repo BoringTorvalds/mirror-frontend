@@ -1,15 +1,36 @@
-.FeedsContainer__align___1_ppc {
-	display: inline;
+.Webcam__videoel___vNVT4 {
+  -o-transform : scaleX(-1);
+  -webkit-transform : scaleX(-1);
+  transform : scaleX(-1);
+  -ms-filter : fliph; /*IE*/
+  filter : fliph; /*IE*/
+  position: absolute;
+  z-index: -1;
+	border-radius: 50%;
 }
-.FeedsContainer__header___3co4d {
-	color: var(--primary-green);
-	display: inline;
-	position: relative;
-	font-size: large;
+.Login__annotated___1hQ6D {
+  position: fixed;
+  z-index: 2;
+}
+
+.Login__Hide___11Hvd {
+	z-index: -1;
+	position: absolute;
 }
 
 .FeedsContainer__container___3VSCG {
 	padding: 2em 2em;
+}
+
+
+.FeedsContainer__align___1_ppc {
+	display: inline;
+}
+.FeedsContainer__header___3co4d {
+	position: relative;
+	font-size: large;
+	margin-bottom: 15px;
+	color: #fff;
 }
 .style__container___QMOA5 {
 	/* min-height: 20em; */
@@ -306,9 +327,8 @@
   /* right: 2em; */
   position: relative;
 }.Setting__setting___3hv9K {
-	color: var(--primary-green);
-	position: absolute;
-	bottom: 10px;
+	color: #fff;
+	position: relative;
 }
 
 .Setting__inline___iPAnH {
@@ -321,16 +341,6 @@ body {
 }
 
 
-.Webcam__videoel___vNVT4 {
-  -o-transform : scaleX(-1);
-  -webkit-transform : scaleX(-1);
-  transform : scaleX(-1);
-  -ms-filter : fliph; /*IE*/
-  filter : fliph; /*IE*/
-  position: absolute;
-  z-index: -1;
-	border-radius: 50%;
-}
 .Setting__container___2QIAL {
 	padding-top: 50%;
 	font-size: xx-large;
@@ -338,6 +348,31 @@ body {
 
 .Setting__textWhite___3qoLU {
 	color: white;
+}
+.styles__CircularProgress-Bg___2OMIW,
+.styles__CircularProgress-Fg___Ib1qJ {
+	fill: none;
+}
+
+.styles__CircularProgress-Bg___2OMIW {
+	stoke: #ddd;
+}
+
+.styles__CircularProgress-Fg___Ib1qJ {
+	transition: stroke-dashoffset .5s ease-in-out;
+	stroke: #ddd;
+}
+
+.styles__CircularProgress-Text___18-H5 {
+	font-family: sans-serif;
+	font-size: 25px;
+	fill: #fff;
+
+	transform: translate(0 50%);
+}
+
+.styles__CircularProgress___1T1XA {
+	padding: 1em;
 }
 .SignIn__container___21TTy {
 	margin: auto;
@@ -354,7 +389,7 @@ html, body{
   height: 100%;
   width: 100%;
   margin: 0;
-	font-weight: 600;
+	font-weight: 500;
   font-family: 'HelveticaNeue-UltraLight', sans-serif;
   font-size: large;
 }

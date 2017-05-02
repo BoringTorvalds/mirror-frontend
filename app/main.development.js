@@ -44,7 +44,8 @@ const installExtensions = async () => {
 app.on('ready', async () => {
   await installExtensions();
 
-  mainWindow = new BrowserWindow({
+	mainWindow = new BrowserWindow({
+		'web-preferences': {'web-security': false},
     show: false,
     width: 1024,
     height: 728

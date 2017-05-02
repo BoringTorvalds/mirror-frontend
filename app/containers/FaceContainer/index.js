@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import * as messageTypes from './../../constants/SocketMessageTypes';
 import Webcam from './../../components/Webcam';
 import { updateTraining } from './../../actions/signup';
-import { detectNewFace, updateIdentity, addPersonFinished } from './../../actions/facialAuth';
+import { 
+	detectNewFace, 
+	updateIdentity, 
+	addPersonFinished,
+	addPersonFailure
+} from './../../actions/facialAuth';
 import { OPENFACE_SOCKET_ADDRESS } from './../../constants/config';
 import { Image } from 'react-bootstrap';
 import styles from './Login.css'
@@ -52,12 +57,13 @@ class FaceContainer extends Component {
 	}
 
 	componentDidMount() {
-		// let msg = localStorage.getItem('faces');
-		// if (msg) {
-		// 	msg = JSON.parse(msg);
-		// 	this.images = msg.images;
-		// 	this.people = msg.people;
-		// }
+		let msg = localStorage.getItem('faces');
+		if (msg) {
+			msg = JSON.parse(msg);
+			// console.log(msg);
+			this.images = msg.images;
+			this.people = msg.people;
+		}
 	}
 
 	updateState = () => {
@@ -67,7 +73,9 @@ class FaceContainer extends Component {
 			people: this.people,
 			training: this.props.training
 		};
-		// localStorage.setItem('faces', JSON.stringify(msg));
+		console.log("SAVE::::");
+		// console.log(localStorage.getItem('faces'));
+		localStorage.setItem('faces', JSON.stringify(msg));
     //
 	}
 
@@ -78,11 +86,17 @@ class FaceContainer extends Component {
 			people: this.people,
 			training: this.props.training
 		};
+		console.log(msg);
 
 		this.socket.send(JSON.stringify(msg));
 	}
 
 	_addPerson = (name) => {
+		if (this.people.indexOf(name) != -1) {
+			this.props.dispatch(addPersonFailure("Profile existed"));
+			return;
+		}
+
 		if (this.socket != null){
 			let msg = {
 				'type': 'ADD_PERSON',
@@ -92,15 +106,13 @@ class FaceContainer extends Component {
 			this.defaultPerson  = this.people.length;
 
 			this.people.push(name);
+			console.log("-----------");
+			console.log(this.people);
+			console.log("DEFAULT is " + this.defaultPerson);
+			console.log("------------");
 
 			this.socket.send(JSON.stringify(msg));
 		}
-	}
-
-
-	getIdentity = () => {
-		const len = this.people.length;
-		return this.people[len-1];
 	}
 
 	_sendFrameLoop() {
@@ -180,8 +192,8 @@ class FaceContainer extends Component {
 	 */
 	_onSocketMessage = (e) => {
 		const msg = JSON.parse(e.data);
-		console.log("----------------------------------");
-		console.log(msg.type);
+		// console.log("----------------------------------");
+		// console.log(msg.type);
 
 		switch(msg.type) {
 			case messageTypes.NULL:
@@ -296,7 +308,7 @@ class FaceContainer extends Component {
 		const {
 			training,
 			currentIdentity, 
-			hidden ,
+			hidden,
 			counts
 		} = this.props;
 		if (hidden){
@@ -315,12 +327,13 @@ class FaceContainer extends Component {
 				ref='webcam'
 				hidden
 			/> 
+			{ "Hi, " + this.props.person }
 			{ training ? "Training" : "Not Training"}
 			{ !training &&
 				<Image 
 					src={this.detectedFace} 
-					width="800" 
-					height="600"
+					width="400" 
+					height="300"
 					id={counts}
 				/> 
 			}

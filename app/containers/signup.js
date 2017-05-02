@@ -9,6 +9,7 @@ import {
 	Col,
 	Row
 } from 'react-bootstrap';
+import CircularProgress from './../components/CircularProgress';
 
 class SignUp extends Component {
 
@@ -21,19 +22,20 @@ class SignUp extends Component {
 			if (nextProps.counts === 10) {
 				setTimeout(()=> {
 					this.props.dispatch(updateProcessedCounts(0)) ;
-					this.props.dispatch(addPersonRequest());
 					this.props.dispatch(updateTraining(false));
 
 				}, 2000);
 			} else {
+
 				setTimeout(()=> {
-					this.props.dispatch(updateProcessedCounts(this.props.counts + 1));
-				},1000);
+					this.props.dispatch(updateProcessedCounts(this.props.counts + 0.5));
+				},500);
 			}
 		}
 	}
 	_renderCounts = () => {
-		return <div> {this.props.counts } </div>
+		const percentage = (this.props.counts / 10) * 100;
+		return <CircularProgress percentage={percentage} radius="80" strokeWidth="10"	/>
 	}
 	_renderStatus = () => {
 		const {person} = this.props;
@@ -51,7 +53,8 @@ class SignUp extends Component {
 	render() {
 		const connectionError = <h2> There's an issue connecting to OpenFace. <br /> Please refresh the app </h2>;
 		const containerStyle = {
-			padding: "15% 10%"
+			padding: "10% 5%",
+			textAlign: "center"
 		}
 		return(
 			<div style={containerStyle}>

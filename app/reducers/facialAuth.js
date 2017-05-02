@@ -4,7 +4,8 @@ import {
 	UPDATE_TRAINING,
 	ADD_PERSON_REQUEST,
 	ADD_PERSON_FINISHED,
-	FETCH_PERSON_NAME_SUCCESS
+	FETCH_PERSON_NAME_SUCCESS,
+	ADD_PERSON_FAILURE
 } from './../constants/ActionTypes';
 
 const initialState = {
@@ -29,6 +30,8 @@ export function facialAuth(state = initialState, action) {
 			return { ...state, add: true };
 		case ADD_PERSON_FINISHED:
 			return { ...state, add: false };
+		case ADD_PERSON_FAILURE:
+			return { ...state, error: action.error};
 		default:
 			return state;
 	}

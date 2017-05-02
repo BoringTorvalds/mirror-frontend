@@ -1,7 +1,6 @@
 .setting {
-	color: var(--primary-green);
-	position: absolute;
-	bottom: 10px;
+	color: #fff;
+	position: relative;
 }
 
 .inline {

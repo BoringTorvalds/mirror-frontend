@@ -56,7 +56,7 @@ class FeedsContainer extends Component {
 			<div>
 				<div className={styles.header}>
 					<img src={HNIcon} />
-					<div className={styles.align}> Hacker News </div>
+					<div className={styles.align}> TRENDING NEWS </div>
 				</div>
 				{stories}
 				<div 

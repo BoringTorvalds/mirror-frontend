@@ -31,7 +31,8 @@ class Webcam extends Component {
 
 	getCameraStream = () => {
 		return this.state.streamUrl;
-		// return "http://172.24.1.1:8080/stream/video.mjpeg"
+		// "http://172.24.1.1:8080/stream/video.mjpeg"
+		// return "http://53f2400e.ngrok.io/stream/video.mjpeg";
 	}
 
 	getScreenShot() {
@@ -72,6 +73,7 @@ class Webcam extends Component {
 				autoPlay
 			> 
 			</video>
+			// <img src={this.getCameraStream()} width="400" height="300" />
 		);
 	}
 }

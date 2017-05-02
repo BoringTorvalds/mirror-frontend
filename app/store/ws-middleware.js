@@ -3,7 +3,7 @@ import * as actions from './../actions/SocketActions';
 import * as types from './../constants/ActionTypes';
 import { parseNavigationRequest } from './../utils/AlexaParser';
 import { fetchStock } from './../actions/stock';
-import { updateTraining, fetchPersonName } from './../actions/facialAuth';
+import { updateTraining, addPersonRequest, fetchPersonName } from './../actions/facialAuth';
 
 
 /**
@@ -31,7 +31,7 @@ const wsMiddleware = (function(){
 			case 'training':
 				const option = msg.content == 'on';
 				console.log("DISPATCHING option :" + option);
-				store.dispatch(updateTraining(option))
+				store.dispatch(updateTraining(option));
 				break;
 			case 'navigation':
 				const route = parseNavigationRequest(msg.content);
@@ -50,6 +50,7 @@ const wsMiddleware = (function(){
 				console.log("Signing up a user with name: " + msg.content);
 				const name = msg.content;
 				store.dispatch(fetchPersonName(name));
+				store.dispatch(addPersonRequest());
 				break;
 		}
 	}

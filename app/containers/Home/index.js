@@ -23,7 +23,7 @@ class Home extends Component {
 	render() {
 		return (
 			<Grid>
-				<Row style={{marginBottom: "100"}}> 
+				<Row style={{marginBottom: "50"}}> 
 					<Col sm={4} md={4} lg={4}>
 						<WeatherContainer />
 					</Col>
@@ -34,15 +34,13 @@ class Home extends Component {
 				<Row>
 				</Row>
 				<Row>
-					<Col sm={5} md={5} lg={5}>
-						<StockContainer />
-					</Col>
 					<Col sm={7} md={7} lg={7}>
 						<FeedsContainer />
 					</Col>
-				</Row>
-				<Row>
-					<Setting />
+					<Col sm={5} md={5} lg={5}>
+						<StockContainer />
+					</Col>
+						{/* <Setting /> */}
 				</Row>
 			</Grid>
 		);

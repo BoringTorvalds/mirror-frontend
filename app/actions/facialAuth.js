@@ -4,6 +4,7 @@ import {
 	UPDATE_TRAINING,
 	ADD_PERSON_REQUEST,
 	ADD_PERSON_FINISHED,
+	ADD_PERSON_FAILURE,
 	FETCH_PERSON_NAME_SUCCESS
 } from './../constants/ActionTypes';
 
@@ -36,6 +37,13 @@ export function addPersonRequest() {
 export function addPersonFinished() {
 	return {
 		type: ADD_PERSON_FINISHED
+	}
+}
+
+export function addPersonFailure(err) {
+	return {
+		type: ADD_PERSON_FAILURE,
+		error: err
 	}
 }
 

@@ -10,7 +10,7 @@ class App extends Component {
 	render() {
 		return ( 
 			<div> 
-				<FaceContainer />
+				<FaceContainer  hidden/>
 				{this.props.children}
 			</div>
 		);
