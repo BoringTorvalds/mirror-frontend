@@ -18,6 +18,9 @@ class FaceFrame extends Component {
 		this.updateCanvas();
 	}
 
+	componentWillUnmount() {
+	}
+
 	updateCanvas = ()=> {
 		const ctx = this.refs.canvas.getContext('2d');
 		let {points,title} = this.props;
@@ -83,7 +86,12 @@ class FaceFrame extends Component {
 
 	render() {
 		return(
-			<canvas ref="canvas" width="1250" height="800" />
+			<canvas 
+				ref="canvas" 
+				width="1250" 
+				height="800" 
+				style={{position: "absolute"}}
+			/>
 		);
 	}
 }

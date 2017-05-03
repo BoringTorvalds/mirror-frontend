@@ -1,22 +1,3 @@
-.Webcam__videoel___vNVT4 {
-  -o-transform : scaleX(-1);
-  -webkit-transform : scaleX(-1);
-  transform : scaleX(-1);
-  -ms-filter : fliph; /*IE*/
-  filter : fliph; /*IE*/
-  position: absolute;
-  z-index: -1;
-	border-radius: 50%;
-}
-.Login__annotated___1hQ6D {
-  position: fixed;
-  z-index: 2;
-}
-
-.Login__Hide___11Hvd {
-	z-index: -1;
-	position: absolute;
-}
 
 .FeedsContainer__container___3VSCG {
 	padding: 2em 2em;
@@ -305,20 +286,6 @@
 		opacity: 0.2;
 	}
 }
-.Weather__temperature___2JjsU {
-	font-size: -webkit-xxx-large;
-	z-index: 2;
-	position: relative;
-	top: 1.0em;
-}
-
-.Weather__placeHolder___1-mF8 {
-	padding: 1.5em 2em;
-}
-
-.Weather__text___1zmAU {
-	text-align: center;
-}
 .Clock__container___IbOUL {
   color: #fff;
   font-size: xx-large;
@@ -334,13 +301,6 @@
 .Setting__inline___iPAnH {
 	display: inline;
 }
-body {
-    background-color: #000;
-    font-family: "HelveticaNeue-UltraLight";
-    color: #fff;
-}
-
-
 .Setting__container___2QIAL {
 	padding-top: 50%;
 	font-size: xx-large;

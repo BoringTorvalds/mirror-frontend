@@ -7,6 +7,7 @@ import {
 	detectNewFace, 
 	updateIdentity, 
 	addPersonFinished,
+	updateModels,
 	addPersonFailure
 } from './../../actions/facialAuth';
 import { OPENFACE_SOCKET_ADDRESS } from './../../constants/config';
@@ -27,7 +28,6 @@ window.requestAnimFrame = (function() {
 	};
 })();
 
-//const SOCKET_ADDRESS = "ws://34.208.16.120:9000";
 const DEFAULT_TOK= 1;
 const DEFAULT_NUMNULLS= 10;
 
@@ -46,7 +46,6 @@ class FaceContainer extends Component {
 		super(props);
 
 		this.socket = null;
-		this.detectedFace = null;
 		this.tok = DEFAULT_TOK;
 		this.defaultPerson = -1;
 		this.people = [];
@@ -57,26 +56,18 @@ class FaceContainer extends Component {
 	}
 
 	componentDidMount() {
-		// let msg = localStorage.getItem('faces');
-		// if (msg) {
-		// 	msg = JSON.parse(msg);
-		// 	// console.log(msg);
-		// 	this.images = msg.images;
-		// 	this.people = msg.people;
-		// }
+		let msg = this.props.openface;
+		this.images = msg.images;
+		this.people = msg.people;
 	}
 
 	updateState = () => {
 		const msg = {
-			type: 'ALL_STATE',
 			images: this.images,
 			people: this.people,
-			training: this.props.training
 		};
 		console.log("SAVE::::");
-		// console.log(localStorage.getItem('faces'));
-		// localStorage.setItem('faces', JSON.stringify(msg));
-		//
+		this.props.dispatch(updateModels(msg));
 	}
 
 	_sendState(){
@@ -210,7 +201,6 @@ class FaceContainer extends Component {
 			case messageTypes.ANNOTATED:
 				const {counts} = this.props;
 				this.props.dispatch(detectNewFace(msg["landmarks"]));
-				this.detectedFace = msg['content'];
 				console.log(msg["landmarks"]);
 				this.refs.face.updateCanvas();
 				break;
@@ -320,13 +310,6 @@ class FaceContainer extends Component {
 			top: "15%",
 			left: "15%"
 		};
-		// const f = <Image 
-		// 				src={this.detectedFace} 
-		// 				width="750" 
-		// 				height="550"
-		// 				style={annotatedStyle}
-		// 				alt={counts}
-		// 			/> 
 		return (
 			<div>
 				<Webcam 
@@ -354,7 +337,8 @@ FaceContainer.propTypes = {
 	currentIdentity: PropTypes.string,
 	add: PropTypes.boolean,
 	person: PropTypes.string,
-	hideFace: PropTypes.boolean
+	hideFace: PropTypes.boolean,
+	openface: PropTypes.object
 };
 
 const mapStateToProps = ({facialAuth}) => {

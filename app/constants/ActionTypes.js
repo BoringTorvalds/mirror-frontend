@@ -33,3 +33,4 @@ export const HIDE_FACE = "HIDE_FACE";
 export const SHOW_FACE = "SHOW_FACE";
 export const TRAINING_REQUEST = "TRAINING_REQUEST";
 export const TRAINING_FINISHED = "TRAINING_FINISHED";
+export const UPDATE_MODELS = "UPDATE_MODELS";

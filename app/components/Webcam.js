@@ -15,7 +15,8 @@ class Webcam extends Component {
 	}
 
 	componentWillUnmount() {
-		this.mediaStream.stop();
+		// window.alert("UNMOUNTING WEBCAM");
+		// this.mediaStream.stop();
 	}
 
 
@@ -29,9 +30,9 @@ class Webcam extends Component {
 	}
 
 	getCameraStream = () => {
-		return this.state.streamUrl;
+		//return this.state.streamUrl;
 		// "http://172.24.1.1:8080/stream/video.mjpeg"
-		// return "http://496704bd.ngrok.io/stream/video.mjpeg";
+		return "http://496704bd.ngrok.io/stream/video.mjpeg";
 		// return "http://raspberrypi:8080/stream/video.mjpeg";
 	}
 
@@ -63,16 +64,17 @@ class Webcam extends Component {
 			"top": "-99999px",
 			"bottom": "-99999px"
 		} : null;
+
+			// <video
+			// 	src={ this.getCameraStream() } 
+			// 	width="400" 
+			// 	height="300"  
+			// 	style={hiddenStyle}
+			// 	autoPlay
+			// > 
+			// </video>
 		return(
-			<video
-				src={ this.getCameraStream() } 
-				width="400" 
-				height="300"  
-				style={hiddenStyle}
-				autoPlay
-			> 
-			</video>
-			// <img src={this.getCameraStream()} width="400" height="300" alt="image" />
+			 <img src={this.getCameraStream()} width="400" height="300" alt="image" />
 		);
 	}
 }

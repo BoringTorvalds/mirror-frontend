@@ -9,7 +9,11 @@ const initialState = {
 	person: null,
 	add: false,
 	trainingRequest: false,
-	trainingFinished: false
+	trainingFinished: false,
+	openface: {
+		images:[],
+		people:[]
+	}
 };
 
 export function facialAuth(state = initialState, action) {
@@ -18,8 +22,12 @@ export function facialAuth(state = initialState, action) {
 			return { ...state, counts: state.counts + 1, face: action.face };
 		case ActionTypes.FETCH_PERSON_NAME_SUCCESS:
 			return { ...state, person: action.person };
-		case ActionTypes.UPDATE_IDENTITY:
+		case ActionTypes.UPDATE_IDENTITY:{
 			return { ...state, currentIdentity: action.identity };
+		}
+		case ActionTypes.UPDATE_MODELS:{
+			return {...state, openface: action.openface };
+		}
 		case ActionTypes.UPDATE_TRAINING:
 			return { ...state, training: action.training };
 		case ActionTypes.ADD_PERSON_REQUEST:

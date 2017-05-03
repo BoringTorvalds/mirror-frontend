@@ -14,6 +14,13 @@ export function updateIdentity(newIdentity) {
 	}
 }
 
+export function updateModels(openface) {
+	return {
+		type: UPDATE_MODELS,
+		openface: openface
+	}
+}
+
 export function updateTraining(status) {
 	return {
 		type: ActionTypes.UPDATE_TRAINING,
