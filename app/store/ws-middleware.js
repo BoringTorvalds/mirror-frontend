@@ -77,7 +77,7 @@ const wsMiddleware = (function(){
 				socket.onmessage = onSocketMessage(socket, store);
 				socket.onopen = onSocketOpen(socket, store, action.token);
 				socket.onclose = onSocketClose(socket, store);
-				console.log("Socket connected");
+				window.alert(socket);
 				break;
 
 			case types.DISCONNECT:

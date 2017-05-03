@@ -11,7 +11,7 @@ class Webcam extends Component {
 	}
 
 	componentDidMount() {
-		//this.loadCameraStream();
+		//		this.loadCameraStream();
 		this.echoUpdate();
 	}
 
@@ -41,10 +41,10 @@ class Webcam extends Component {
 	}
 
 	getCameraStream = () => {
-		//return this.state.streamUrl;
+		return this.state.streamUrl;
 		// "http://172.24.1.1:8080/stream/video.mjpeg"
 		//return "http://496704bd.ngrok.io/stream/video.mjpeg";
-		return "http://raspberrypi:8080/stream/video.mjpeg";
+		//return "http://raspberrypi:8080/stream/video.mjpeg";
 	}
 
 	getScreenShot() {
@@ -76,7 +76,7 @@ class Webcam extends Component {
 			"bottom": "-99999px"
 		} : null;
 
-			// <video
+			// return(<video
 			// 	src={ this.getCameraStream() } 
 			// 	width="400" 
 			// 	height="300"  
@@ -84,6 +84,7 @@ class Webcam extends Component {
 			// 	autoPlay
 			// > 
 			// </video>
+			// );
 		return(
 			 <img src={this.getCameraStream()} width="400" height="300" alt="image" />
 		);

@@ -1,8 +1,7 @@
 
-
 export const connected = () => ({
-  type: 'CONNECTED'
-})
+	type: 'CONNECTED'
+});
 
 export function connecting() {
     return {

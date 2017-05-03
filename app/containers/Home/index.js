@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
-
 import FeedsContainer from './../FeedsContainer';
 import WeatherContainer from './../WeatherContainer';
 import Clock from './../../components/Clock';
@@ -42,7 +41,8 @@ class Home extends Component {
 						<StockContainer />
 					</Col>
 						{/* <Setting /> */}
-				</Row>
+					</Row>
+					<Setting />
 			</Grid>
 		);
 	}

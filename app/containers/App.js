@@ -18,6 +18,8 @@ class App extends Component {
 		`;
 		return ( 
 			<Container> 
+				{ this.props.ws.connected ? "Connected": "Not connected"};
+				{ this.props.ws.connecting ? "Connecting" : "Connecting"};
 				<FaceContainer />
 				{this.props.children}
 			</Container>
@@ -27,7 +29,8 @@ class App extends Component {
 }
 
 App.propTypes = {
-	children: HTMLElement
+	children: HTMLElement,
+	ws: PropTypes.object
 }
-
-export default connect()(App);
+const mapStateToProps = ({ws}) =>({ws: ws});
+export default connect(mapStateToProps)(App);

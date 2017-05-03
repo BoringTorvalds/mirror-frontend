@@ -77,9 +77,9 @@
     "url": "git+https://github.com/chentsulin/electron-react-boilerplate.git"
   },
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "Nhat Dao",
+    "email": "daoanhnhat1995@gmail.com",
+    "url": "https://github.com/daoanhnha1995"
   },
   "license": "MIT",
   "bugs": {
@@ -194,7 +194,8 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "source-map-support": "^0.4.10",
-    "styled-components": "^1.4.6"
+    "styled-components": "^1.4.6",
+    "ws": "^2.3.1"
   },
   "devEngines": {
     "node": ">=6.x",
