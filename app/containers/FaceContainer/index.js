@@ -11,7 +11,7 @@ import {
 } from './../../actions/facialAuth';
 import { OPENFACE_SOCKET_ADDRESS } from './../../constants/config';
 import { Image } from 'react-bootstrap';
-import styles from './Login.css'
+import FaceFrame from './../../components/FaceFrame';
 
 /**
  * Request new frames to rerender annotated frames
@@ -209,8 +209,10 @@ class FaceContainer extends Component {
 
 			case messageTypes.ANNOTATED:
 				const {counts} = this.props;
-				this.props.dispatch(detectNewFace());
+				this.props.dispatch(detectNewFace(msg["landmarks"]));
 				this.detectedFace = msg['content'];
+				console.log(msg["landmarks"]);
+				this.refs.face.updateCanvas();
 				break;
 
 			case messageTypes.NEW_IMAGE:
@@ -312,37 +314,42 @@ class FaceContainer extends Component {
 			counts,
 			person
 		} = this.props;
-		if (hideFace){
-			return <div> 
+
+		const annotatedStyle = {
+			position: "relative",
+			top: "15%",
+			left: "15%"
+		};
+		// const f = <Image 
+		// 				src={this.detectedFace} 
+		// 				width="750" 
+		// 				height="550"
+		// 				style={annotatedStyle}
+		// 				alt={counts}
+		// 			/> 
+		return (
+			<div>
 				<Webcam 
 					ref='webcam'
 					hidden
 				/> 
+				{ !hideFace && 
+					!training &&
+					<FaceFrame 
+						ref="face"
+						points={this.props.face} 
+						title={currentIdentity}
+					/>
+				}
 			</div>
-		}
-
-		return (<div>
-			<Webcam 
-				ref='webcam'
-				hidden
-			/> 
-			{ !training &&
-				<Image 
-					src={this.detectedFace} 
-					width="750" 
-					height="550"
-					style={{"position":"absolute", "zIndex":"-1", "left": "10%"}}
-					id={counts}
-				/> 
-			}
-
-		</div>);
+		);
 	}
 
 }
 
 FaceContainer.propTypes = {
 	counts: PropTypes.number,
+	face: PropTypes.any,
 	training: PropTypes.boolean,
 	currentIdentity: PropTypes.string,
 	add: PropTypes.boolean,

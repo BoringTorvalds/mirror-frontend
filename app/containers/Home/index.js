@@ -8,7 +8,6 @@ import Clock from './../../components/Clock';
 import Setting from './../../components/Setting';
 import StockContainer from './../StockContainer';
 
-import styles from './Home.css';
 import {
 	Grid,
 	Col,

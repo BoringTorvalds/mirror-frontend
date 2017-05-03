@@ -1,8 +1,9 @@
 import * as ActionTypes from './../constants/ActionTypes';
 
-export function detectNewFace() {
+export function detectNewFace(points) {
 	return {
-		type: ActionTypes.NEW_FACE_DETECTED
+		type: ActionTypes.NEW_FACE_DETECTED,
+		face: points
 	}
 }
 

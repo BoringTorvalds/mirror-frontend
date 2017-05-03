@@ -1,11 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { Grid, Row, Col } from 'react-bootstrap';
 import AnimatedIcon from './AnimatedIcon';
-import {
-	Grid,
-	Row,
-	Col
-} from 'react-bootstrap';
-import styles from './Weather.css';
+import styled from 'styled-components';
 
 
 const formatTemperature = (degrees, format) => {
@@ -25,22 +21,37 @@ class Weather extends Component {
 			current
 		} = this.props;
 
+		const Temperature = styled.div`
+			font-size: -webkit-xxx-large;
+			z-index: 2;
+			position: relative;
+			top: 1.0em;
+		`;
+
+		const PlaceHolder = styled.div`
+			padding: 1.5em 2em;
+		`;
+
+		const Text = styled.p`
+			text-align: center;
+		`;
+
 		return(
 			<Grid fluid>
 				<Row>
 				</Row>
 				<Row>
-					<div className={styles.temperature}>
+					<Temperature>
 						{ formatTemperature(current.temperature,'F') }
-					</div>
+					</Temperature>
 					<AnimatedIcon iconType={iconType} />
 				</Row>
 				<Row>
-					<div className={styles.placeHolder}> </div>
+					<PlaceHolder> </PlaceHolder>
 				</Row>
 				<Row>
-					<p className={styles.text}> Arlington, Tx </p>
-					<p className={styles.text}>{ summary } </p>
+					<Text> Arlington, TX </Text>
+					<Text>{ summary } </Text>
 				</Row>
 			</Grid>
 		);

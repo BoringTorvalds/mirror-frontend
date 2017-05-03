@@ -1,19 +1,14 @@
 import React, {Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { connected } from './../actions/websocket';
-import { updateProcessedCounts } from './../actions/signup';
+import styled from 'styled-components';
 import { 
 	showFace, 
 	updateTraining, 
 	addPersonRequest,
 	trainingFinished
 } from './../actions/facialAuth';
-
-import {
-	Grid,
-	Col,
-	Row
-} from 'react-bootstrap';
+import { updateProcessedCounts } from './../actions/signup';
+import {Grid, Col, Row} from 'react-bootstrap';
 import CircularProgress from './../components/CircularProgress';
 
 class SignUp extends Component {
@@ -44,28 +39,41 @@ class SignUp extends Component {
 	}
 	_renderStatus = () => {
 		const {
-			person
-		}
-		= this.props;
+			person,
+			trainingRequest,
+			trainingFinished,
+			training
+		} = this.props;
 		if (person !== null) {
 			this.props.dispatch(showFace());
-			return <h2> Hi {person}, <br/> Say "I'm Ready" to Alexa when you're ready </h2>
+			if (training){
+				return this._renderCounts();
+			} else if (!trainingFinished) {
+				return <h2> Hi {person}, <br/> Say "I'm Ready" to Alexa when you're ready </h2>
+			} else if (trainingFinished) {
+				return <h2> Your profile has been saved ! </h2>
+			}
 		}
 		return <h2> Please tell Alexa your name. </h2>
 	}
 	render() {
 		const connectionError = <h2> There's an issue connecting to OpenFace. <br /> Please refresh the app </h2>;
-		const containerStyle = {
-			padding: "5% 5%",
-			textAlign: "center"
-		}
+		const StatusContainer = styled.div`
+			text-align: center;
+			width: 100%;
+		`;
+		const Text = styled.div`
+			position: absolute;
+			top: 600px;
+			width: 100%;
+			text-align: center;
+		`;
 		return(
-			<div style={containerStyle}>
-				<Grid>
+			<StatusContainer>
+				<Text>
 					{this._renderStatus()}
-				</Grid>
-				{ this.props.training && this._renderCounts() }
-			</div>
+				</Text>
+			</StatusContainer>
 		);
 	}
 }

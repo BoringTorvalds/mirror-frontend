@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import FaceContainer from './FaceContainer';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
+
+import FaceContainer from './FaceContainer';
 
 class App extends Component {
 	constructor(props) {
@@ -8,11 +10,17 @@ class App extends Component {
 	}
 
 	render() {
+		const Container = styled.div`
+		background-color: #000;
+		font-family: "HelveticaNeue-UltraLight";
+		color: #fff;
+		min-height: 1000px;
+		`;
 		return ( 
-			<div> 
+			<Container> 
 				<FaceContainer />
 				{this.props.children}
-			</div>
+			</Container>
 		);
 	}
 

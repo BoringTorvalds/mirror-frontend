@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import styles from './Webcam.css';
 
 class Webcam extends Component {
 	constructor(props) {
@@ -59,7 +58,6 @@ class Webcam extends Component {
 
 
 	render() {
-		console.log(this.props);
 		const hiddenStyle =  this.props.hidden ? {
 			"position" : "absolute",
 			"top": "-99999px",

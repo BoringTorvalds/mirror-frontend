@@ -3,6 +3,7 @@ import * as ActionTypes from './../constants/ActionTypes';
 const initialState = {
 	training: false,
 	hideFace: true,
+	face: [],
 	counts: 0,
 	currentIdentity: "Unknown person",
 	person: null,
@@ -14,7 +15,7 @@ const initialState = {
 export function facialAuth(state = initialState, action) {
 	switch (action.type) {
 		case ActionTypes.NEW_FACE_DETECTED:
-			return { ...state, counts: state.counts + 1 };
+			return { ...state, counts: state.counts + 1, face: action.face };
 		case ActionTypes.FETCH_PERSON_NAME_SUCCESS:
 			return { ...state, person: action.person };
 		case ActionTypes.UPDATE_IDENTITY:
