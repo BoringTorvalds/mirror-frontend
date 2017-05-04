@@ -6,8 +6,7 @@ import Spinner from './../../components/Spinner';
 import HNStoryListItem from './../../components/HNStoryListItem';
 import NewsIcon from './news-icon.png';
 import HNIcon from './hn-icon.png';
-import styles from './FeedsContainer.css';
-
+import styled from 'styled-components';
 class FeedsContainer extends Component {
 	constructor(props) {
 		super(props);
@@ -45,6 +44,15 @@ class FeedsContainer extends Component {
 
 	renderhn = (items) => {
 		const {pagination} = this.props;
+		const InlineText = styled.div`
+			display: inline;
+		`;
+		const HeaderText = styled.div`
+			position: relative;
+			font-size: large;
+			margin-bottom: 15px;
+			color: #fff;
+		`;
 		const stories = items.map((each,ind) => 
 			<HNStoryListItem 
 				key={each.id} 
@@ -52,19 +60,17 @@ class FeedsContainer extends Component {
 				{...each} 
 			/> 
 		);
+
 		return (
 			<div>
-				<div className={styles.header}>
+				<HeaderText>
 					<img src={HNIcon} />
-					<div className={styles.align}> TRENDING NEWS </div>
-				</div>
+					<InlineText> TRENDING NEWS </InlineText>
+				</HeaderText>
 				{stories}
-				<div 
-					onClick={this._fetchFeeds}
-					className={styles.header}
-				> 
-					Show More 
-				</div>
+				<HeaderText onClick={this._fetchFeeds}> Show More 
+
+				</HeaderText>
 			</div>
 		)
 	}
@@ -77,18 +83,22 @@ class FeedsContainer extends Component {
 			pagination
 		} = this.props;
 
+		const Container = styled.div`
+				padding: 2em 2em;
+		`;
+
 
 		if (isFetched && items.length > 0){
 			return(
-				<div className={styles.container}>
+				<Container>
 					{this.renderhn(items)}
-				</div>
+				</Container>
 			);
 		} else {
 			return (
-				<div className={styles.container}>
+				<Container>
 					{	this.renderEmptyView()}
-				</div>
+				</Container>
 			);
 		}
 	}
@@ -106,7 +116,7 @@ FeedsContainer.propTypes = {
 const mapStateToProps = ({hn}) => {
 	return {
 		...hn,
-		offSet: hn.pagination.offSet
+	offSet: hn.pagination.offSet
 	}
 };
 
