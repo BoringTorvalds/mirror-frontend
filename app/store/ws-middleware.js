@@ -11,9 +11,9 @@ import {
 	addPersonRequest, 
 	fetchPersonName ,
 	trainingRequest,
-	resetModel
+	resetModel,
 } from './../actions/facialAuth';
-
+import { fetchLocationWeather, fetchFullWeather } from './../actions/weather';
 
 /**
  * This socket communicate with Event Emitter server 
@@ -63,8 +63,16 @@ const wsMiddleware = (function(){
 			// Display weather of specific location
 			case 'weather':
 				const location = msg.content;
+				store.dispatch(fetchLocationWeather(location));
 				break;
-			// Display stock
+				// Display stock
+			case 'full_weather':
+				if (msg.content == 'off') {
+					store.dispatch(fetchFullWeather({width: null, height: null}));
+				} else {
+					store.dispatch(fetchFullWeather({width: "1000", height: "2000"}));
+				}
+				break;
 			case 'stock':
 				console.log('stock' + msg.content);
 				const stockName = msg.content;

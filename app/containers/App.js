@@ -19,7 +19,7 @@ class App extends Component {
 		return ( 
 			<Container> 
 				{/* { this.props.ws.connected ? "Connection OK": "Not connected"}; */}
-				<FaceContainer />
+				{/* <FaceContainer /> */}
 				{this.props.children}
 			</Container>
 		);
