@@ -13,6 +13,7 @@ import {
 	trainingRequest,
 	resetModel,
 } from './../actions/facialAuth';
+import { fetchPagination } from './../actions/hn';
 import { fetchLocationWeather, fetchFullWeather } from './../actions/weather';
 
 /**
@@ -85,6 +86,13 @@ const wsMiddleware = (function(){
 				store.dispatch(fetchPersonName(name));
 				store.dispatch(addPersonRequest());
 				break;
+			case 'feeds':
+				if (msg.content == 'more') {
+					store.dispatch(fetchPagination({next: true, previous: false}));
+				} else if (msg.content == 'previous'){
+					store.dispatch(fetchPagination({previous: true, next:false }));
+				}
+
 		}
 	}
 

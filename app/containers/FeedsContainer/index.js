@@ -1,11 +1,7 @@
-import React, { Component, PropTypes } from 'react'; 
-import { connect } from 'react-redux';
-import {
-	PAGE_SIZE
-} from './../../constants/config';
-import {
-	fetchAllItems
-} from './../../actions/hn';
+import React, {Component, PropTypes} from 'react'; 
+import {connect} from 'react-redux';
+import {PAGE_SIZE} from './../../constants/config';
+import {fetchAllItems, fetchPagination } from './../../actions/hn';
 import Spinner from './../../components/Spinner';
 import HNStoryListItem from './../../components/HNStoryListItem';
 import NewsIcon from './news-icon.png';
@@ -15,15 +11,19 @@ import styles from './FeedsContainer.css';
 class FeedsContainer extends Component {
 	constructor(props) {
 		super(props);
-		this.filter = {
-			offSet: 0,
-			pageSize: PAGE_SIZE
-		};
 	}
 
 	componentDidMount() {
-		this.props.dispatch(fetchAllItems())
+		const { pagination } = this.props;
+		this.props.dispatch(fetchAllItems(pagination));
 	}
+
+	componentWillReceiveProps(nextProps) {
+		if (this.props.offSet != nextProps.offSet) {
+			nextProps.dispatch(fetchAllItems(nextProps.pagination));
+		}
+	}
+
 
 	renderEmptyView() {
 		return (
@@ -40,15 +40,15 @@ class FeedsContainer extends Component {
 	 * Fetch next stories of next page
 	 */
 	_fetchFeeds = () => {
-		this.filter.offSet++;
-		this.props.dispatch(fetchAllItems(this.filter));
+		this.props.dispatch(fetchPagination({next: true, previous: false}));
 	}
 
 	renderhn = (items) => {
+		const {pagination} = this.props;
 		const stories = items.map((each,ind) => 
 			<HNStoryListItem 
 				key={each.id} 
-				i={parseInt(ind + this.filter.offSet*this.filter.pageSize)} 
+				i={parseInt(ind + pagination.offSet*pagination.pageSize)} 
 				{...each} 
 			/> 
 		);
@@ -73,24 +73,40 @@ class FeedsContainer extends Component {
 		const {
 			isFetching,
 			isFetched,
-			items
-		} = this.props.hn;
-		return(
-			<div className={styles.container}>
-				{ isFetched && this.renderhn(items) }
-				{ isFetching &&  this.renderEmptyView() }
-			</div>
-		)
+			items,
+			pagination
+		} = this.props;
+
+
+		if (isFetched && items.length > 0){
+			return(
+				<div className={styles.container}>
+					{this.renderhn(items)}
+				</div>
+			);
+		} else {
+			return (
+				<div className={styles.container}>
+					{	this.renderEmptyView()}
+				</div>
+			);
+		}
 	}
 }
 
 FeedsContainer.propTypes = {
-	hn: PropTypes.object
+	isFetched: PropTypes.boolean,
+	isFetching: PropTypes.boolean,
+	items: PropTypes.any,
+	pagination: PropTypes.object,
+	offSet: PropTypes.number
 };
 
-const mapStateToProps = (state) => {
+
+const mapStateToProps = ({hn}) => {
 	return {
-		hn: state.hn
+		...hn,
+		offSet: hn.pagination.offSet
 	}
 };
 
