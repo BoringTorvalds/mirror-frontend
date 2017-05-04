@@ -20,12 +20,6 @@ class Webcam extends Component {
 
 	echoUpdate = () => {
 		this.forceUpdate();
-		setTimeout(() => echo2Update(),1000/60);
-	}
-
-	echo2Update = () => {
-		this.forceUpdate();
-		setTimeout(() => echoUpdate(),1000/60);
 	}
 
 	componentWillUnmount() {

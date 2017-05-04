@@ -77,3 +77,20 @@ export function trainingFinished() {
 		type: ActionTypes.TRAINING_FINISHED
 	}
 }
+
+export function resetModel() {
+	const resetModel = {
+		training: false,
+		hideFace: true,
+		face: [],
+		counts: 0,
+		isTrainingRequest: false,
+		isTrainingFinished: false,
+		add: false,
+		person: null
+	};
+	return {
+		type: ActionTypes.RESET_MODEL,
+		model: resetModel
+	}
+}

@@ -1,6 +1,8 @@
 import React, {Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import {Grid, Col, Row} from 'react-bootstrap';
+import CircularProgress from './../components/CircularProgress';
 import { 
 	showFace, 
 	updateTraining, 
@@ -8,9 +10,9 @@ import {
 	trainingFinished
 } from './../actions/facialAuth';
 import { updateProcessedCounts } from './../actions/signup';
-import {Grid, Col, Row} from 'react-bootstrap';
-import CircularProgress from './../components/CircularProgress';
 
+
+//@TODO : Merge signup reducer with facialAuth somehow
 class SignUpContainer extends Component {
 
 	constructor(props) {
@@ -40,20 +42,28 @@ class SignUpContainer extends Component {
 	_renderStatus = () => {
 		const {
 			person,
-			trainingRequest,
-			trainingFinished,
+			isTrainingRequest,
+			isTrainingFinished,
 			training
 		} = this.props;
+
 		if (person !== null) {
+			// Start with showing annotated frame drawn on canvas
 			this.props.dispatch(showFace());
+
+			// If training mode is turning on, start progress and counting
+			// Trigger request to training
 			if (training){
 				return this._renderCounts();
-			} else if (!trainingFinished) {
+			// If training is started 
+			} else if (!isTrainingFinished) {
 				return <h2> Hi {person}, <br/> Say "I'm Ready" to Alexa when you're ready </h2>
-			} else if (trainingFinished) {
+			// Once training is finished
+			} else if (isTrainingFinished) {
 				return <h2> Your profile has been saved ! </h2>
 			}
 		}
+		// First state 
 		return <h2> Please tell Alexa your name. </h2>
 	}
 	render() {
@@ -82,16 +92,16 @@ SignUpContainer.propTypes = {
 	training: PropTypes.boolean,
 	counts: PropTypes.number,
 	person: PropTypes.string,
-	trainingFinished: PropTypes.boolean,
-	trainingRequest: PropTypes.boolean
+	isTrainingFinished: PropTypes.boolean,
+	isTrainingRequest: PropTypes.boolean
 };
 
-const parseFacialAuth = ({training, person, trainingRequest, trainingFinished}) => {
+const parseFacialAuth = ({training, person, isTrainingRequest, isTrainingFinished}) => {
 	return {
 		training: training,
 		person: person,
-		trainingRequest: trainingRequest,
-		trainingFinished: trainingFinished
+		isTrainingRequest: isTrainingRequest,
+		isTrainingFinished: isTrainingFinished
 	};
 }
 const mapStateToProps = ({signup, facialAuth}) => {

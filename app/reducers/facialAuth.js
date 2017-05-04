@@ -8,8 +8,8 @@ const initialState = {
 	currentIdentity: "Unknown person",
 	person: null,
 	add: false,
-	trainingRequest: false,
-	trainingFinished: false,
+	isTrainingRequest: false,
+	isTrainingFinished: false,
 	openface: {
 		images:[],
 		people:[]
@@ -41,9 +41,11 @@ export function facialAuth(state = initialState, action) {
 		case ActionTypes.SHOW_FACE:
 			return { ...state, hideFace: false };
 		case ActionTypes.TRAINING_REQUEST:
-			return { ...state, trainingRequest: true, trainingFinished: false };
+			return { ...state, isTrainingRequest: true, isTrainingFinished: false };
 		case ActionTypes.TRAINING_FINISHED:
-			return { ...state, trainingFinished: true, trainingRequest: false };
+			return { ...state, isTrainingFinished: true, isTrainingRequest: false };
+		case ActionTypes.RESET_MODEL:
+			return { ...state, ...action.model };
 		default:
 			return state;
 	}

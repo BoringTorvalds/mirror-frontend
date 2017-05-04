@@ -10,7 +10,8 @@ import {
 	updateTraining, 
 	addPersonRequest, 
 	fetchPersonName ,
-	trainingRequest
+	trainingRequest,
+	resetModel
 } from './../actions/facialAuth';
 
 
@@ -35,7 +36,12 @@ const wsMiddleware = (function(){
 		let msg = JSON.parse(evt.data);
 		console.log(msg);
 
+		/**
+		 * Listen to events coming from EventEmitter socket
+		 * Dispatch to Redux state change and actions needed 
+		 */
 		switch(msg.type) {
+			// Set training on or off
 			case 'training':
 				const option = msg.content == 'on';
 				console.log("DISPATCHING option :" + option);
@@ -44,22 +50,27 @@ const wsMiddleware = (function(){
 					store.dispatch(trainingRequest());
 				}
 				break;
+			// Navigate to a page
 			case 'navigation':
 				const route = parseNavigationRequest(msg.content);
 				console.log("Navigating to" + route);
+				if (route == "/signup"){
+					store.dispatch(resetModel());
+				}
 				store.dispatch(push(route));
 				store.dispatch(actions.receiveMessage(evt.data));
 				break;
-
+			// Display weather of specific location
 			case 'weather':
 				const location = msg.content;
 				break;
+			// Display stock
 			case 'stock':
 				console.log('stock' + msg.content);
 				const stockName = msg.content;
 				store.dispatch(fetchStock(stockName));
 				break;
-
+			// Start signup with a given name
 			case 'signup':
 				console.log("Signing up a user with name: " + msg.content);
 				const name = msg.content;

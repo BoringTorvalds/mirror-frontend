@@ -201,7 +201,7 @@ class FaceContainer extends Component {
 			case messageTypes.ANNOTATED:
 				const {counts} = this.props;
 				this.props.dispatch(detectNewFace(msg["landmarks"]));
-				console.log(msg["landmarks"]);
+				// console.log(msg["landmarks"]);
 				this.refs.face.updateCanvas();
 				break;
 
