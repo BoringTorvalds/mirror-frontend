@@ -11,7 +11,7 @@ import { updateProcessedCounts } from './../actions/signup';
 import {Grid, Col, Row} from 'react-bootstrap';
 import CircularProgress from './../components/CircularProgress';
 
-class SignUp extends Component {
+class SignUpContainer extends Component {
 
 	constructor(props) {
 		super(props);
@@ -78,7 +78,7 @@ class SignUp extends Component {
 	}
 }
 
-SignUp.propTypes = {
+SignUpContainer.propTypes = {
 	training: PropTypes.boolean,
 	counts: PropTypes.number,
 	person: PropTypes.string,
@@ -102,4 +102,4 @@ const mapStateToProps = ({signup, facialAuth}) => {
 	}
 };
 
-export default connect(mapStateToProps)(SignUp);
+export default connect(mapStateToProps)(SignUpContainer);
