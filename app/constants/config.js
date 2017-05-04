@@ -10,3 +10,4 @@ export const WEATHER_API_ENDPOINT = "https://api.darksky.net/forecast/9e1bfc49cd
 export const DEFAULT_LAT = "32.7357";
 export const DEFAULT_LNG = "-97.1081";
 export const IS_VIDEO_STREAM = process.env.NODE_ENV == "development" ? true : false;
+export const GOOGLE_MAP_API="https://maps.googleapis.com/maps/api/geocode/json?address="

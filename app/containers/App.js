@@ -14,13 +14,12 @@ class App extends Component {
 		background-color: #000;
 		font-family: "HelveticaNeue-UltraLight";
 		color: #fff;
-		min-height: 1000px;
+		min-height: 1500px;
 		`;
 		return ( 
 			<Container> 
-				{ this.props.ws.connected ? "Connected": "Not connected"};
-				{ this.props.ws.connecting ? "Connecting" : "Connecting"};
-				<FaceContainer />
+				{/* { this.props.ws.connected ? "Connection OK": "Not connected"}; */}
+				{/* <FaceContainer /> */}
 				{this.props.children}
 			</Container>
 		);

@@ -3,6 +3,7 @@ import {
   FETCH_WEATHER_SUCCESS,
   FETCH_WEATHER_FAILURE
 } from './../constants/ActionTypes';
+import { GOOGLE_MAP_API } from './../constants/config';
 
 
 const parseWeatherObject = (d) => { 
@@ -45,4 +46,28 @@ export const fetchWeather = (url) => {
 	  .then(json => dispatch(fetchWeatherSuccess(parseWeatherObject(json))))
 	  .catch(error => dispatch(fetchWeatherFailure(error)))
   }
+}
+
+/**
+ * Parse Location from Google Map API
+ * @params {Array} results objects
+ *
+ * @return {Object} Location
+ *	@return {Number} Location.lat
+ *	@return {Number} Location.lng
+ */
+const parseLocationObject = ({results}) => {
+	if (results.length > 0) {
+		return { ...results[0].geometry.location, formatted_address: results[0].formatted_address};
+	} 
+	return {formatted_address:null, lng:null, lat: null};
+}
+export async function fetchLocation(location) {
+	try {
+	let response = await fetch(GOOGLE_MAP_API + location);
+	let locationObj = await response.json();
+	return parseLocationObject(locationObj);
+	} catch(error){
+		return error;
+	}
 }

@@ -18,7 +18,8 @@ class Weather extends Component {
 		const { 
 			iconType,
 			summary,
-			current
+			current,
+			currentLocation
 		} = this.props;
 
 		const Temperature = styled.div`
@@ -50,7 +51,7 @@ class Weather extends Component {
 					<PlaceHolder> </PlaceHolder>
 				</Row>
 				<Row>
-					<Text> Arlington, TX </Text>
+					<Text> { currentLocation }</Text>
 					<Text>{ summary } </Text>
 				</Row>
 			</Grid>
@@ -62,7 +63,8 @@ Weather.propTypes = {
 		iconType: PropTypes.string,
 		summary: PropTypes.object,
 		current: PropTypes.object.isRequired,
-		summary: PropTypes.string.isRequired
+		summary: PropTypes.string.isRequired,
+		currentLocation: PropTypes.string
 }
 
 export default Weather;

@@ -8,6 +8,8 @@ const SHAPE_MOUTH = [[49,50],[50,51],[51,52],[52,53],[53,54],[49,48],[49,31],[53
 const SHAPE_CONNECT = [[39,27],[27,42],[39,31],[42,35], [31,30],[35,30],[31,29],[35,29],[28,35]];
 const SHAPE_SURROUND = [[19,38],[38,21],[37,19],[37,17],[36,17],[36,0],[36,1],[2,31],[31,4],[48,4],[48,6],[6,58],[57,9],[55,11],[11,54],[54,13],[35,14],[14,45],[45,26],[44,24],[22,42],[42,23],[24,19],[20,23]];
 
+const w = window.outerWidth;
+const h = window.outerHeight;
 
 class FaceFrame extends Component {
 	constructor(props) {
@@ -24,8 +26,6 @@ class FaceFrame extends Component {
 	updateCanvas = ()=> {
 		const ctx = this.refs.canvas.getContext('2d');
 		let {points,title} = this.props;
-		const w = 1250;
-		const h = 800;
 		points = points.map((p) => [p[0]*w/400,p[1]*h/300]);
 
 		ctx.clearRect(0, 0, w, h);
@@ -88,8 +88,8 @@ class FaceFrame extends Component {
 		return(
 			<canvas 
 				ref="canvas" 
-				width="1250" 
-				height="800" 
+				width={w}
+				height={h}
 				style={{position: "absolute"}}
 			/>
 		);

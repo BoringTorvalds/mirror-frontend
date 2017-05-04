@@ -24,7 +24,7 @@ window.requestAnimFrame = (function() {
 		window.oRequestAnimationFrame ||
 		window.msRequestAnimationFrame ||
 		function(callback, element) {
-		return window.setTimeout(callback, 1000/100);
+		return window.setTimeout(callback, 1000/500);
 	};
 })();
 
@@ -134,7 +134,7 @@ class FaceContainer extends Component {
 		}
 
 		let sendFrameLoop = this._sendFrameLoop.bind(this);
-		window.setTimeout(function(){ window.requestAnimFrame(sendFrameLoop) }, 60);
+		window.setTimeout(function(){ window.requestAnimFrame(sendFrameLoop) }, 1000/500);
 	}
 
 	_screenShot(){

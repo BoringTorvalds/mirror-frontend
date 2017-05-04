@@ -51,6 +51,9 @@ const wsMiddleware = (function(){
 				store.dispatch(actions.receiveMessage(evt.data));
 				break;
 
+			case 'weather':
+				const location = msg.content;
+				break;
 			case 'stock':
 				console.log('stock' + msg.content);
 				const stockName = msg.content;
