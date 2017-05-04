@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './Clock.css';
+import styled from 'styled-components';
 
 class Clock extends Component {
 
@@ -21,8 +21,8 @@ class Clock extends Component {
 	}
 
 	/**
-	 *
 	 * Update clock state with new time
+	 *
 	 */
 	updateClock() {
 		const currentTime = this._getTime();
@@ -78,8 +78,16 @@ class Clock extends Component {
 			date
 		} = this.state;
 
+		const ClockContainer = styled.div`
+			color: #fff;
+			font-size: xx-large;
+			float: right;
+			top: 1em; 
+			position: relative;
+		`;
+
 		return(
-			<div className={styles.container}>
+			<ClockContainer>
 				{ this.props.title } <br />
 				{ dayOfWeek }, { month } { date } <br/> 
 				{
@@ -91,7 +99,7 @@ class Clock extends Component {
 					seconds > 9 ? seconds: `0${seconds}`
 				} {ampm} <br/>
 
-			</div>
+			</ClockContainer>
 		);
 	}
 }

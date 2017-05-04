@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import styles from './Setting.css';
+import styled from 'styled-components';
 import settingIcon from './setting-icon.png';
 
 export default class Setting extends Component {
@@ -9,12 +9,20 @@ export default class Setting extends Component {
 	}
 
 	render(){
+		const Setting = styled.div`
+			color: #fff;
+			position: relative;
+		`;
+		const Text = styled.p`
+			display: inline;
+		`;
+			
 		return(
 			<Link to="/setting">
-				<div className={styles.setting}>
+				<Setting>
 					<img src={settingIcon} />
-					<p className={styles.inline}> echo "Mirror, show my settings" </p>
-				</div>
+					<Text> echo "Mirror, show my settings" </Text>
+				</Setting>
 			</Link>
 		)
 	}

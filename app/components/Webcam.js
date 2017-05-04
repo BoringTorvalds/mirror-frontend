@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
+import { IS_VIDEO_STREAM } from './../constants/config';
 
 class Webcam extends Component {
 	constructor(props) {
@@ -11,18 +12,20 @@ class Webcam extends Component {
 	}
 
 	componentDidMount() {
-		//		this.loadCameraStream();
+		if (IS_VIDEO_STREAM) {
+			this.loadCameraStream();
+		}
 		this.echoUpdate();
 	}
 
 	echoUpdate = () => {
 		this.forceUpdate();
-		setTimeout(() => echo2Update(),200);
+		setTimeout(() => echo2Update(),1000/60);
 	}
 
 	echo2Update = () => {
 		this.forceUpdate();
-		setTimeout(() => echoUpdate(),200);
+		setTimeout(() => echoUpdate(),1000/60);
 	}
 
 	componentWillUnmount() {
@@ -44,6 +47,9 @@ class Webcam extends Component {
 		// return this.state.streamUrl;
 		// "http://172.24.1.1:8080/stream/video.mjpeg"
 		//return "http://496704bd.ngrok.io/stream/video.mjpeg";
+		if (IS_VIDEO_STREAM) {
+			return this.state.streamUrl;
+		}
 		return "http://raspberrypi:8080/stream/video.mjpeg";
 	}
 
@@ -75,19 +81,21 @@ class Webcam extends Component {
 			"top": "-99999px",
 			"bottom": "-99999px"
 		} : null;
-
-			// return(<video
-			// 	src={ this.getCameraStream() } 
-			// 	width="400" 
-			// 	height="300"  
-			// 	style={hiddenStyle}
-			// 	autoPlay
-			// > 
-			// </video>
-			// );
-		return(
-			 <img src={this.getCameraStream()} width="400" height="300" alt="image" />
-		);
+		if (IS_VIDEO_STREAM) {
+			return(<video
+				src={ this.getCameraStream() } 
+				width="400" 
+				height="300"  
+				style={hiddenStyle}
+				autoPlay
+			> 
+			</video>
+			);
+		} else {
+			return(
+				<img src={this.getCameraStream()} width="400" height="300" alt="image" />
+			);
+		}
 	}
 }
 

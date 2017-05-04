@@ -1,18 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as messageTypes from './../../constants/SocketMessageTypes';
-import Webcam from './../../components/Webcam';
-import { updateTraining } from './../../actions/signup';
+import * as messageTypes from './../constants/SocketMessageTypes';
+import Webcam from './../components/Webcam';
+import { updateTraining } from './../actions/signup';
 import { 
 	detectNewFace, 
 	updateIdentity, 
 	addPersonFinished,
 	updateModels,
 	addPersonFailure
-} from './../../actions/facialAuth';
-import { OPENFACE_SOCKET_ADDRESS } from './../../constants/config';
+} from './../actions/facialAuth';
+import { OPENFACE_SOCKET_ADDRESS } from './../constants/config';
 import { Image } from 'react-bootstrap';
-import FaceFrame from './../../components/FaceFrame';
+import FaceFrame from './../components/FaceFrame';
 
 /**
  * Request new frames to rerender annotated frames

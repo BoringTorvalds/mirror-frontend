@@ -1,9 +1,0 @@
-.annotated {
-  position: fixed;
-  z-index: 2;
-}
-
-.Hide {
-	z-index: -1;
-	position: absolute;
-}
