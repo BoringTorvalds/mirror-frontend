@@ -3,7 +3,7 @@ import { EVENT_SERVER_SOCKET_ADDRESS } from './../constants/config';
 import * as actions from './../actions/SocketActions';
 import * as types from './../constants/ActionTypes';
 import { parseNavigationRequest } from './../utils/AlexaParser';
-import { fetchStock } from './../actions/stock';
+import { fetchStock, fetchStockSymbol } from './../actions/stock';
 import { 
 	hideFace, 
 	showFace, 
@@ -74,11 +74,6 @@ const wsMiddleware = (function(){
 					store.dispatch(fetchFullWeather({width: "1000", height: "2000"}));
 				}
 				break;
-			case 'stock':
-				console.log('stock' + msg.content);
-				const stockName = msg.content;
-				store.dispatch(fetchStock(stockName));
-				break;
 			// Start signup with a given name
 			case 'signup':
 				console.log("Signing up a user with name: " + msg.content);
@@ -92,7 +87,15 @@ const wsMiddleware = (function(){
 				} else if (msg.content == 'previous'){
 					store.dispatch(fetchPagination({previous: true, next:false }));
 				}
-
+				break;
+			case 'stock':
+				// Look up stock
+				const content = msg.content.split('/');
+				store.dispatch(fetchStockSymbol({
+					symbol: content[1],
+					title: content[0],
+					exchange: content[2]
+				}));
 		}
 	}
 

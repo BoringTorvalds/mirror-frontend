@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
 	FETCH_STOCK_REQUEST,
 	FETCH_STOCK_FAILURE,
-	FETCH_STOCK_SUCCESS
+	FETCH_STOCK_SUCCESS,
+	FETCH_STOCK_SYMBOL
 } from './../constants/ActionTypes';
 
 export const fetchStockRequest = () => {
@@ -11,10 +12,24 @@ export const fetchStockRequest = () => {
 	}
 }
 
-export const fetchStockSuccess = (stock) => {
+export const fetchStockSymbol = (stock) => {
+	return {
+		type: FETCH_STOCK_SYMBOL,
+		stock: stock
+	}
+}
+
+const fetchStockSuccess = (stock) => {
 	return {
 		type: FETCH_STOCK_SUCCESS,
 		stock
+	}
+}
+
+const fetchStockFailure = (err) => {
+	return {
+		type: FETCH_STOCK_FAILURE,
+		err
 	}
 }
 
@@ -26,8 +41,9 @@ export const fetchStockSuccess = (stock) => {
 export const fetchStock = (stockName) => {
 	let url = 'http://dev.markitondemand.com/Api/v2/InteractiveChart/json';
 	if (!stockName) {
-		stockName = 'AAPL';
+		stockName = "AAPL";
 	}
+	console.log(stockName);
 	const params = {  
 		parameters: {
 			Normalized: false,

@@ -4,6 +4,7 @@ import axios from 'axios'
 import Trend from 'react-trend';
 import Spinner from './../components/Spinner';
 import { fetchStock } from './../actions/stock';
+import styled from 'styled-components';
 
 class StockContainer extends Component {
 	constructor(props) {
@@ -11,7 +12,16 @@ class StockContainer extends Component {
 	}
 
 	componentDidMount() {
-		this.props.dispatch(fetchStock());
+		const {symbol} = this.props;
+		console.log("SYMBOL : " + symbol);
+		this.props.dispatch(fetchStock(symbol));
+	}
+
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.symbol != this.props.symbol) {
+				nextProps.dispatch(fetchStock(nextProps.symbol));
+		}
 	}
 
 	_getStock = ({Elements}) => {
@@ -33,20 +43,29 @@ class StockContainer extends Component {
 		)
 	}
 
-	_getStockName = ({Elements}) => {
-		return Elements[0].Symbol;
-	}
-
 	render() {
 		const {
 			isFetched,
 			isFetching,
-			data
-		} = this.props.stock;
+			title,
+			symbol,
+			data,
+			exchange
+		} = this.props;
+
+		const SymbolText = styled.h2`
+			font-weight: bold;
+		`
+		const StockContainer = styled.div`
+			line-height: 0.5;
+		`;
 		if (isFetched) {
 			return(
 				<div> 
-					{this._getStockName(data)}
+					<StockContainer>
+					<SymbolText> { symbol } </SymbolText> <h3> { title } </h3>
+					<h3> { exchange } </h3>
+				</StockContainer>
 					<Trend 
 						data={this._getStock(data)} 
 						autoDraw
@@ -64,11 +83,14 @@ class StockContainer extends Component {
 	}
 }
 StockContainer.propTypes = {
-	stock: PropTypes.object
-}
-const mapStateToProps = (state) => {
-	return {
-		stock: state.stock
-	}
+	data: PropTypes.any,
+	title: PropTypes.string,
+	symbol: PropTypes.string,
+	exchange: PropTypes.string,
+	isFetched: PropTypes.boolean,
+	isFetching: PropTypes.boolean
+};
+const mapStateToProps = ({stock}) => {
+	return {...stock};
 }
 export default connect(mapStateToProps)(StockContainer);
