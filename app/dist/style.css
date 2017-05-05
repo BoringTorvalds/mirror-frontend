@@ -1,18 +1,3 @@
-
-.FeedsContainer__container___3VSCG {
-	padding: 2em 2em;
-}
-
-
-.FeedsContainer__align___1_ppc {
-	display: inline;
-}
-.FeedsContainer__header___3co4d {
-	position: relative;
-	font-size: large;
-	margin-bottom: 15px;
-	color: #fff;
-}
 .style__container___QMOA5 {
 	/* min-height: 20em; */
 	/* width: 25%; */
@@ -285,29 +270,6 @@
 		background: #fff;
 		opacity: 0.2;
 	}
-}
-.Clock__container___IbOUL {
-  color: #fff;
-  font-size: xx-large;
-	float: right;
-  top: 1em; 
-  /* right: 2em; */
-  position: relative;
-}.Setting__setting___3hv9K {
-	color: #fff;
-	position: relative;
-}
-
-.Setting__inline___iPAnH {
-	display: inline;
-}
-.Setting__container___2QIAL {
-	padding-top: 50%;
-	font-size: xx-large;
-}
-
-.Setting__textWhite___3qoLU {
-	color: white;
 }
 .styles__CircularProgress-Bg___2OMIW,
 .styles__CircularProgress-Fg___Ib1qJ {
