@@ -40,11 +40,11 @@ class Webcam extends Component {
 	getCameraStream = () => {
 		// return this.state.streamUrl;
 		// "http://172.24.1.1:8080/stream/video.mjpeg"
-		//return "http://496704bd.ngrok.io/stream/video.mjpeg";
 		if (IS_VIDEO_STREAM) {
 			return this.state.streamUrl;
 		}
 		return "http://raspberrypi:8080/stream/video.mjpeg";
+		// return "http://b7036544.ngrok.io/stream/video.mjpeg";
 	}
 
 	getScreenShot() {
@@ -87,7 +87,7 @@ class Webcam extends Component {
 			);
 		} else {
 			return(
-				<img src={this.getCameraStream()} width="400" height="300" alt="image" />
+				<img style={hiddenStyle} src={this.getCameraStream()} width="400" height="300" alt="image" />
 			);
 		}
 	}
