@@ -27,7 +27,7 @@ class FaceFrame extends Component {
 		const ctx = this.refs.canvas.getContext('2d');
 		const { w, h} = this.props;
 		let {points,title} = this.props;
-		points = points.map((p) => [p[0]*w*1.5/400,p[1]*h*1.5/300]);
+		points = points.map((p) => [p[0]*w*1.2/400,p[1]*h*1.2/300]);
 
 		ctx.clearRect(0, 0, w, h);
 		ctx.strokeStyle="#eae25a";

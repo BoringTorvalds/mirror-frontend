@@ -57,7 +57,7 @@ class SignUpContainer extends Component {
 				return this._renderCounts();
 			// If training is started 
 			} else if (!isTrainingFinished) {
-				return <h2> Hi {person}, <br/> Say "I'm Ready" to Alexa when you're ready </h2>
+				return <h2> Hi {person}, <br/> Say "Set training on" to Alexa when you're ready </h2>
 			// Once training is finished
 			} else if (isTrainingFinished) {
 				return <h2> Your profile has been saved ! </h2>
