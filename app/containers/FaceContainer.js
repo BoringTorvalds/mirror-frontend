@@ -61,6 +61,14 @@ class FaceContainer extends Component {
 		this.people = msg.people;
 	}
 
+	getWindow = () => {
+		return {
+			w : window.outerWidth,
+			h : window.outerHeight
+		}
+	}
+
+
 	updateState = () => {
 		const msg = {
 			images: this.images,
@@ -322,6 +330,7 @@ class FaceContainer extends Component {
 						ref="face"
 						points={this.props.face} 
 						title={currentIdentity}
+						{...this.getWindow()}
 					/>
 				}
 			</div>

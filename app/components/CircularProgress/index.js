@@ -8,6 +8,7 @@ export default ({radius, percentage, strokeWidth }) => {
 	const viewBox = `0 0 ${width} ${height}`;
 	const dashArray = r* Math.PI * 2;
 	const dashOffset = dashArray - dashArray * percentage / 100;
+	const percent = percentage > 100 ? 100 : percentage;
 
 	return (
 		<svg
@@ -37,7 +38,7 @@ export default ({radius, percentage, strokeWidth }) => {
 				y={radius}
 				dy=".4em"
 				textAnchor="middle">
-				{`${percentage}%`}
+				{`${percent}%`}
 			</text>
 		</svg>
 	);

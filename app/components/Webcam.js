@@ -19,7 +19,7 @@ class Webcam extends Component {
 	}
 
 	echoUpdate = () => {
-		this.forceUpdate();
+		// this.forceUpdate();
 	}
 
 	componentWillUnmount() {
@@ -50,7 +50,6 @@ class Webcam extends Component {
 	getScreenShot() {
 		const video = findDOMNode(this);
 		let canvas = document.createElement('canvas');
-
 		canvas.width = video.clientWidth;
 		canvas.height = video.clientHeight;
 

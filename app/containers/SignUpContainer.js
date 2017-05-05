@@ -30,13 +30,13 @@ class SignUpContainer extends Component {
 				}, 2000);
 			} else {
 				setTimeout(()=> {
-					this.props.dispatch(updateProcessedCounts(this.props.counts + 0.5));
-				},1000);
+					this.props.dispatch(updateProcessedCounts(this.props.counts + 1));
+				},800);
 			}
 		}
 	}
 	_renderCounts = () => {
-		const percentage = (this.props.counts / 10) * 100;
+		const percentage = this.props.counts * 10;
 		return <CircularProgress percentage={percentage} radius="80" strokeWidth="8"	/>
 	}
 	_renderStatus = () => {

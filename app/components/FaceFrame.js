@@ -8,8 +8,6 @@ const SHAPE_MOUTH = [[49,50],[50,51],[51,52],[52,53],[53,54],[49,48],[49,31],[53
 const SHAPE_CONNECT = [[39,27],[27,42],[39,31],[42,35], [31,30],[35,30],[31,29],[35,29],[28,35]];
 const SHAPE_SURROUND = [[19,38],[38,21],[37,19],[37,17],[36,17],[36,0],[36,1],[2,31],[31,4],[48,4],[48,6],[6,58],[57,9],[55,11],[11,54],[54,13],[35,14],[14,45],[45,26],[44,24],[22,42],[42,23],[24,19],[20,23]];
 
-const w = window.outerWidth;
-const h = window.outerHeight;
 
 class FaceFrame extends Component {
 	constructor(props) {
@@ -22,11 +20,14 @@ class FaceFrame extends Component {
 
 	componentWillUnmount() {
 	}
+	componentWillUpdate(nextProps, nextState) {
+	}
 
 	updateCanvas = ()=> {
 		const ctx = this.refs.canvas.getContext('2d');
+		const { w, h} = this.props;
 		let {points,title} = this.props;
-		points = points.map((p) => [p[0]*w/400,p[1]*h/300]);
+		points = points.map((p) => [p[0]*w*1.5/400,p[1]*h*1.5/300]);
 
 		ctx.clearRect(0, 0, w, h);
 		ctx.strokeStyle="#eae25a";
@@ -85,6 +86,7 @@ class FaceFrame extends Component {
 	}
 
 	render() {
+		const { w,h } = this.props;
 		return(
 			<canvas 
 				ref="canvas" 
@@ -98,7 +100,9 @@ class FaceFrame extends Component {
 
 FaceFrame.propTypes = {
 	points: React.PropTypes.any,
-	title: React.PropTypes.string
+	title: React.PropTypes.string,
+	w: React.PropTypes.number,
+	h: React.PropTypes.number
 };
 
 export default FaceFrame;
