@@ -7,6 +7,7 @@ import { fetchStock, fetchStockSymbol } from './../actions/stock';
 import { 
 	hideFace, 
 	showFace, 
+	setDebug,
 	updateTraining, 
 	addPersonRequest, 
 	fetchPersonName ,
@@ -53,6 +54,10 @@ const wsMiddleware = (function(){
 				break;
 			// Navigate to a page
 			case 'navigation':
+				if (msg.content == "debug"){
+					store.dispatch(setDebug());
+					break;
+				}
 				const route = parseNavigationRequest(msg.content);
 				console.log("Navigating to" + route);
 				if (route == "/signup"){

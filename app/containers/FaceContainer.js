@@ -310,7 +310,8 @@ class FaceContainer extends Component {
 			currentIdentity, 
 			hideFace,
 			counts,
-			person
+			person,
+			debug
 		} = this.props;
 
 		const annotatedStyle = {
@@ -322,7 +323,7 @@ class FaceContainer extends Component {
 			<div>
 				<Webcam 
 					ref='webcam'
-					hidden
+					hidden={!debug}
 				/> 
 				{ !hideFace && 
 					!training &&
@@ -347,7 +348,8 @@ FaceContainer.propTypes = {
 	add: PropTypes.boolean,
 	person: PropTypes.string,
 	hideFace: PropTypes.boolean,
-	openface: PropTypes.object
+	openface: PropTypes.object,
+	debug: PropTypes.boolean
 };
 
 const mapStateToProps = ({facialAuth}) => {

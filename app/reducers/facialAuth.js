@@ -8,6 +8,7 @@ const initialState = {
 	currentIdentity: "Unknown person",
 	person: null,
 	add: false,
+	debug: false,
 	isTrainingRequest: false,
 	isTrainingFinished: false,
 	openface: {
@@ -46,6 +47,8 @@ export function facialAuth(state = initialState, action) {
 			return { ...state, isTrainingFinished: true, isTrainingRequest: false };
 		case ActionTypes.RESET_MODEL:
 			return { ...state, ...action.model };
+		case ActionTypes.TOGLE_DEBUG:
+			return { ...state, debug: !state.debug };
 		default:
 			return state;
 	}

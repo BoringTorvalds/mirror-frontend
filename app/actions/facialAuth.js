@@ -94,3 +94,9 @@ export function resetModel() {
 		model: resetModel
 	}
 }
+
+export function setDebug() {
+	return {
+		type: ActionTypes.TOGLE_DEBUG
+	}
+}
