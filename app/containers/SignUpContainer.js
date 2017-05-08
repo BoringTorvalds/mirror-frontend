@@ -11,15 +11,24 @@ import {
 } from './../actions/facialAuth';
 import { updateProcessedCounts } from './../actions/signup';
 
-
-//@TODO : Merge signup reducer with facialAuth somehow
+/**
+ * React Component represents Sign Up Page
+ * Location : 'app/containers/SignUpContainer'
+ * This page is used to start the sign up process using facial recognition feature
+ *
+ */
 class SignUpContainer extends Component {
 
 	constructor(props) {
 		super(props);
 	}
 
-	componentWillUpdate = (nextProps) => {
+	/**
+	 * Watching for changes in state.facialAuth.training
+	 * If training is switch to True, start counting process till 10 counts and switch back to False.
+	 * By dispatching to Redux store with trainingFinished, updateTraining, updateProcessCounts
+	 */
+	componentWillUpdate(nextProps) {
 		if (nextProps.training) {
 			if (nextProps.counts === 10) {
 				setTimeout(()=> {
@@ -35,11 +44,23 @@ class SignUpContainer extends Component {
 			}
 		}
 	}
-	_renderCounts = () => {
+
+	/**
+	 * Render <CircularProgress> Component
+	 * Represent percentage of facial authentication sign up process 
+	 */
+	renderCounts = () => {
 		const percentage = this.props.counts * 10;
 		return <CircularProgress percentage={percentage} radius="80" strokeWidth="8"	/>
 	}
-	_renderStatus = () => {
+
+	/**
+	 * Render the state of process 
+	 * First : Tell Alexa Name
+	 * Second: Place face at center of mirror
+	 * Last: Finished 
+	 */
+	renderStatus = () => {
 		const {
 			person,
 			isTrainingRequest,
@@ -54,7 +75,7 @@ class SignUpContainer extends Component {
 			// If training mode is turning on, start progress and counting
 			// Trigger request to training
 			if (training){
-				return this._renderCounts();
+				return this.renderCounts();
 			// If training is started 
 			} else if (!isTrainingFinished) {
 				return <h2> Hi {person}, <br/> Say "Set training on" to Alexa when you're ready </h2>
@@ -81,7 +102,7 @@ class SignUpContainer extends Component {
 		return(
 			<StatusContainer>
 				<Text>
-					{this._renderStatus()}
+					{this.renderStatus()}
 				</Text>
 			</StatusContainer>
 		);
@@ -89,11 +110,16 @@ class SignUpContainer extends Component {
 }
 
 SignUpContainer.propTypes = {
-	training: PropTypes.boolean,
+	/** a value indicate whether the training mode is on. */
+	training: PropTypes.bool,
+	/** a value indicate the percentage of training process */
 	counts: PropTypes.number,
+	/** show the current person in front of mirror */
 	person: PropTypes.string,
-	isTrainingFinished: PropTypes.boolean,
-	isTrainingRequest: PropTypes.boolean
+	/** indicate status of training mode to be finished or not */
+	isTrainingFinished: PropTypes.bool,
+	/** indicate status of training mode to be requested or not */
+	isTrainingRequest: PropTypes.bool
 };
 
 const parseFacialAuth = ({training, person, isTrainingRequest, isTrainingFinished}) => {

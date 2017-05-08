@@ -1,0 +1,1 @@
+{"description":"React component that represents annotated frame","methods":[],"props":{"points":{"type":{"name":"any"},"required":false,"description":""},"title":{"type":{"name":"string"},"required":false,"description":""},"w":{"type":{"name":"number"},"required":false,"description":""},"h":{"type":{"name":"number"},"required":false,"description":""}}}

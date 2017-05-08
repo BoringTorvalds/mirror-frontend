@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import Weather from './../components/Weather';
 import { fetchLocationWeather} from './../actions/weather';
 
+/**
+ * React component represents WeatherContainer
+ * A container that maps to state.weather and display in Weather Component
+ */
 class WeatherContainer extends Component{
 	constructor(props) {
 		super(props);
@@ -16,9 +20,9 @@ class WeatherContainer extends Component{
 	render() {
 		return (
 			<div>
-				{ this.props.weather.isFetched &&
+				{ this.props.isFetched &&
 					<Weather 
-						{...this.props.weather} 
+						{...this.props} 
 					/> 
 				}
 			</div>
@@ -27,14 +31,37 @@ class WeatherContainer extends Component{
 
 }
 
-
 WeatherContainer.propTypes = {
-	weather: PropTypes.object
+	/** Icon type of weather */
+	iconType: PropTypes.string,
+	/** Summary of current weather */
+	summary: PropTypes.string,
+	/** An object of weather container current temperature */
+	current: PropTypes.object.isRequired,
+	/** Next 7 days forcast of weather  */
+	daily: PropTypes.any,
+	/** Current location to look up weather */
+	currentLocation: PropTypes.string,
+	/** Width of component */
+	width: PropTypes.string,
+	/** Height of component */
+	height: PropTypes.string
 };
-const mapStateToProps = (state) => {
-	return {
-		weather: state.weather
-	}
+
+
+WeatherContainer.defaultProps = {
+	iconType: null,
+	summary: null,
+	temparature: null,
+	daily: [],
+	isFetching: false,
+	isFetched: false,
+	width: null,
+	currentLocation: null,
+	height: null
 }
 
+const mapStateToProps = ({weather}) => {
+	return {...weather}
+};
 export default connect(mapStateToProps)(WeatherContainer);

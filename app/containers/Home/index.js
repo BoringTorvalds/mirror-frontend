@@ -3,24 +3,28 @@ import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import FeedsContainer from './../FeedsContainer';
 import WeatherContainer from './../WeatherContainer';
+import StockContainer from './../StockContainer';
 import Clock from './../../components/Clock';
 import Setting from './../../components/Setting';
-import StockContainer from './../StockContainer';
 
-import {
-	Grid,
-	Col,
-	Row
-} from 'react-bootstrap';
+import {Grid, Col, Row} from 'react-bootstrap';
 
+/**
+ * React component represents home page of mirror
+ * Contains components:
+ * weather
+ * feeds
+ * clock
+ * settings
+ */
 class Home extends Component {
 	constructor(props){
 		super(props);
 	}
 
 	render() {
-		const { person } = this.props;
-		const title = ((person == "Unknown person") || (person == "Nobody")) ? person : "Hi " + person;
+		const {person} = this.props;
+		const title = ((person == "Unknown") || (person == "Nobody")) ? person : "Hi " + person;
 		return (
 			<Grid>
 				<Row style={{marginBottom: "50"}}> 
@@ -49,8 +53,14 @@ class Home extends Component {
 }
 
 Home.propTypes = {
+	/** Represent current person infront of mirror */
 	person: PropTypes.string
 }
+
+Home.defaultProps = {
+	person: "Unknown"
+}
+
 const mapStateToProps = ({facialAuth}) => {
 	const { currentIdentity} = facialAuth;
 	return {

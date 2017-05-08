@@ -5,7 +5,7 @@ const initialState = {
 	hideFace: true,
 	face: [],
 	counts: 0,
-	currentIdentity: "Unknown person",
+	currentIdentity: "Unknown",
 	person: null,
 	add: false,
 	debug: false,

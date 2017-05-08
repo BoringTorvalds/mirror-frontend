@@ -7,6 +7,12 @@ import HNStoryListItem from './../../components/HNStoryListItem';
 import NewsIcon from './news-icon.png';
 import HNIcon from './hn-icon.png';
 import styled from 'styled-components';
+
+/**
+ * React Component represents Feeds Container
+ * Display news
+ * Default source is from HackerNews
+ */
 class FeedsContainer extends Component {
 	constructor(props) {
 		super(props);
@@ -24,6 +30,9 @@ class FeedsContainer extends Component {
 	}
 
 
+	/**
+	 * Render loading view when news are being fetched
+	 */
 	renderEmptyView() {
 		return (
 			<div style={{textAlign: "center"}}> Loading news ... <br/>
@@ -38,11 +47,15 @@ class FeedsContainer extends Component {
 	/**
 	 * Fetch next stories of next page
 	 */
-	_fetchFeeds = () => {
+	_fetchFeeds(){
 		this.props.dispatch(fetchPagination({next: true, previous: false}));
 	}
 
-	renderhn = (items) => {
+	/**
+	 * Render HN news items 
+	 * params {array} list of news items 
+	 */
+	renderhn(items){
 		const {pagination} = this.props;
 		const InlineText = styled.div`
 			display: inline;
@@ -105,10 +118,15 @@ class FeedsContainer extends Component {
 }
 
 FeedsContainer.propTypes = {
-	isFetched: PropTypes.boolean,
-	isFetching: PropTypes.boolean,
-	items: PropTypes.any,
+	/** Is news already fetched */
+	isFetched: PropTypes.bool,
+	/** Is news being fetched */
+	isFetching: PropTypes.bool,
+	/** List of news */
+	items: PropTypes.array,
+	/** Pagination of current news view */
 	pagination: PropTypes.object,
+	/** Offet */
 	offSet: PropTypes.number
 };
 

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { IS_VIDEO_STREAM } from './../constants/config';
 
+/**
+ * Webcam component
+ */
 class Webcam extends Component {
 	constructor(props) {
 		super(props);
@@ -15,21 +18,12 @@ class Webcam extends Component {
 		if (IS_VIDEO_STREAM) {
 			this.loadCameraStream();
 		}
-		this.echoUpdate();
-	}
-
-	echoUpdate = () => {
-		// this.forceUpdate();
-	}
-
-	componentWillUnmount() {
-		// window.alert("UNMOUNTING WEBCAM");
-		// this.mediaStream.stop();
 	}
 
 
 	/**
-	 * Save stream URL after obtaining it from WEbcam
+	 * Set state.streamUrl to stream url after obtaining it from Webcam
+	 * @params {String} webcam stream url
 	 */
 	setCameraStream(source) {
 		const url = URL.createObjectURL(source);
@@ -37,7 +31,14 @@ class Webcam extends Component {
 		this.setState({ streamUrl : url });
 	}
 
-	getCameraStream = () => {
+	/**
+	 * Get camera stream 
+	 * In production mode, return url from raspberry pi
+	 * In dev mode, return url from current machine's webcam exposed in Chromium
+	 *
+	 * @return {String} webcam stream url
+	 */
+	getCameraStream () {
 		// return this.state.streamUrl;
 		// "http://172.24.1.1:8080/stream/video.mjpeg"
 		if (IS_VIDEO_STREAM) {
@@ -47,6 +48,11 @@ class Webcam extends Component {
 		// return "http://b7036544.ngrok.io/stream/video.mjpeg";
 	}
 
+	/**
+	 * Capture current screenshot of video
+	 * Height and Width of screenshot is set default to equal video's dimensions
+	 *
+	 */
 	getScreenShot() {
 		const video = findDOMNode(this);
 		let canvas = document.createElement('canvas');
@@ -61,13 +67,17 @@ class Webcam extends Component {
 	}
 
 
-	//@TODO : Load steps with React view callbacks and show alert on Alert View
+	/** 
+	 * Load webcam
+	 */
 	loadCameraStream() {
-		let env = this;
 		navigator.webkitGetUserMedia({ video: true },(stream) => env.setCameraStream(stream), () => alert('Couldnt connect'));
 	}
 
 
+	/**
+	 * Render Webcam component 
+	 */
 	render() {
 		const hiddenStyle =  this.props.hidden ? {
 			"position" : "absolute",
@@ -91,5 +101,7 @@ class Webcam extends Component {
 		}
 	}
 }
+
+Webcam.propTypes = {};
 
 export default Webcam;

@@ -12,7 +12,7 @@ import {
 } from './../actions/facialAuth';
 import { OPENFACE_SOCKET_ADDRESS } from './../constants/config';
 import { Image } from 'react-bootstrap';
-import FaceFrame from './../components/FaceFrame';
+import AnnotatedFrame from './../components/AnnotatedFrame';
 
 /**
  * Request new frames to rerender annotated frames
@@ -31,16 +31,22 @@ window.requestAnimFrame = (function() {
 const DEFAULT_TOK= 1;
 const DEFAULT_NUMNULLS= 10;
 
+
+/**
+ * React Component represents Face Container
+ * This stores state to send back frame to OpenFace server 
+ * Or receive a new annotated frame and display it
+ */
 class FaceContainer extends Component {
 
 	/**
 	 * Init variables for OpenFace
-	 * @param { number } tok : A variable 0 or 1 to make sure an image was processed 
+	 * @params { number } tok : A variable 0 or 1 to make sure an image was processed 
 	 * then client will send more frames 
-	 * @param { string } people : Names of People in trained models
-	 * @param { string } images : Array of screenshots used for training in form ds:// jpg
-	 * @param { number } numNulls : A variable default = 20 to slow down the sending frames sent to server 
-	 * @param { boolean } training : Indicate if the OpenFace should train a profile or not
+	 * @params { string } people : Names of People in trained models
+	 * @params { string } images : Array of screenshots used for training in form ds:// jpg
+	 * @params { number } numNulls : A variable default = 20 to slow down the sending frames sent to server 
+	 * @params { bool } training : Indicate if the OpenFace should train a profile or not
 	 */
 	constructor(props){ 
 		super(props);
@@ -55,12 +61,20 @@ class FaceContainer extends Component {
 		this.createSocket(OPENFACE_SOCKET_ADDRESS);
 	}
 
+	/**
+	 * When component is mounted, assign the images and people variables to store's values
+	 */
 	componentDidMount() {
 		let msg = this.props.openface;
 		this.images = msg.images;
 		this.people = msg.people;
 	}
 
+	/**
+	 * @return {object} window
+	 *	@return {string} window.w : width
+	 *	@return {string} window.h : height
+	 */
 	getWindow = () => {
 		return {
 			w : window.outerWidth,
@@ -69,6 +83,9 @@ class FaceContainer extends Component {
 	}
 
 
+	/**
+	 * Update current state in store
+	 */
 	updateState = () => {
 		const msg = {
 			images: this.images,
@@ -78,6 +95,9 @@ class FaceContainer extends Component {
 		this.props.dispatch(updateModels(msg));
 	}
 
+	/** 
+	 * Send current state of training to OpenFace Server 
+	 */
 	_sendState(){
 		const msg = {
 			type: 'ALL_STATE',
@@ -90,6 +110,10 @@ class FaceContainer extends Component {
 		this.socket.send(JSON.stringify(msg));
 	}
 
+	/**
+	 * Example of adding a person 
+	 * @params {string} name : person name
+	 */
 	_addPerson = (name) => {
 		if (this.people.indexOf(name) != -1) {
 			this.props.dispatch(addPersonFailure("Profile existed"));
@@ -103,17 +127,15 @@ class FaceContainer extends Component {
 			};
 
 			this.defaultPerson  = this.people.length;
-
 			this.people.push(name);
-			console.log("-----------");
-			console.log(this.people);
-			console.log("DEFAULT is " + this.defaultPerson);
-			console.log("------------");
-
 			this.socket.send(JSON.stringify(msg));
 		}
 	}
 
+	/**
+	 * Start frame loop by sending a state to OpenFace server 
+	 * And receive a frame back 
+	 */
 	_sendFrameLoop() {
 		if (this.socket == null || 
 			this.socket.readyState != this.socket.OPEN ||
@@ -145,10 +167,17 @@ class FaceContainer extends Component {
 		window.setTimeout(function(){ window.requestAnimFrame(sendFrameLoop) }, 60);
 	}
 
+	/**
+	 * Request Webcam component to take a screenshot 
+	 * By using this.refs.webcam
+	 */
 	_screenShot(){
 		return this.refs.webcam.getScreenShot();
 	}
 
+	/**
+	 * Close current websocket connection to OpenFace server 
+	 */
 	_closeSocket(){
 		if (this.socket){
 			this.socket.close();
@@ -156,12 +185,22 @@ class FaceContainer extends Component {
 		this.socket = null;
 	}
 
+	/**
+	 * On connection open to Openface Server
+	 * Reset settings
+	 */
 	_onSocketOpen(){
 		this.numNulls = 0;
 		this.tok = DEFAULT_TOK;
 		this.socket.send(JSON.stringify({'type': 'NULL'}));
 	}
 
+	/**
+	 * Encode current frame from _screenShot to DataStringUrl
+	 * @params {object} rgb : current frame
+	 * 
+	 * @return {string} dataUrl of image/png
+	 */
 	_getDataURLFromRGB(rgb) {
 		var rgbLen = rgb.length;
 
@@ -258,10 +297,9 @@ class FaceContainer extends Component {
 
 	/**
 	 * Create websocket to connect to OpenFace 
-	 * @param {String} ws address
+	 * @params {string} ws address
 	 */
 	createSocket(address) {
-		// Close openning socket if any
 		this._closeSocket();
 
 		this.socket = new WebSocket(address);
@@ -274,10 +312,6 @@ class FaceContainer extends Component {
 		};
 	}
 
-	goTo() {
-		hashHistory.push('/home');
-	}
-
 	setTrainingOn = () => {
 		const { training, counts } = this.props;
 		const msg = {
@@ -287,6 +321,9 @@ class FaceContainer extends Component {
 		this.socket.send(JSON.stringify(msg))
 	}
 
+	/**
+	 * Set training mode to be off and send to OpenFace server 
+	 */
 	setTrainingOff(){
 		const msg = {
 			'type': 'TRAINING',
@@ -297,6 +334,9 @@ class FaceContainer extends Component {
 	}
 
 
+	/**
+	 * Close current connection to OpenFace 
+	 */
 	closeConnection(){
 		this.socket.close();
 	}
@@ -327,7 +367,7 @@ class FaceContainer extends Component {
 				/> 
 				{ !hideFace && 
 					!training &&
-					<FaceFrame 
+					<AnnotatedFrame 
 						ref="face"
 						points={this.props.face} 
 						title={currentIdentity}
@@ -341,17 +381,30 @@ class FaceContainer extends Component {
 }
 
 FaceContainer.propTypes = {
+	/** represents the training process percentage, used to dispatch to store when the training should be started */
 	counts: PropTypes.number,
-	face: PropTypes.any,
-	training: PropTypes.boolean,
+	/** response from OpenFace server, 2d coordinates*/
+	face: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+	/** indicate training state is on or off */
+	training: PropTypes.bool,
+	/** holds value of current user */
 	currentIdentity: PropTypes.string,
-	add: PropTypes.boolean,
+	/** True value indicates current profile should be added to server */
+	add: PropTypes.bool,
+	/** name of the person given by Alexa */
 	person: PropTypes.string,
-	hideFace: PropTypes.boolean,
+	/** False value indicates mirror should show annotated frame, True is hide it */
+	hideFace: PropTypes.bool,
+	/** Current state of OpenFace protocol */
 	openface: PropTypes.object,
-	debug: PropTypes.boolean
+	/** True then show the webcam on main screen, false then set debug mode off */
+	debug: PropTypes.bool
 };
 
+/**
+ * Map current props to state
+ * @return {object} state.facialAuth
+ */
 const mapStateToProps = ({facialAuth}) => {
 	return facialAuth;
 }

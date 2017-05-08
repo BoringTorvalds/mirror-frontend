@@ -12,6 +12,9 @@ const formatTemperature = (degrees, format) => {
 
 const DAYS_IN_WEEKS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 
+/**
+ * React component that display full/summary of weather at a location
+ */
 class Weather extends Component {
 	constructor(props){
 		super(props);
@@ -67,7 +70,7 @@ class Weather extends Component {
 		return dailyForcast;
 	}
 
-	render = () => {
+	render(){
 		const { 
 			iconType,
 			summary,
@@ -136,13 +139,19 @@ class Weather extends Component {
 }
 
 Weather.propTypes = {
+	/** Icon type of weather */
 	iconType: PropTypes.string,
-	summary: PropTypes.object,
+	/** Summary of current weather */
+	summary: PropTypes.string,
+	/** An object of weather container current temperature */
 	current: PropTypes.object.isRequired,
-	summary: PropTypes.string.isRequired,
+	/** Next 7 days forcast of weather  */
 	daily: PropTypes.any,
+	/** Current location to look up weather */
 	currentLocation: PropTypes.string,
+	/** Width of component */
 	width: PropTypes.string,
+	/** Height of component */
 	height: PropTypes.string
 };
 

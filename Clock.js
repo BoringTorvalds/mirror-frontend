@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import styled from 'styled-components';
+
 
 /**
  * React component that display current time at current location.
  * By parsing new Date() from browser.
  */
 class Clock extends Component {
+	props: Props;
 
 	constructor(props){
 		super(props);
@@ -37,15 +39,15 @@ class Clock extends Component {
 	/**
 	 * Parse current Date object
 	 *
-	 * @return {Object} currentTime
-	 *	@return {int} currentTime.hour
-	 *	@return {int} currentTime.minutes
-	 *	@return {string} currentTime.ampm "am" or "pm"
-	 *	@return {string} currentTime.dayOfWeek 
-	 *	@return {string} currentTime.month
-	 *	@return {int} currentTime.date
+	 * @returns {Object} currentTime
+	 *	@returns {int} currentTime.hour
+	 *	@returns {int} currentTime.minutes
+	 *	@returns {string} currentTime.ampm "am" or "pm"
+	 *	@returns {string} currentTime.dayOfWeek 
+	 *	@returns {string} currentTime.month
+	 *	@returns {int} currentTime.date
 	 */
-	getTime() {
+	getTime = ()=>{
 		const dateObject = new Date();
 		const dateString = dateObject.toDateString().split(" ");
 		const currentTime = {
@@ -109,11 +111,8 @@ class Clock extends Component {
 }
 
 Clock.propTypes = {
-	/** A text display current's user identity,
-	 *  "Nobody" if no one is detected in the background,
-	 *  "Hi, ..name" if an user is detected 
-	 */
-	title: React.PropTypes.string
-}
+	/** A text display current's user identity */
+	title: PropTypes.string
+};
 
 export default Clock;

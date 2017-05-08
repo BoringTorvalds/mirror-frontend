@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 
 import FaceContainer from './FaceContainer';
 
+/**
+ * Parent Component that holds other components inside its props.children
+ */
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -28,7 +31,9 @@ class App extends Component {
 }
 
 App.propTypes = {
+	/** Child components */
 	children: HTMLElement,
+	/** Websocket object, used to track connection */
 	ws: PropTypes.object
 }
 const mapStateToProps = ({ws}) =>({ws: ws});

@@ -1,0 +1,7 @@
+`methods` (component)
+=====================
+
+undefined
+
+
+

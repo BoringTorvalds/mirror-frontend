@@ -6,6 +6,10 @@ import Spinner from './../components/Spinner';
 import { fetchStock } from './../actions/stock';
 import styled from 'styled-components';
 
+/**
+ * React component represents Stock container
+ * Display stock fetched from Stock API
+ */ 
 class StockContainer extends Component {
 	constructor(props) {
 		super(props);
@@ -13,7 +17,6 @@ class StockContainer extends Component {
 
 	componentDidMount() {
 		const {symbol} = this.props;
-		console.log("SYMBOL : " + symbol);
 		this.props.dispatch(fetchStock(symbol));
 	}
 
@@ -24,11 +27,18 @@ class StockContainer extends Component {
 		}
 	}
 
-	_getStock = ({Elements}) => {
+	/**
+	 * Parse stock points from response to draw on graph
+	 */
+	getStock({Elements}){
 		return Elements[1].DataSeries.volume.values;
 	}
 
-	_renderRange = ({Elements}) => {
+
+	/**
+	 * Parse low, high , close values of stock
+	 */
+	renderRange({Elements}){
 		const { 
 			low, 
 			high, 
@@ -63,17 +73,18 @@ class StockContainer extends Component {
 			return(
 				<div> 
 					<StockContainer>
-					<SymbolText> { symbol } </SymbolText> <h3> { title } </h3>
-					<h3> { exchange } </h3>
-				</StockContainer>
+						<SymbolText> { symbol } </SymbolText> <h3> { title } </h3>
+						<h3> { exchange } </h3>
+					</StockContainer>
+
 					<Trend 
-						data={this._getStock(data)} 
+						data={this.getStock(data)} 
 						autoDraw
 						autoDrawDuration={3000}
 						autoDrawEasing="ease-in"
 						gradient={['#0FF', '#F0F', '#FF0']}
 					/>
-					{this._renderRange(data)}
+					{this.renderRange(data)}
 				</div>
 			)
 		} else if (isFetching){
@@ -83,12 +94,18 @@ class StockContainer extends Component {
 	}
 }
 StockContainer.propTypes = {
-	data: PropTypes.any,
+	/** object of data from response */
+	data: PropTypes.object,
+	/** name of corp */
 	title: PropTypes.string,
+	/** symbol of stock */
 	symbol: PropTypes.string,
+	/** name of stock exchange market */
 	exchange: PropTypes.string,
-	isFetched: PropTypes.boolean,
-	isFetching: PropTypes.boolean
+	/** is stock fetched */
+	isFetched: PropTypes.bool,
+	/** is stock fetching */
+	isFetching: PropTypes.bool
 };
 const mapStateToProps = ({stock}) => {
 	return {...stock};
